@@ -1,4 +1,4 @@
-import { projectsData } from "@/data/projects";
+import { projectsData } from "@/data/projectsData";
 
 export default function Projects() {
   return (
