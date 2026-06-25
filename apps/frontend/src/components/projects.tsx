@@ -1,8 +1,8 @@
-import { projectsData } from "@/data/projectsData";
+import { projectsData } from "@/data/projects";
 
 export default function Projects() {
   return (
-    <section className="py-20 border-t border-gray-200 dark:border-gray-800">
+    <section id="projects" className="py-20 border-t border-gray-200 dark:border-gray-800">
       <div className="mb-12">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
           Featured Projects
