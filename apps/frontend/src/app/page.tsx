@@ -1,10 +1,8 @@
-import NavMenu from "@/components/NavMenu";
 import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
     <>
-      <NavMenu />
       <main id="home" className="mx-auto max-w-5xl px-6 py-6 sm:px-12">
         <section className="flex min-h-[70vh] flex-col justify-center py-16">
           <p className="text-sm font-medium uppercase tracking-[0.3em] text-blue-600 dark:text-blue-400">
@@ -17,7 +15,6 @@ export default function Home() {
             I create modern web applications with clean architecture, thoughtful UX, and polished interactions.
           </p>
         </section>
-        <Projects />
       </main>
     </>
   );
