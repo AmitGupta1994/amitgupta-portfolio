@@ -14,7 +14,7 @@ export default function NavMenu() {
         aria-label="Primary"
       >
         <Link
-          href="#home"
+          href="/"
           className="text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-50 dark:hover:text-blue-400"
           onClick={() => setIsOpen(false)}
         >
