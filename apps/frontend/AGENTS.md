@@ -9,6 +9,12 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 - Use Tailwind utilities for styling and GSAP for subtle, high-quality animations.
 - Maintain fast, responsive, and accessible UI behavior across devices.
 
+## Reference websites
+
+- Use this sites as a visual and structural reference for the portfolio experience:
+  https://editwithpanda.my.canva.site/copy-of-template-portfolio-01#page-3
+  https://kontentmedia.in/Kontentedit
+
 ## Tech stack
 
 - Next.js 16
@@ -50,6 +56,7 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 
 - Update content through the existing data files in src/data rather than hardcoding copy directly in components when possible.
 - Keep project information, profile details, and navigation values centralized and easy to edit.
+- Use the data from my CV at /public/cv-amitgupta.pdf
 
 ## Quality bar
 
