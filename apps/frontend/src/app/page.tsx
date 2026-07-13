@@ -1,21 +1,30 @@
-import Projects from "@/components/ProjectCard";
+import Hero from '@/components/Hero';
+import About from '@/components/About';
+import SkillsSection from '@/components/SkillsSection';
+import ExperienceSection from '@/components/ExperienceSection';
+
+import { profileData } from '@/data/profile';
+import { skillsData } from '@/data/skills';
+import { experienceData } from '@/data/experience';
 
 export default function Home() {
   return (
-    <>
-      <main id="home" className="mx-auto max-w-5xl px-6 py-6 sm:px-12">
-        <section className="flex min-h-[70vh] flex-col justify-center py-16">
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-blue-600 dark:text-blue-400">
-            Software Engineer
-          </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-50">
-            Building thoughtful digital experiences.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-300">
-            I create modern web applications with clean architecture, thoughtful UX, and polished interactions.
-          </p>
-        </section>
-      </main>
-    </>
+    <main className="min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200">
+      <div className="mx-auto max-w-5xl px-6 py-20 md:py-32 flex flex-col gap-24">
+        
+        <Hero 
+          name={profileData.name} 
+          headline={profileData.headline} 
+          contact={profileData.contact} 
+        />
+        
+        <About summary={profileData.summary} />
+        
+        <SkillsSection skills={skillsData} />
+        
+        <ExperienceSection experiences={experienceData} />
+        
+      </div>
+    </main>
   );
 }
