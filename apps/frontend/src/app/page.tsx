@@ -1,4 +1,4 @@
-import Projects from "@/components/Projects";
+import Projects from "@/components/ProjectCard";
 
 export default function Home() {
   return (
