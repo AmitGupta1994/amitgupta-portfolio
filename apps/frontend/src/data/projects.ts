@@ -1,11 +1,11 @@
-export const projectsData = [
+export const projects = [
   {
     id: "1",
     title: "Monorepo Portfolio",
     description: "A production-grade portfolio built with Next.js, Tailwind CSS, and structured for a future Django backend integration.",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/yourusername/amitgupta-portfolio",
-    liveUrl: "#", 
+    liveUrl: "#",
   },
   {
     id: "2",
