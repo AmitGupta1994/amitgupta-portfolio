@@ -20,7 +20,7 @@ export default function ProjectCard({ title, description, techStack, githubUrl, 
         ))}
       </div>
 
-      <a href={liveUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'blue', textDecoration: 'underline' }}>
+      <a href={liveUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'green', textDecoration: 'underline' }}>
         View Project
       </a>
     </div>
