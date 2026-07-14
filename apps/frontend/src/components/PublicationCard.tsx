@@ -1,9 +1,7 @@
-interface PublicationCardProps {
-  title: string;
-  authors: string;
-  date: string;
-  publisher: string;
-}
+import { Publication } from "@/types/publication";
+
+// Derive the props from the single source of truth, omitting 'id' since it's just for the React key
+type PublicationCardProps = Omit<Publication, 'id'>;
 
 export default function PublicationCard({ title, authors, date, publisher }: PublicationCardProps) {
   return (
