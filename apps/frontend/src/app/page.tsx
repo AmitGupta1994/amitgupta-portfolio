@@ -6,6 +6,8 @@ import ExperienceSection from '@/components/ExperienceSection';
 import { profileData } from '@/data/profile';
 import { skillsData } from '@/data/skills';
 import { experienceData } from '@/data/experience';
+import { publicationsData } from '@/data/publications';
+import PublicationsSection from '@/components/PublicationsSection';
 
 export default function Home() {
   return (
@@ -23,6 +25,8 @@ export default function Home() {
         <SkillsSection skills={skillsData} />
         
         <ExperienceSection experiences={experienceData} />
+
+        <PublicationsSection publications={publicationsData} />
         
       </div>
     </main>
