@@ -3,10 +3,10 @@ export interface Skill{
     rating:number|string
 }
 
-export interface SkillsCategoryData{
-    id:string
-    name:string
-    show:boolean
-    priority:number
-    items:Skill[]
+export interface SkillCategoryData {
+  id: string;
+  title: string;
+  show: boolean;
+  priority: number; // 1 is highest priority, 99 is lowest
+  items: Skill[];
 }
