@@ -4,17 +4,15 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PublicationCard from './PublicationCard';
+import { Publication } from '@/types/publication';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Publication {
-  id: string;
-  title: string;
-  authors: string;
-  date: string;
-  publisher: string;
+interface PublicationsSectionProps {
+  publications: Publication[];
 }
 
+// Use the imported type directly
 interface PublicationsSectionProps {
   publications: Publication[];
 }

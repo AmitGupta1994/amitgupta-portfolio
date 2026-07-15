@@ -1,8 +1,7 @@
 import React from 'react';
+import { Skill } from '@/types/skill';
 
-interface SkillBadgeProps {
-  name: string;
-  rating: number | string;
+interface SkillBadgeProps extends Skill {
   isLearning?: boolean;
 }
 

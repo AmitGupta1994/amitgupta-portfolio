@@ -1,15 +1,11 @@
 import React from 'react';
-import SkillBadge from '@/components/SkillsBadge';
-
-interface Skill {
-  name: string;
-  rating: number | string;
-}
+import SkillBadge from './SkillBadge';
+import { Skill } from '@/types/skill';
 
 interface SkillCategoryProps {
   title: string;
   items: Skill[];
-  categoryKey: string; // Used to determine if we should apply the "learning" styling
+  categoryKey: string;
 }
 
 export default function SkillCategory({ title, items, categoryKey }: SkillCategoryProps) {
