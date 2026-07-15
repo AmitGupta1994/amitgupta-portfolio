@@ -49,7 +49,7 @@ export const skillsData: SkillCategoryData[] = [
     id: "iot_embedded",
     title: "IoT & Embedded Systems",
     show: true,
-    priority: 5,
+    priority: 7,
     items: [
       { name: "Android TV / STB", rating: 9 },
       { name: "AOSP Firmware", rating: 8 },
@@ -73,7 +73,7 @@ export const skillsData: SkillCategoryData[] = [
     id: "frontend",
     title: "Frontend",
     show: true,
-    priority: 7,
+    priority: 5,
     items: [
       { name: "React", rating: 7 },
       { name: "Next.js", rating: 7 },
