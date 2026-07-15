@@ -17,6 +17,7 @@ export default function Home() {
         <Hero 
           name={profileData.name} 
           headline={profileData.headline} 
+          imageUrl={profileData.imageUrl} 
           contact={profileData.contact} 
         />
         
