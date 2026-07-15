@@ -97,14 +97,17 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
             target="_blank"
             rel="noreferrer"
             aria-label="Freelancer"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100"
+            className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100"
           >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 6h6" />
-              <path d="M7 3h4" />
-              <path d="M8 9c0 2 1 3 3 3h1c2 0 3 1 3 3v1" />
-              <path d="m12 15 4 6" />
-              <path d="m16 15-4 6" />
+            <svg
+              id="Layer_1"
+              data-name="Layer 1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 122.88 91.38"
+              className="h-5 w-5 shrink-0"
+              fill="currentColor"
+            >
+              <path d="M72.19,0l8.37,11.74L122.88,0Zm-44,91.38L51.08,69,37.3,54.19,28.18,91.38ZM68.7,0,56.46,11l20.59.77L68.7,0ZM21.11,0l4.42,9,24.23,1.51L21.11,0Zm13,46.73L52,13.33,0,10.52,34.09,46.73Zm2.08,2.11L53.08,67,71.73,48.72l5.79-34L54.79,13.51,36.17,48.84Zm0,0Z" />
             </svg>
           </a>
         ) : null}
@@ -131,8 +134,11 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
             aria-label="LinkedIn"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100"
           >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
-              <path d="M6.94 8.5A1.56 1.56 0 1 0 6.94 5.38a1.56 1.56 0 0 0 0 3.12ZM5.5 9.5h2.88V18H5.5zM10.2 9.5h2.76v1.16h.04c.38-.72 1.32-1.48 2.72-1.48 2.9 0 3.43 1.91 3.43 4.39V18h-2.88v-7.56h-2.76v.95h-.04c-.4-.75-1.3-1.54-2.68-1.54-2.56 0-3.55 1.69-3.55 4.02V18H5.5V9.5h4.7Z" />
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="3" />
+              <path d="M8 10v6" />
+              <path d="M8 8.2a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z" />
+              <path d="M12 16v-3.2a2.2 2.2 0 0 1 4.4 0V16" />
             </svg>
           </a>
         ) : null}
