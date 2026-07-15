@@ -14,7 +14,7 @@ export default function SkillCategory({ title, items, categoryKey }: SkillCatego
   return (
     <div className="flex flex-col gap-3">
       <h4 className="text-neutral-900 font-medium border-b border-neutral-100 pb-2">
-        {title}
+        <b>{title}</b>
       </h4>
       <div className="flex flex-wrap gap-2">
         {items.map((skill) => (

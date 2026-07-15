@@ -28,12 +28,24 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
           Core Expertise
         </h3>
         
-        {/* The button that flips the state and forces a redraw */}
-        <button 
+        {/* Toggle between highest-priority and lowest-priority sorting */}
+        <button
           onClick={() => setSortAscending(!sortAscending)}
-          className="px-3 py-1 text-sm bg-neutral-200 rounded hover:bg-neutral-300"
+          aria-label={sortAscending ? 'Sort by lowest priority' : 'Sort by highest priority'}
+          title={sortAscending ? 'Sort by lowest priority' : 'Sort by highest priority'}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 bg-white/80 text-neutral-700 transition hover:bg-neutral-100"
         >
-          Sort: {sortAscending ? 'Highest Priority' : 'Lowest Priority'}
+          {sortAscending ? (
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14" />
+              <path d="m6 11 6-6 6 6" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 19V5" />
+              <path d="m6 13 6 6 6-6" />
+            </svg>
+          )}
         </button>
       </div>
       
