@@ -1,9 +1,11 @@
 import Hero from '@/components/Hero';
+import ProjectsSection from '@/components/ProjectsSection';
 import About from '@/components/About';
 import SkillsSection from '@/components/SkillsSection';
 import ExperienceSection from '@/components/ExperienceSection';
 
 import { profileData } from '@/data/profile';
+import { projects } from '@/data/projects';
 import { skillsData } from '@/data/skills';
 import { experienceData } from '@/data/experience';
 import { publicationsData } from '@/data/publications';
@@ -21,6 +23,8 @@ export default function Home() {
           contact={profileData.contact} 
         />
         
+        <ProjectsSection projects={projects} />
+
         <About summary={profileData.summary} />
         
         <SkillsSection skills={skillsData} />

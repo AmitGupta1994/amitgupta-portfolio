@@ -6,6 +6,7 @@ export const projects = [
     techStack: ["Next.js", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/yourusername/amitgupta-portfolio",
     liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: "2",
@@ -14,5 +15,6 @@ export const projects = [
     techStack: ["Django", "Python", "PostgreSQL", "Docker"],
     githubUrl: "https://github.com/yourusername/task-api",
     liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800",
   }
 ];
