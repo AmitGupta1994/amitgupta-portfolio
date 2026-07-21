@@ -25,5 +25,32 @@ export const projects = [
     githubUrl: "https://github.com/yourusername/ecommerce-app",
     liveUrl: "#",
     imageUrl: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "4",
+    title: "Real-time Chat App",
+    description: "A scalable chat application featuring WebSocket connections, online status indicators, and message history.",
+    techStack: ["React", "Express", "Socket.io", "Redis"],
+    githubUrl: "https://github.com/yourusername/chat-app",
+    liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "5",
+    title: "AI Image Generator",
+    description: "A creative tool allowing users to generate artwork from text prompts using OpenAI's DALL-E 3 API.",
+    techStack: ["Next.js", "Tailwind", "OpenAI API", "Vercel"],
+    githubUrl: "https://github.com/yourusername/ai-generator",
+    liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "6",
+    title: "SaaS Analytics Dashboard",
+    description: "A comprehensive dashboard for SaaS companies to track user engagement, MRR, and churn rates.",
+    techStack: ["Vue.js", "Nuxt", "Chart.js", "Supabase"],
+    githubUrl: "https://github.com/yourusername/saas-dashboard",
+    liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
   }
 ];
