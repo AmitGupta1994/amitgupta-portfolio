@@ -1,28 +1,50 @@
+import Image from 'next/image';
+
 type ProjectProps = {
   title: string;
   description: string;
   techStack: string[];
   githubUrl: string;
   liveUrl: string;
+  imageUrl: string;
 }
 
-export default function ProjectCard({ title, description, techStack, githubUrl, liveUrl }: ProjectProps) {
+export default function ProjectCard({ title, description, techStack, githubUrl, liveUrl, imageUrl }: ProjectProps) {
   return (
-    <div style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
-      <h3>{title}</h3>
-      <p>{description}</p>
-
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
-        {techStack.map((tech) => (
-          <span key={tech} style={{ background: '#eee', padding: '4px 8px', borderRadius: '4px', fontSize: '0.875rem', color: '#333' }}>
-            {tech}
-          </span>
-        ))}
+    <div className="group flex flex-col bg-white border border-neutral-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+      <div className="relative h-56 w-full overflow-hidden bg-neutral-100">
+        <Image 
+          src={imageUrl} 
+          alt={title} 
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+        />
       </div>
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-xl font-bold text-neutral-900 mb-2">{title}</h3>
+        <p className="text-neutral-600 mb-6 flex-grow">{description}</p>
+        
+        <div className="flex flex-wrap gap-2 mb-6">
+          {techStack.map((tech) => (
+            <span key={tech} className="px-3 py-1 bg-neutral-100 text-neutral-700 text-xs font-semibold rounded-full border border-neutral-200">
+              {tech}
+            </span>
+          ))}
+        </div>
 
-      <a href={liveUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'green', textDecoration: 'underline' }}>
-        View Project
-      </a>
+        <div className="flex items-center gap-4 mt-auto">
+          {githubUrl !== "#" && (
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors">
+              GitHub
+            </a>
+          )}
+          {liveUrl !== "#" && (
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+              Live Demo
+            </a>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
