@@ -15,24 +15,24 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200">
       <div className="mx-auto max-w-5xl px-6 py-20 md:py-32 flex flex-col gap-24">
-        
-        <Hero 
-          name={profileData.name} 
-          headline={profileData.headline} 
-          imageUrl={profileData.imageUrl} 
-          contact={profileData.contact} 
+
+        <Hero
+          name={profileData.name}
+          headline={profileData.headline}
+          imageUrl={profileData.imageUrl}
+          contact={profileData.contact}
         />
-        
-        <ProjectsSection projects={projects} />
 
         <About summary={profileData.summary} />
-        
+
+        <ProjectsSection projects={projects} />
+
         <SkillsSection skills={skillsData} />
-        
+
         <ExperienceSection experiences={experienceData} />
 
         <PublicationsSection publications={publicationsData} />
-        
+
       </div>
     </main>
   );
