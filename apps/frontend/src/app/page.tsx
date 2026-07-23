@@ -3,6 +3,7 @@ import ProjectsSection from '@/components/ProjectsSection';
 import About from '@/components/About';
 import SkillsSection from '@/components/SkillsSection';
 import ExperienceSection from '@/components/ExperienceSection';
+import ContactSection from '@/components/ContactSection';
 
 import { profileData } from '@/data/profile';
 import { projects } from '@/data/projects';
@@ -32,6 +33,8 @@ export default function Home() {
         <ExperienceSection experiences={experienceData} />
 
         <PublicationsSection publications={publicationsData} />
+
+        <ContactSection />
 
       </div>
     </main>
