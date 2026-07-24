@@ -49,9 +49,13 @@ export default async function MediumArticlesSection() {
           // Try to find an image in the content if thumbnail is missing
           let imageUrl = article.thumbnail;
           if (!imageUrl) {
-            const imgMatch = article.content.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch && imgMatch[1]) {
-              imageUrl = imgMatch[1];
+            // Find all image tags in the content
+            const imgMatches = Array.from(article.content.matchAll(/<img[^>]+src="([^">]+)"/g));
+            // Find the first one that is NOT a Medium tracking pixel
+            const validImg = imgMatches.find(match => !match[1].includes('stat?event') && !match[1].includes('medium.com/_/stat'));
+            
+            if (validImg && validImg[1]) {
+              imageUrl = validImg[1];
             } else {
               imageUrl = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"; // Fallback
             }
