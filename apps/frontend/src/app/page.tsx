@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero';
 import ProjectsSection from '@/components/ProjectsSection';
 import About from '@/components/About';
+import ExpertiseSection from '@/components/ExpertiseSection';
 import SkillsSection from '@/components/SkillsSection';
 import ExperienceSection from '@/components/ExperienceSection';
 import ContactSection from '@/components/ContactSection';
@@ -26,6 +27,8 @@ export default function Home() {
         />
 
         <About summary={profileData.summary} />
+
+        <ExpertiseSection />
 
         <ProjectsSection projects={projects} />
 
