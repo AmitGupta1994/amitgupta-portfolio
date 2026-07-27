@@ -4,7 +4,7 @@ export const expertiseData = [
     description: "Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring."
   },
   {
-    title: "Backend & Databases (3+ Years)",
+    title: "Backend & Databases (4+ Years)",
     description: "Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB."
   },
   {
