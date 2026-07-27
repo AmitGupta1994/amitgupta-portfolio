@@ -8,9 +8,10 @@ export default function About({ summary }: AboutProps) {
       <h3 className="text-sm uppercase tracking-widest text-neutral-400 font-semibold mb-2">
         About
       </h3>
-      <p className="text-lg md:text-xl text-neutral-700 leading-relaxed max-w-4xl">
-        {summary}
-      </p>
+      <p 
+        className="text-lg md:text-xl text-neutral-700 leading-relaxed max-w-4xl"
+        dangerouslySetInnerHTML={{ __html: summary }}
+      />
     </section>
   );
 }
