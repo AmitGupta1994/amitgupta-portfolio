@@ -14,5 +14,5 @@ export const profileData: Profile = {
     github: "https://github.com/amitgupta1994",
     googleScholar: "https://scholar.google.com/citations?user=NZwhe6kAAAAJ&hl=en&oi=sra",
   },
-  summary: "Senior Software Engineer and Lead Engineer with <strong>7+ years</strong> architecting scalable systems. <br><br> I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Consulting directly with clients, I build complex solutions like OTT and ride-sharing platforms. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. Skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth.",
+  summary: "As a Senior Software Engineer and Lead Engineer with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth.",
 };
