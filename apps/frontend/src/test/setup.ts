@@ -3,7 +3,9 @@ import React from 'react';
 import { vi } from 'vitest';
 
 vi.mock('next/image', () => ({
-  default: ({ src, alt, fill, ...rest }: any) => {
-    return React.createElement('img', { src, alt, ...rest });
+  default: (props: Record<string, unknown>) => {
+    const { fill, ...rest } = props;
+    void fill;
+    return React.createElement('img', rest);
   },
 }));

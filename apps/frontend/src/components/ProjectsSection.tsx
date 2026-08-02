@@ -20,7 +20,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
       <div className="mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight mb-4">Selected Projects</h2>
         <p className="text-lg text-neutral-600 max-w-2xl">
-          Here are some of the applications and services I've built recently, showcasing my experience across the full stack.
+          Here are some of the applications and services I&apos;ve built recently, showcasing my experience across the full stack.
         </p>
       </div>
       

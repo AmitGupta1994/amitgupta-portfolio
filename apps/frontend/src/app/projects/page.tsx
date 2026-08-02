@@ -5,7 +5,7 @@ export default function Project() {
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
       <h1>My Projects</h1>
-      <p>Here are some of the things I've built recently.</p>
+      <p>Here are some of the things I&apos;ve built recently.</p>
 
       <div style={{ marginTop: '2rem' }}>
         {projects.map((project) => (
@@ -16,6 +16,7 @@ export default function Project() {
             techStack={project.techStack}
             liveUrl={project.liveUrl}
             githubUrl={project.githubUrl}
+            imageUrl={project.imageUrl}
           />
         ))}
       </div>

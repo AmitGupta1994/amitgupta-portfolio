@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Profile } from '@/types/profile';
 
-type HeroProps = Profile;
+type HeroProps = Omit<Profile, 'summary'>;
 
 export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
