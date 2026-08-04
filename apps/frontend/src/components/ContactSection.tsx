@@ -8,18 +8,14 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
-
-    // The form data can be easily sent to Formspree, Web3Forms, or your own API
-    const formData = new FormData(e.currentTarget);
     
     try {
       // For now, we simulate a successful submission. 
       // To make this fully functional without a backend, 
       // you can replace this with a fetch call to Formspree or Web3Forms.
-      // Example: await fetch("https://formspree.io/f/YOUR_FORM_ID", { method: "POST", body: formData, headers: { Accept: "application/json" } });
       await new Promise(resolve => setTimeout(resolve, 1200));
       setStatus("success");
-    } catch (error) {
+    } catch {
       setStatus("error");
     }
   };
@@ -29,7 +25,7 @@ export default function ContactSection() {
       <div className="mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight mb-4">Get in Touch</h2>
         <p className="text-lg text-neutral-600 max-w-2xl">
-          Have a question, a project idea, or just want to say hi? Leave a message and I'll get back to you as soon as possible.
+          Have a question, a project idea, or just want to say hi? Leave a message and I&apos;ll get back to you as soon as possible.
         </p>
       </div>
 
@@ -42,7 +38,7 @@ export default function ContactSection() {
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-neutral-900 mb-2">Message Sent Successfully!</h3>
-            <p className="text-neutral-600 mb-8">Thanks for reaching out. I've received your message and will reply shortly.</p>
+            <p className="text-neutral-600 mb-8">Thanks for reaching out. I&apos;ve received your message and will reply shortly.</p>
             <button 
               onClick={() => setStatus("idle")}
               className="px-6 py-2.5 bg-neutral-100 text-neutral-900 font-semibold rounded-lg hover:bg-neutral-200 transition-colors"

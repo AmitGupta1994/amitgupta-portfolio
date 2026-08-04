@@ -1,0 +1,21 @@
+{
+  "name": "@amitgupta-portfolio/source",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "nx dev frontend",
+    "build": "nx run-many -t build",
+    "start": "nx start frontend",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "graph": "nx graph"
+  },
+  "devDependencies": {
+    "nx": "^20.0.0"
+  }
+}

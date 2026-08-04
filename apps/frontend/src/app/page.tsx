@@ -38,7 +38,6 @@ export default function Home() {
 
         <PublicationsSection publications={publicationsData} />
 
-        {/* @ts-expect-error Async Server Component */}
         <MediumArticlesSection />
 
         <ContactSection />
