@@ -16,6 +16,9 @@
     "graph": "nx graph"
   },
   "devDependencies": {
-    "nx": "^20.0.0"
+    "nx": "^22.6.5"
+  },
+  "dependencies": {
+    "next": "16.3.0"
   }
 }
