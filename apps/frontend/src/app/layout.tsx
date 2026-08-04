@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Amit Gupta",
-  description: "Lead Engineer | AI | Full Stack (Backend-Focused) | Mobile",
+  description: "Lead Engineer | AI | Full Stack  (Backend-Focused) | Mobile",
 };
 
 export default function RootLayout({
@@ -20,4 +20,3 @@ export default function RootLayout({
     </html>
   );
 }
-¬
