@@ -4,8 +4,12 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/.next"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/.next"
+      ]
     },
     "test": {
       "cache": true
@@ -18,12 +22,16 @@
     }
   },
   "namedInputs": {
-    "default": ["sharedGlobals", "{projectRoot}/**/*"],
+    "default": [
+      "sharedGlobals",
+      "{projectRoot}/**/*"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/__tests__/**/*",
       "!{projectRoot}/**/*.test.[jt]s?(x)"
     ],
     "sharedGlobals": []
-  }
+  },
+  "analytics": false
 }
