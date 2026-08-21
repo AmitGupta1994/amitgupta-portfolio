@@ -33,7 +33,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
           onClick={() => setSortAscending(!sortAscending)}
           aria-label={sortAscending ? 'Sort by lowest priority' : 'Sort by highest priority'}
           title={sortAscending ? 'Sort by lowest priority' : 'Sort by highest priority'}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 bg-white/80 text-neutral-700 transition hover:bg-neutral-100"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 shadow-sm transition-all duration-200 hover:bg-neutral-50 hover:text-neutral-800 hover:border-neutral-300 active:scale-95 cursor-pointer"
         >
           {sortAscending ? (
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
