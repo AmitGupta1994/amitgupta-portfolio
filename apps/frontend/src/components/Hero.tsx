@@ -80,11 +80,9 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
       });
     }, containerRef);
 
-    return () => ctx.revert(); // Cleanup for React strict mode
+    return () => ctx.revert();
   }, []);
 
-  // Configure social & contact links dynamically based on profile data.
-  // Unifies their custom layouts: email and social icons are circular buttons on screen and expand on print.
   const socialItems = [
     contact.email && {
       href: `mailto:${contact.email}`,
@@ -136,9 +134,9 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   }>;
 
   return (
-    <section ref={containerRef} className="flex flex-col items-start gap-6 max-w-3xl">
-      <div className="hero-element flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm md:h-28 md:w-28">
+    <section ref={containerRef} className="flex flex-col items-start gap-6 max-w-3xl pt-4">
+      <div className="hero-element flex flex-col gap-5 sm:flex-row sm:items-center">
+        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
           <Image
             src={imageUrl}
             alt={`${name} portrait`}
@@ -149,27 +147,27 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
             {name}
           </h1>
-          <h2 className="text-xl md:text-2xl font-medium text-neutral-500 leading-relaxed">
+          <h2 className="text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
             {headline}
           </h2>
         </div>
       </div>
 
-      <div className="hero-element flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 mt-2">
+      <div className="hero-element flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
         <button
           type="button"
           onClick={() => window.print()}
-          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 print:hidden"
+          className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden"
         >
           Save as PDF
         </button>
 
         {contact.location && (
-          <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white">
-            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             {contact.location}
           </span>
         )}
@@ -177,7 +175,7 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
         {contact.phone && (
           <a
             href={`tel:${contact.phone}`}
-            className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+            className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
           >
             <PhoneIcon />
             <span className="print:inline print:text-black print:underline print:underline-offset-2">
@@ -193,7 +191,7 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
             aria-label={item.ariaLabel}
             target={item.isExternal ? "_blank" : undefined}
             rel={item.isExternal ? "noreferrer" : undefined}
-            className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+            className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
           >
             <span className="print:hidden">
               {item.icon}

@@ -6,13 +6,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PublicationCard from './PublicationCard';
 import { Publication } from '@/types/publication';
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface PublicationsSectionProps {
-  publications: Publication[];
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-// Use the imported type directly
 interface PublicationsSectionProps {
   publications: Publication[];
 }
@@ -21,6 +18,8 @@ export default function PublicationsSection({ publications }: PublicationsSectio
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined" || !containerRef.current) return;
+
     const ctx = gsap.context(() => {
       gsap.from(".pub-card", {
         scrollTrigger: {
@@ -30,7 +29,7 @@ export default function PublicationsSection({ publications }: PublicationsSectio
         y: 40,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.2,
+        stagger: 0.15,
         ease: "power2.out",
       });
     }, containerRef);
@@ -39,9 +38,9 @@ export default function PublicationsSection({ publications }: PublicationsSectio
   }, []);
 
   return (
-    <section ref={containerRef} className="flex flex-col gap-6">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm uppercase tracking-widest text-neutral-400 font-semibold">
+    <section id="publications" ref={containerRef} className="flex flex-col gap-6 scroll-mt-24">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xs uppercase tracking-widest text-neutral-500 font-semibold dark:text-neutral-400">
           Research & Publications
         </h3>
       </div>
