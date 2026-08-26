@@ -4,23 +4,28 @@ import Link from "next/link";
 import { useState } from "react";
 import { navLinks } from "@/data/navigation";
 import ThemeToggle from "./ThemeToggle";
+import MagneticButton from "./MagneticButton";
+import ScrollProgress from "./ScrollProgress";
 
 export default function NavMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200/80 bg-neutral-50/80 backdrop-blur-md dark:border-neutral-800/80 dark:bg-neutral-950/80 print:hidden transition-colors duration-300">
+      <ScrollProgress />
       <nav
         className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3.5"
         aria-label="Primary"
       >
-        <Link
-          href="/"
-          className="text-base font-semibold tracking-tight text-neutral-900 transition-colors hover:text-neutral-600 dark:text-neutral-50 dark:hover:text-neutral-300"
-          onClick={() => setIsOpen(false)}
-        >
-          Amit Gupta
-        </Link>
+        <MagneticButton strength={0.2}>
+          <Link
+            href="/"
+            className="text-base font-semibold tracking-tight text-neutral-900 transition-colors hover:text-neutral-600 dark:text-neutral-50 dark:hover:text-neutral-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Amit Gupta
+          </Link>
+        </MagneticButton>
 
         <div className="hidden items-center gap-5 md:flex">
           {navLinks.map((link) => (
@@ -33,7 +38,9 @@ export default function NavMenu() {
             </Link>
           ))}
           <div className="ml-2 border-l border-neutral-200 pl-4 dark:border-neutral-800">
-            <ThemeToggle />
+            <MagneticButton strength={0.25}>
+              <ThemeToggle />
+            </MagneticButton>
           </div>
         </div>
 
