@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Profile } from '@/types/profile';
+import MagneticButton from './MagneticButton';
 
 // --- SVG Icon Components ---
 
@@ -68,23 +69,38 @@ type HeroProps = Omit<Profile, 'summary'>;
 
 export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-element", {
-        y: 30,
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+      tl.from(avatarRef.current, {
+        scale: 0.7,
         opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power3.out",
-      });
+        duration: 0.9,
+      })
+      .from(".hero-title-text", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+      }, "-=0.6")
+      .from(".hero-headline-text", {
+        y: 25,
+        opacity: 0,
+        duration: 0.7,
+      }, "-=0.5")
+      .from(".hero-action-item", {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.08,
+      }, "-=0.4");
     }, containerRef);
 
-    return () => ctx.revert(); // Cleanup for React strict mode
+    return () => ctx.revert();
   }, []);
 
-  // Configure social & contact links dynamically based on profile data.
-  // Unifies their custom layouts: email and social icons are circular buttons on screen and expand on print.
   const socialItems = [
     contact.email && {
       href: `mailto:${contact.email}`,
@@ -136,72 +152,82 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   }>;
 
   return (
-    <section ref={containerRef} className="flex flex-col items-start gap-6 max-w-3xl">
-      <div className="hero-element flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm md:h-28 md:w-28">
-          <Image
-            src={imageUrl}
-            alt={`${name} portrait`}
-            fill
-            priority
-            sizes="(max-width: 768px) 96px, 112px"
-            className="object-cover"
-          />
+    <section ref={containerRef} className="flex flex-col items-start gap-6 max-w-3xl pt-4 relative z-10">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+        <div ref={avatarRef} className="relative group">
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neutral-300 to-neutral-500 opacity-30 blur-sm group-hover:opacity-60 transition duration-500 dark:from-neutral-700 dark:to-neutral-500" />
+          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
+            <Image
+              src={imageUrl}
+              alt={`${name} portrait`}
+              fill
+              priority
+              sizes="(max-width: 768px) 96px, 112px"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-2">
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900">
+          <h1 className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
             {name}
           </h1>
-          <h2 className="text-xl md:text-2xl font-medium text-neutral-500 leading-relaxed">
+          <h2 className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
             {headline}
           </h2>
         </div>
       </div>
 
-      <div className="hero-element flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 mt-2">
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 print:hidden"
-        >
-          Save as PDF
-        </button>
+      <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
+        <MagneticButton className="hero-action-item">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
+          >
+            Save as PDF
+          </button>
+        </MagneticButton>
 
         {contact.location && (
-          <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white">
-            <span className="w-2 h-2 rounded-full bg-green-500"></span>
-            {contact.location}
-          </span>
+          <div className="hero-action-item">
+            <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              {contact.location}
+            </span>
+          </div>
         )}
 
         {contact.phone && (
-          <a
-            href={`tel:${contact.phone}`}
-            className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
-          >
-            <PhoneIcon />
-            <span className="print:inline print:text-black print:underline print:underline-offset-2">
-              {contact.phone}
-            </span>
-          </a>
+          <MagneticButton className="hero-action-item">
+            <a
+              href={`tel:${contact.phone}`}
+              className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+            >
+              <PhoneIcon />
+              <span className="print:inline print:text-black print:underline print:underline-offset-2">
+                {contact.phone}
+              </span>
+            </a>
+          </MagneticButton>
         )}
 
         {socialItems.map((item) => (
-          <a
-            key={item.ariaLabel}
-            href={item.href}
-            aria-label={item.ariaLabel}
-            target={item.isExternal ? "_blank" : undefined}
-            rel={item.isExternal ? "noreferrer" : undefined}
-            className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
-          >
-            <span className="print:hidden">
-              {item.icon}
-            </span>
-            <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
-              {item.printText}
-            </span>
-          </a>
+          <MagneticButton key={item.ariaLabel} className="hero-action-item">
+            <a
+              href={item.href}
+              aria-label={item.ariaLabel}
+              target={item.isExternal ? "_blank" : undefined}
+              rel={item.isExternal ? "noreferrer" : undefined}
+              className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+            >
+              <span className="print:hidden">
+                {item.icon}
+              </span>
+              <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
+                {item.printText}
+              </span>
+            </a>
+          </MagneticButton>
         ))}
       </div>
     </section>

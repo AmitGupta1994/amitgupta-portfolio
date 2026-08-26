@@ -6,6 +6,7 @@ import SkillsSection from '@/components/SkillsSection';
 import ExperienceSection from '@/components/ExperienceSection';
 import ContactSection from '@/components/ContactSection';
 import MediumArticlesSection from '@/components/MediumArticlesSection';
+import AmbientBackground from '@/components/AmbientBackground';
 
 import { profileData } from '@/data/profile';
 import { projects } from '@/data/projects';
@@ -16,8 +17,10 @@ import PublicationsSection from '@/components/PublicationsSection';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200">
-      <div className="mx-auto max-w-5xl px-6 py-20 md:py-32 flex flex-col gap-24">
+    <main className="relative min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200 dark:bg-neutral-950 dark:text-neutral-100 dark:selection:bg-neutral-800 transition-colors duration-300 overflow-x-hidden">
+      <AmbientBackground />
+      
+      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-20">
 
         <Hero
           name={profileData.name}
