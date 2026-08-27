@@ -7,6 +7,7 @@ import ExperienceSection from '@/components/ExperienceSection';
 import ContactSection from '@/components/ContactSection';
 import MediumArticlesSection from '@/components/MediumArticlesSection';
 import AmbientBackground from '@/components/AmbientBackground';
+import FullPageDeck from '@/components/FullPageDeck';
 
 import { profileData } from '@/data/profile';
 import { projects } from '@/data/projects';
@@ -20,32 +21,52 @@ export default function Home() {
     <main className="relative min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200 dark:bg-neutral-950 dark:text-neutral-100 dark:selection:bg-neutral-800 transition-colors duration-300 overflow-x-hidden">
       <AmbientBackground />
       
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-20">
+      <FullPageDeck>
+        <div className="relative z-10 mx-auto max-w-5xl px-6 py-10 md:py-16 flex flex-col gap-24 md:gap-32">
 
-        <Hero
-          name={profileData.name}
-          headline={profileData.headline}
-          imageUrl={profileData.imageUrl}
-          contact={profileData.contact}
-        />
+          <div id="hero" className="scroll-mt-28 min-h-[70dvh] flex items-center">
+            <Hero
+              name={profileData.name}
+              headline={profileData.headline}
+              imageUrl={profileData.imageUrl}
+              contact={profileData.contact}
+            />
+          </div>
 
-        <About summary={profileData.summary} />
+          <div id="about" className="scroll-mt-28 min-h-[50dvh] flex items-center">
+            <About summary={profileData.summary} />
+          </div>
 
-        <ExpertiseSection />
+          <div id="expertise" className="scroll-mt-28 min-h-[60dvh] flex items-center">
+            <ExpertiseSection />
+          </div>
 
-        <ProjectsSection projects={projects} />
+          <div id="projects" className="scroll-mt-28 min-h-[80dvh] flex items-center">
+            <ProjectsSection projects={projects} />
+          </div>
 
-        <SkillsSection skills={skillsData} />
+          <div id="skills" className="scroll-mt-28 min-h-[70dvh] flex items-center">
+            <SkillsSection skills={skillsData} />
+          </div>
 
-        <ExperienceSection experiences={experienceData} />
+          <div id="experience" className="scroll-mt-28 min-h-[70dvh] flex items-center">
+            <ExperienceSection experiences={experienceData} />
+          </div>
 
-        <PublicationsSection publications={publicationsData} />
+          <div id="publications" className="scroll-mt-28 min-h-[60dvh] flex items-center">
+            <PublicationsSection publications={publicationsData} />
+          </div>
 
-        <MediumArticlesSection />
+          <div id="articles" className="scroll-mt-28 min-h-[70dvh] flex items-center">
+            <MediumArticlesSection />
+          </div>
 
-        <ContactSection />
+          <div id="contact" className="scroll-mt-28 min-h-[70dvh] flex items-center pb-12">
+            <ContactSection />
+          </div>
 
-      </div>
+        </div>
+      </FullPageDeck>
     </main>
   );
 }
