@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Profile } from '@/types/profile';
 import MagneticButton from './MagneticButton';
+import HeroMarquee from './HeroMarquee';
 
 // --- SVG Icon Components ---
 
@@ -62,8 +63,6 @@ const ScholarIcon = () => (
     <path d="M5 14v4c0 2.2 3.1 4 7 4s7-1.8 7-4v-4" />
   </svg>
 );
-
-// --- Component ---
 
 type HeroProps = Omit<Profile, 'summary'>;
 
@@ -152,84 +151,89 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   }>;
 
   return (
-    <section ref={containerRef} className="flex flex-col items-start gap-6 max-w-3xl pt-4 relative z-10">
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-        <div ref={avatarRef} className="relative group">
-          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neutral-300 to-neutral-500 opacity-30 blur-sm group-hover:opacity-60 transition duration-500 dark:from-neutral-700 dark:to-neutral-500" />
-          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
-            <Image
-              src={imageUrl}
-              alt={`${name} portrait`}
-              fill
-              priority
-              sizes="(max-width: 768px) 96px, 112px"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+    <section ref={containerRef} className="w-full flex items-center justify-between gap-8 pt-4 relative z-10">
+      <div className="flex flex-col items-start gap-6 max-w-2xl">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div ref={avatarRef} className="relative group">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neutral-300 to-neutral-500 opacity-30 blur-sm group-hover:opacity-60 transition duration-500 dark:from-neutral-700 dark:to-neutral-500" />
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
+              <Image
+                src={imageUrl}
+                alt={`${name} portrait`}
+                fill
+                priority
+                sizes="(max-width: 768px) 96px, 112px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h1 className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
+              {name}
+            </h1>
+            <h2 className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {headline}
+            </h2>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <h1 className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
-            {name}
-          </h1>
-          <h2 className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            {headline}
-          </h2>
-        </div>
-      </div>
 
-      <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
-        <MagneticButton className="hero-action-item">
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
-          >
-            Save as PDF
-          </button>
-        </MagneticButton>
-
-        {contact.location && (
-          <div className="hero-action-item">
-            <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              {contact.location}
-            </span>
-          </div>
-        )}
-
-        {contact.phone && (
+        <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
           <MagneticButton className="hero-action-item">
-            <a
-              href={`tel:${contact.phone}`}
-              className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
             >
-              <PhoneIcon />
-              <span className="print:inline print:text-black print:underline print:underline-offset-2">
-                {contact.phone}
-              </span>
-            </a>
+              Save as PDF
+            </button>
           </MagneticButton>
-        )}
 
-        {socialItems.map((item) => (
-          <MagneticButton key={item.ariaLabel} className="hero-action-item">
-            <a
-              href={item.href}
-              aria-label={item.ariaLabel}
-              target={item.isExternal ? "_blank" : undefined}
-              rel={item.isExternal ? "noreferrer" : undefined}
-              className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
-            >
-              <span className="print:hidden">
-                {item.icon}
+          {contact.location && (
+            <div className="hero-action-item">
+              <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                {contact.location}
               </span>
-              <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
-                {item.printText}
-              </span>
-            </a>
-          </MagneticButton>
-        ))}
+            </div>
+          )}
+
+          {contact.phone && (
+            <MagneticButton className="hero-action-item">
+              <a
+                href={`tel:${contact.phone}`}
+                className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+              >
+                <PhoneIcon />
+                <span className="print:inline print:text-black print:underline print:underline-offset-2">
+                  {contact.phone}
+                </span>
+              </a>
+            </MagneticButton>
+          )}
+
+          {socialItems.map((item) => (
+            <MagneticButton key={item.ariaLabel} className="hero-action-item">
+              <a
+                href={item.href}
+                aria-label={item.ariaLabel}
+                target={item.isExternal ? "_blank" : undefined}
+                rel={item.isExternal ? "noreferrer" : undefined}
+                className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+              >
+                <span className="print:hidden">
+                  {item.icon}
+                </span>
+                <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
+                  {item.printText}
+                </span>
+              </a>
+            </MagneticButton>
+          ))}
+        </div>
       </div>
+
+      {/* Right side infinite marquee */}
+      <HeroMarquee />
     </section>
   );
 }

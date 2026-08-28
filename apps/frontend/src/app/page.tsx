@@ -1,5 +1,5 @@
 import Hero from '@/components/Hero';
-import ProjectsSection from '@/components/ProjectsSection';
+import HorizontalProjectsSection from '@/components/HorizontalProjectsSection';
 import About from '@/components/About';
 import ExpertiseSection from '@/components/ExpertiseSection';
 import SkillsSection from '@/components/SkillsSection';
@@ -8,6 +8,7 @@ import ContactSection from '@/components/ContactSection';
 import MediumArticlesSection from '@/components/MediumArticlesSection';
 import AmbientBackground from '@/components/AmbientBackground';
 import FullPageDeck from '@/components/FullPageDeck';
+import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
 
 import { profileData } from '@/data/profile';
 import { projects } from '@/data/projects';
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200 dark:bg-neutral-950 dark:text-neutral-100 dark:selection:bg-neutral-800 transition-colors duration-300 overflow-x-hidden">
       <AmbientBackground />
+      <DigitalMantrasSideNav />
       
       <FullPageDeck>
         <div className="relative z-10 mx-auto max-w-5xl px-6 py-10 md:py-16 flex flex-col gap-24 md:gap-32">
@@ -41,8 +43,8 @@ export default function Home() {
             <ExpertiseSection />
           </div>
 
-          <div id="projects" className="scroll-mt-28 min-h-[80dvh] flex items-center">
-            <ProjectsSection projects={projects} />
+          <div id="projects" className="scroll-mt-28 min-h-[80dvh] flex items-center w-full">
+            <HorizontalProjectsSection projects={projects} />
           </div>
 
           <div id="skills" className="scroll-mt-28 min-h-[70dvh] flex items-center">
