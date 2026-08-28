@@ -7,7 +7,6 @@ import ExperienceSection from '@/components/ExperienceSection';
 import ContactSection from '@/components/ContactSection';
 import MediumArticlesSection from '@/components/MediumArticlesSection';
 import AmbientBackground from '@/components/AmbientBackground';
-import FullPageDeck from '@/components/FullPageDeck';
 import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
 
 import { profileData } from '@/data/profile';
@@ -23,52 +22,50 @@ export default function Home() {
       <AmbientBackground />
       <DigitalMantrasSideNav />
       
-      <FullPageDeck>
-        <div className="relative z-10 mx-auto max-w-5xl px-6 py-10 md:py-16 flex flex-col gap-24 md:gap-32">
+      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
 
-          <div id="hero" className="scroll-mt-28 min-h-[70dvh] flex items-center">
-            <Hero
-              name={profileData.name}
-              headline={profileData.headline}
-              imageUrl={profileData.imageUrl}
-              contact={profileData.contact}
-            />
-          </div>
-
-          <div id="about" className="scroll-mt-28 min-h-[50dvh] flex items-center">
-            <About summary={profileData.summary} />
-          </div>
-
-          <div id="expertise" className="scroll-mt-28 min-h-[60dvh] flex items-center">
-            <ExpertiseSection />
-          </div>
-
-          <div id="projects" className="scroll-mt-28 min-h-[80dvh] flex items-center w-full">
-            <HorizontalProjectsSection projects={projects} />
-          </div>
-
-          <div id="skills" className="scroll-mt-28 min-h-[70dvh] flex items-center">
-            <SkillsSection skills={skillsData} />
-          </div>
-
-          <div id="experience" className="scroll-mt-28 min-h-[70dvh] flex items-center">
-            <ExperienceSection experiences={experienceData} />
-          </div>
-
-          <div id="publications" className="scroll-mt-28 min-h-[60dvh] flex items-center">
-            <PublicationsSection publications={publicationsData} />
-          </div>
-
-          <div id="articles" className="scroll-mt-28 min-h-[70dvh] flex items-center">
-            <MediumArticlesSection />
-          </div>
-
-          <div id="contact" className="scroll-mt-28 min-h-[70dvh] flex items-center pb-12">
-            <ContactSection />
-          </div>
-
+        <div id="hero" className="scroll-mt-28">
+          <Hero
+            name={profileData.name}
+            headline={profileData.headline}
+            imageUrl={profileData.imageUrl}
+            contact={profileData.contact}
+          />
         </div>
-      </FullPageDeck>
+
+        <div id="about" className="scroll-mt-28">
+          <About summary={profileData.summary} />
+        </div>
+
+        <div id="expertise" className="scroll-mt-28">
+          <ExpertiseSection />
+        </div>
+
+        <div id="projects" className="scroll-mt-28 w-full">
+          <HorizontalProjectsSection projects={projects} />
+        </div>
+
+        <div id="skills" className="scroll-mt-28">
+          <SkillsSection skills={skillsData} />
+        </div>
+
+        <div id="experience" className="scroll-mt-28">
+          <ExperienceSection experiences={experienceData} />
+        </div>
+
+        <div id="publications" className="scroll-mt-28">
+          <PublicationsSection publications={publicationsData} />
+        </div>
+
+        <div id="articles" className="scroll-mt-28">
+          <MediumArticlesSection />
+        </div>
+
+        <div id="contact" className="scroll-mt-28 pb-12">
+          <ContactSection />
+        </div>
+
+      </div>
     </main>
   );
 }
