@@ -29,6 +29,23 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Hero entrance: keep animated pieces hidden until GSAP has rendered their
+   start state, so server-rendered content never flashes. `.js` is added by the
+   inline script in layout.tsx; the delayed keyframe reveals everything anyway
+   if hydration never happens. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-hero-reveal] {
+    visibility: hidden;
+    animation: hero-reveal-fallback 0s 3s forwards;
+  }
+}
+
+@keyframes hero-reveal-fallback {
+  to {
+    visibility: visible;
+  }
+}
+
 @media print {
   body {
     background: #ffffff !important;

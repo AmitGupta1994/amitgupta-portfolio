@@ -3,9 +3,15 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import { Profile } from '@/types/profile';
 import MagneticButton from './MagneticButton';
 import HeroMarquee from './HeroMarquee';
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+}
 
 // --- SVG Icon Components ---
 
@@ -68,33 +74,70 @@ type HeroProps = Omit<Profile, 'summary'>;
 
 export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+    const container = containerRef.current;
+    if (typeof window === "undefined" || !container) return;
 
-      tl.from(avatarRef.current, {
-        scale: 0.7,
-        opacity: 0,
-        duration: 0.9,
-      })
-      .from(".hero-title-text", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-      }, "-=0.6")
-      .from(".hero-headline-text", {
-        y: 25,
-        opacity: 0,
-        duration: 0.7,
-      }, "-=0.5")
-      .from(".hero-action-item", {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.08,
-      }, "-=0.4");
+    // Reduced motion: globals.css doesn't pre-hide anything, so the static hero stays.
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const titleSplit = SplitText.create(".hero-title-text", {
+        type: "words,chars",
+        mask: "words",
+      });
+      const headlineSplit = SplitText.create(".hero-headline-text", {
+        type: "words",
+        mask: "words",
+      });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "expo.out" },
+        // Masks clip descenders at rest, so hand back the original text nodes.
+        onComplete: () => {
+          titleSplit.revert();
+          headlineSplit.revert();
+        },
+      });
+
+      tl.from(avatarRef.current, { opacity: 0, duration: 0.6, ease: "power2.out" }, 0)
+        .fromTo(
+          ".hero-avatar-frame",
+          { clipPath: "circle(0% at 50% 50%)", scale: 1.25 },
+          { clipPath: "circle(71% at 50% 50%)", scale: 1, duration: 1.2 },
+          0
+        )
+        .from(titleSplit.chars, { yPercent: 110, duration: 1, stagger: 0.035 }, 0.25)
+        .from(
+          headlineSplit.words,
+          { yPercent: 110, opacity: 0, duration: 0.8, stagger: 0.025, ease: "power3.out" },
+          "-=0.7"
+        )
+        .from(
+          ".hero-action-item",
+          { y: 16, scale: 0.9, opacity: 0, duration: 0.6, stagger: 0.05, ease: "back.out(1.7)" },
+          "-=0.55"
+        )
+        .from(".hero-marquee", { x: 40, opacity: 0, duration: 1.4, ease: "power3.out" }, 0.4);
+
+      // Every tween above has already rendered its start state; lift the CSS pre-hide.
+      gsap.set("[data-hero-reveal]", { visibility: "visible" });
+
+      // Scroll-out depth: copy drifts up and dims while the reels sink the other way.
+      const scrollOut = {
+        trigger: container,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.6,
+      };
+      gsap.to(contentRef.current, { y: -48, opacity: 0.35, ease: "none", scrollTrigger: scrollOut });
+      gsap.to(".hero-marquee", { y: 80, ease: "none", scrollTrigger: { ...scrollOut } });
     }, containerRef);
 
     return () => ctx.revert();
@@ -150,13 +193,15 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
     isExternal?: boolean;
   }>;
 
+  // Entrance tweens run on these wrappers, never on MagneticButton itself, so the
+  // entrance `y` and the magnetic `y` never fight over the same element.
   return (
     <section ref={containerRef} className="w-full flex items-center justify-between gap-8 pt-4 relative z-10">
-      <div className="flex flex-col items-start gap-6 max-w-2xl">
+      <div ref={contentRef} className="flex flex-col items-start gap-6 max-w-2xl">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-          <div ref={avatarRef} className="relative group">
+          <div ref={avatarRef} data-hero-reveal className="relative group">
             <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neutral-300 to-neutral-500 opacity-30 blur-sm group-hover:opacity-60 transition duration-500 dark:from-neutral-700 dark:to-neutral-500" />
-            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
+            <div className="hero-avatar-frame relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
               <Image
                 src={imageUrl}
                 alt={`${name} portrait`}
@@ -168,28 +213,30 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <h1 className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
+            <h1 data-hero-reveal className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
               {name}
             </h1>
-            <h2 className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <h2 data-hero-reveal className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
               {headline}
             </h2>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
-          <MagneticButton className="hero-action-item">
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
-            >
-              Save as PDF
-            </button>
-          </MagneticButton>
+          <div data-hero-reveal className="hero-action-item flex">
+            <MagneticButton>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
+              >
+                Save as PDF
+              </button>
+            </MagneticButton>
+          </div>
 
           {contact.location && (
-            <div className="hero-action-item">
+            <div data-hero-reveal className="hero-action-item">
               <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 {contact.location}
@@ -198,36 +245,40 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
           )}
 
           {contact.phone && (
-            <MagneticButton className="hero-action-item">
-              <a
-                href={`tel:${contact.phone}`}
-                className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
-              >
-                <PhoneIcon />
-                <span className="print:inline print:text-black print:underline print:underline-offset-2">
-                  {contact.phone}
-                </span>
-              </a>
-            </MagneticButton>
+            <div data-hero-reveal className="hero-action-item flex">
+              <MagneticButton>
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+                >
+                  <PhoneIcon />
+                  <span className="print:inline print:text-black print:underline print:underline-offset-2">
+                    {contact.phone}
+                  </span>
+                </a>
+              </MagneticButton>
+            </div>
           )}
 
           {socialItems.map((item) => (
-            <MagneticButton key={item.ariaLabel} className="hero-action-item">
-              <a
-                href={item.href}
-                aria-label={item.ariaLabel}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noreferrer" : undefined}
-                className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
-              >
-                <span className="print:hidden">
-                  {item.icon}
-                </span>
-                <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
-                  {item.printText}
-                </span>
-              </a>
-            </MagneticButton>
+            <div key={item.ariaLabel} data-hero-reveal className="hero-action-item flex">
+              <MagneticButton>
+                <a
+                  href={item.href}
+                  aria-label={item.ariaLabel}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noreferrer" : undefined}
+                  className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+                >
+                  <span className="print:hidden">
+                    {item.icon}
+                  </span>
+                  <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
+                    {item.printText}
+                  </span>
+                </a>
+              </MagneticButton>
+            </div>
           ))}
         </div>
       </div>
