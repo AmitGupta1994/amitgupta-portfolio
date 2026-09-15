@@ -16,22 +16,26 @@ import { experienceData } from '@/data/experience';
 import { publicationsData } from '@/data/publications';
 import PublicationsSection from '@/components/PublicationsSection';
 
+// `overflow-x-clip` (not `hidden`) keeps <main> from becoming a scroll container,
+// which would break sticky and pinned sections.
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200 dark:bg-neutral-950 dark:text-neutral-100 dark:selection:bg-neutral-800 transition-colors duration-300 overflow-x-hidden">
+    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">
       <AmbientBackground />
       <DigitalMantrasSideNav />
-      
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
 
-        <div id="hero" className="scroll-mt-28">
-          <Hero
-            name={profileData.name}
-            headline={profileData.headline}
-            imageUrl={profileData.imageUrl}
-            contact={profileData.contact}
-          />
-        </div>
+      {/* Full-bleed sections */}
+      <div id="hero">
+        <Hero
+          name={profileData.name}
+          headline={profileData.headline}
+          contact={profileData.contact}
+          hero={profileData.hero}
+        />
+      </div>
+
+      {/* Sections still in the contained layout, pending their redesign */}
+      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
 
         <div id="about" className="scroll-mt-28">
           <About summary={profileData.summary} />
