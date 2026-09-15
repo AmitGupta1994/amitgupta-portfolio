@@ -1,3 +1,10 @@
+export interface HeroCopy {
+  title: string;
+  /** Rendered in order; `highlight` segments get the accent colour. */
+  description: Array<{ text: string; highlight?: boolean }>;
+  cta: { label: string; href: string };
+}
+
 export interface Profile {
   name: string;
   headline: string;
@@ -12,5 +19,6 @@ export interface Profile {
     github?: string;
     googleScholar?: string;
   };
-  summary: string;      
+  hero: HeroCopy;
+  summary: string;
 }
