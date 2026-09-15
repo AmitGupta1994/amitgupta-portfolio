@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,14 +17,10 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const initials = profileData.name
-  .split(" ")
-  .map((part) => part[0])
-  .join("");
 const { cta } = profileData.hero;
 const { email } = profileData.contact;
 
-// Fixed page chrome rather than a header bar: monogram top-left, CTA + theme
+// Fixed page chrome rather than a header bar: portrait top-left, CTA + theme
 // toggle top-right, email bottom-right. Section links live in the side nav on
 // desktop and in the full-screen menu below lg.
 export default function NavMenu() {
@@ -58,11 +55,21 @@ export default function NavMenu() {
           href="/#hero"
           aria-label={`${profileData.name}, back to top`}
           onClick={() => setIsOpen(false)}
-          className="pointer-events-auto grid h-12 w-12 place-items-center rounded-full border border-foreground/15 bg-background/60 text-base font-black tracking-tight text-foreground backdrop-blur-md transition-colors hover:border-brand hover:text-brand"
+          className="group pointer-events-auto relative block h-12 w-12 rounded-full md:h-14 md:w-14"
         >
-          <span>
-            {initials}
-            <span className="text-brand">.</span>
+          <span
+            aria-hidden="true"
+            className="absolute -inset-1 rounded-full bg-gradient-to-r from-brand-deep to-brand opacity-40 blur-sm transition duration-500 group-hover:opacity-80"
+          />
+          <span className="relative block h-full w-full overflow-hidden rounded-full border-2 border-brand/60 bg-background shadow-sm transition-colors group-hover:border-brand">
+            <Image
+              src={profileData.imageUrl}
+              alt=""
+              fill
+              priority
+              sizes="56px"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </span>
         </Link>
 

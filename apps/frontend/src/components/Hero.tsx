@@ -210,7 +210,7 @@ export default function Hero({ name, headline, contact, hero }: HeroProps) {
     >
       <div
         ref={contentRef}
-        className="relative z-10 flex w-full flex-col justify-center gap-7 px-6 pb-20 pt-28 sm:px-10 lg:w-[68%] lg:pl-[6vw] lg:pr-12 print:px-0 print:pt-0"
+        className="relative z-10 flex w-full flex-col justify-center gap-7 pb-20 pl-9 pr-6 pt-28 sm:pl-[52px] sm:pr-10 lg:w-[68%] lg:pl-[calc(6vw+12px)] lg:pr-12 print:px-0 print:pt-0"
       >
         <h1 data-hero-reveal className="flex flex-col gap-4">
           <span className="hero-eyebrow block text-sm font-bold uppercase tracking-[0.4em] text-brand sm:text-base">
