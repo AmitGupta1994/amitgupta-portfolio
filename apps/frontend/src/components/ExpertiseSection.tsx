@@ -1,7 +1,11 @@
-import { expertiseData } from "@/data/expertise";
+import { Expertise } from "@/types/expertise";
 import ScrollReveal from "./ScrollReveal";
 
-export default function ExpertiseSection() {
+interface ExpertiseSectionProps {
+  expertise: Expertise[];
+}
+
+export default function ExpertiseSection({ expertise }: ExpertiseSectionProps) {
   return (
     <ScrollReveal id="expertise" direction="up" distance={30} stagger={0.12} className="scroll-mt-24">
       <section className="flex flex-col gap-6">
@@ -9,7 +13,7 @@ export default function ExpertiseSection() {
           Domain Expertise
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {expertiseData.map((item, index) => (
+          {expertise.map((item, index) => (
             <div
               key={index}
               className="flex flex-col gap-2 rounded-xl border border-neutral-200/80 bg-white p-5 transition-all duration-300 hover:border-neutral-300 hover:shadow-sm dark:border-neutral-800 dark:bg-neutral-900/60 dark:hover:border-neutral-700"

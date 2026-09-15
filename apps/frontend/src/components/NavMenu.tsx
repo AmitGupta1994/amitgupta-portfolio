@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { navLinks } from "@/data/navigation";
+import { NavLink } from "@/types/navigation";
 import ThemeToggle from "./ThemeToggle";
 import MagneticButton from "./MagneticButton";
 import ScrollProgress from "./ScrollProgress";
 
-export default function NavMenu() {
+interface NavMenuProps {
+  links: NavLink[];
+}
+
+export default function NavMenu({ links }: NavMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,7 +32,7 @@ export default function NavMenu() {
         </MagneticButton>
 
         <div className="hidden items-center gap-5 md:flex">
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
@@ -76,7 +80,7 @@ export default function NavMenu() {
       {isOpen && (
         <div className="border-t border-neutral-200/80 bg-neutral-50/95 px-6 py-4 shadow-sm dark:border-neutral-800/80 dark:bg-neutral-950/95 md:hidden">
           <div className="mx-auto flex max-w-5xl flex-col gap-2">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}

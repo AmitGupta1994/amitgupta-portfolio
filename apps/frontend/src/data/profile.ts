@@ -1,18 +1,38 @@
+import { cmsFetch, orUndefined, resolveImageUrl, type CmsMedia } from "@/lib/cms";
 import { Profile } from "@/types/profile";
 
-export const profileData: Profile = {
-  name: "Amit Gupta",
-  headline: "Lead Engineer | Full Stack Engineer (Backend-Focused)",
-  imageUrl: "https://github.com/amitgupta1994.png",
-  contact: {
-    email: "jamitgupta1994@gmail.com",
-    phone: "(+977) 9843944663",
-    whatsapp: "https://wa.me/9779843944663",
-    location: "Kathmandu (Nepal)",
-    freelancer: "https://www.freelancer.com/u/iamamitgupta1994",
-    linkedin: "https://www.linkedin.com/in/iamamitgupta1994/",
-    github: "https://github.com/amitgupta1994",
-    googleScholar: "https://scholar.google.com/citations?user=NZwhe6kAAAAJ&hl=en&oi=sra",
-  },
-  summary: "As a Tech Lead and Full Stack Engineer (Backend-Focused) with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth. \n \n I am a pragmatic builder and debugger who approaches software development from a strict systems engineering perspective. By combining strong coding fundamentals with a highly iterative mindset, I build quickly, diagnose issues efficiently, and continuously refine architectures to scale seamlessly from initial single region deployments to high concurrency, multi sharded environments. Ultimately, my focus goes beyond just writing code to designing resilient systems and cultivating a culture of relentless improvement. ",
-};
+type Nullable<T> = { [K in keyof T]: T[K] | null };
+
+/** `profile` global as returned by the CMS REST API. */
+export interface CmsProfile {
+  name: string;
+  headline: string;
+  summary: string;
+  image?: CmsMedia;
+  imageUrl?: string | null;
+  contact: Nullable<Profile["contact"]>;
+}
+
+export function mapProfile(doc: CmsProfile): Profile {
+  const { contact } = doc;
+  return {
+    name: doc.name,
+    headline: doc.headline,
+    summary: doc.summary,
+    imageUrl: resolveImageUrl(doc.image, doc.imageUrl),
+    contact: {
+      email: contact.email ?? "",
+      phone: contact.phone ?? "",
+      whatsapp: orUndefined(contact.whatsapp),
+      location: orUndefined(contact.location),
+      freelancer: orUndefined(contact.freelancer),
+      linkedin: orUndefined(contact.linkedin),
+      github: orUndefined(contact.github),
+      googleScholar: orUndefined(contact.googleScholar),
+    },
+  };
+}
+
+export async function getProfile(): Promise<Profile> {
+  return mapProfile(await cmsFetch<CmsProfile>("/globals/profile?depth=1"));
+}

@@ -54,9 +54,10 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 
 ## Content and data
 
-- Update content through the existing data files in src/data rather than hardcoding copy directly in components when possible.
-- Keep project information, profile details, and navigation values centralized and easy to edit.
-- Use the data from my CV at /public/cv-amitgupta.pdf
+- All content is managed in Payload CMS (apps/admin) and fetched through the getters in src/data; never hardcode copy in components.
+- Only server components call src/data getters; pass the results down as props.
+- When a CMS field changes, update the matching mapper in src/data and its type in src/types.
+- The facts behind the content come from my CV at /public/cv-amitgupta.pdf
 
 ## Quality bar
 

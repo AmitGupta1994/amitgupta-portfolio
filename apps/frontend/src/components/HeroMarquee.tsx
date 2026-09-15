@@ -4,20 +4,27 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects } from "@/data/projects";
+import { Project } from "@/types/project";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function HeroMarquee() {
+interface HeroMarqueeProps {
+  projects: Project[];
+}
+
+export default function HeroMarquee({ projects }: HeroMarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const col1Ref = useRef<HTMLDivElement>(null);
   const col2Ref = useRef<HTMLDivElement>(null);
 
+  // CMS projects may have no image; next/image can't render an empty src.
+  const withImages = projects.filter((project) => project.imageUrl);
+
   // Duplicate items for continuous infinite marquee loop
-  const column1Images = [...projects.slice(0, 3), ...projects.slice(0, 3)];
-  const column2Images = [...projects.slice(3, 6), ...projects.slice(3, 6)];
+  const column1Images = [...withImages.slice(0, 3), ...withImages.slice(0, 3)];
+  const column2Images = [...withImages.slice(3, 6), ...withImages.slice(3, 6)];
 
   useEffect(() => {
     const root = rootRef.current;

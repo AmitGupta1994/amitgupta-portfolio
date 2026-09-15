@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { Profile } from '@/types/profile';
+import { Project } from '@/types/project';
 import MagneticButton from './MagneticButton';
 import HeroMarquee from './HeroMarquee';
 
@@ -70,9 +71,11 @@ const ScholarIcon = () => (
   </svg>
 );
 
-type HeroProps = Omit<Profile, 'summary'>;
+type HeroProps = Omit<Profile, 'summary'> & {
+  projects: Project[];
+};
 
-export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
+export default function Hero({ name, headline, imageUrl, contact, projects }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
@@ -284,7 +287,7 @@ export default function Hero({ name, headline, imageUrl, contact }: HeroProps) {
       </div>
 
       {/* Right side infinite marquee */}
-      <HeroMarquee />
+      <HeroMarquee projects={projects} />
     </section>
   );
 }

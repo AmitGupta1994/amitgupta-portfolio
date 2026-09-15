@@ -1,39 +1,48 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { profileData } from "@/data/profile";
+import { getProfile } from "@/data/profile";
+import { getNavLinks } from "@/data/navigation";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavMenu from "@/components/NavMenu";
 
-export const metadata: Metadata = {
-  title: `${profileData.name} | Portfolio`,
-  description: `${profileData.name} - ${profileData.headline}`,
-  openGraph: {
-    title: `${profileData.name} | Portfolio`,
-    description: `${profileData.name} - ${profileData.headline}`,
-    type: "website",
-    images: [
-      {
-        url: profileData.imageUrl,
-        width: 460,
-        height: 460,
-        alt: profileData.name,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary",
-    title: `${profileData.name} | Portfolio`,
-    description: `${profileData.name} - ${profileData.headline}`,
-    images: [profileData.imageUrl],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+  const title = `${profile.name} | Portfolio`;
+  const description = `${profile.name} - ${profile.headline}`;
 
-export default function RootLayout({
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [
+        {
+          url: profile.imageUrl,
+          width: 460,
+          height: 460,
+          alt: profile.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+      images: [profile.imageUrl],
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const navLinks = await getNavLinks();
+
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
@@ -58,7 +67,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-neutral-50 text-neutral-900 transition-colors duration-300 dark:bg-neutral-950 dark:text-neutral-100">
         <ThemeProvider>
-          <NavMenu />
+          <NavMenu links={navLinks} />
           {children}
         </ThemeProvider>
       </body>

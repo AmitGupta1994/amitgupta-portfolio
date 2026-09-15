@@ -1,7 +1,9 @@
 import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/data/projects";
+import { getProjects } from "@/data/projects";
 
-export default function Project() {
+export default async function Project() {
+  const projects = await getProjects();
+
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
       <h1>My Projects</h1>

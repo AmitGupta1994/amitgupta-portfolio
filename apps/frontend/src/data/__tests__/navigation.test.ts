@@ -1,22 +1,32 @@
-import { describe, it, expect } from 'vitest';
-import { navLinks } from '../navigation';
+import { afterEach, describe, it, expect, vi } from 'vitest';
+import { getNavLinks } from '../navigation';
 
-describe('navLinks', () => {
-  it('defines the expected navigation links', () => {
-    expect(Array.isArray(navLinks)).toBe(true);
-    expect(navLinks.length).toBeGreaterThan(0);
-    
-    const names = navLinks.map(link => link.name);
-    expect(names).toContain('Home');
-    expect(names).toContain('Projects');
-    expect(names).toContain('Skills');
-    expect(names).toContain('Contact');
+function stubCmsResponse(body: unknown) {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => body }));
+}
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+describe('getNavLinks', () => {
+  it('returns the navigation links from the CMS', async () => {
+    stubCmsResponse({
+      links: [
+        { id: 'a', name: 'Home', href: '/#hero' },
+        { id: 'b', name: 'Contact', href: '/#contact' },
+      ],
+    });
+
+    await expect(getNavLinks()).resolves.toEqual([
+      { name: 'Home', href: '/#hero' },
+      { name: 'Contact', href: '/#contact' },
+    ]);
   });
 
-  it('has non-empty hrefs for every navigation item', () => {
-    navLinks.forEach(link => {
-      expect(link.name.length).toBeGreaterThan(0);
-      expect(typeof link.href).toBe('string');
-    });
+  it('returns an empty list when no links are configured', async () => {
+    stubCmsResponse({ links: null });
+
+    await expect(getNavLinks()).resolves.toEqual([]);
   });
 });
