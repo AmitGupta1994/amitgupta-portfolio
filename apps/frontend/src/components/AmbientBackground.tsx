@@ -8,6 +8,11 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const glowClass =
+  "absolute h-[50vw] w-[90vw] rounded-full bg-[radial-gradient(circle_at_100%_0,var(--glow-from),var(--glow-to))] blur-[10vw] will-change-transform";
+
+// Two fixed, heavily blurred radial glows (top-right, bottom-left) that drift
+// slowly against the scroll.
 export default function AmbientBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
@@ -22,35 +27,26 @@ export default function AmbientBackground() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      if (orb1Ref.current) {
-        gsap.to(orb1Ref.current, {
-          y: 350,
-          x: -120,
-          scale: 1.3,
-          ease: "none",
-          scrollTrigger: {
-            trigger: document.documentElement,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.2,
-          },
-        });
-      }
+      const scrub = {
+        trigger: document.documentElement,
+        start: "top top",
+        end: "bottom bottom",
+      };
 
-      if (orb2Ref.current) {
-        gsap.to(orb2Ref.current, {
-          y: -400,
-          x: 100,
-          scale: 1.2,
-          ease: "none",
-          scrollTrigger: {
-            trigger: document.documentElement,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.5,
-          },
-        });
-      }
+      gsap.to(orb1Ref.current, {
+        y: 160,
+        x: -80,
+        scale: 1.15,
+        ease: "none",
+        scrollTrigger: { ...scrub, scrub: 1.2 },
+      });
+      gsap.to(orb2Ref.current, {
+        y: -180,
+        x: 100,
+        scale: 1.1,
+        ease: "none",
+        scrollTrigger: { ...scrub, scrub: 1.5 },
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -59,16 +55,11 @@ export default function AmbientBackground() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40 dark:opacity-25 transition-opacity duration-500"
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden print:hidden"
     >
-      <div
-        ref={orb1Ref}
-        className="absolute -top-32 -left-32 w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-neutral-300 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 blur-3xl"
-      />
-      <div
-        ref={orb2Ref}
-        className="absolute top-1/2 -right-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-900 dark:to-neutral-800 blur-3xl"
-      />
+      <div ref={orb1Ref} className={`${glowClass} -right-[19vw] -top-[16vw]`} />
+      <div ref={orb2Ref} className={`${glowClass} -bottom-[12vw] -left-[47vw]`} />
     </div>
   );
 }

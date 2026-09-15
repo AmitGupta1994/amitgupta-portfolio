@@ -5,19 +5,49 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/data/projects";
+import { Project } from "@/types/project";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+// Each column shows every project so one set is taller than the viewport; the list
+// is doubled so a -50% loop is seamless.
+const column1Images = [...projects, ...projects];
+const column2Images = [...[...projects].reverse(), ...[...projects].reverse()];
+
+function ReelColumn({
+  items,
+  columnRef,
+  prefix,
+}: {
+  items: Project[];
+  columnRef: React.RefObject<HTMLDivElement | null>;
+  prefix: string;
+}) {
+  return (
+    <div className="h-full flex-1">
+      {/* Items use margin rather than flex gap so the doubled list is exactly twice
+          one set, keeping the -50% loop seamless. */}
+      <div ref={columnRef} className="flex flex-col will-change-transform">
+        {items.map((project, idx) => (
+          <div
+            key={`${prefix}-${idx}`}
+            className="relative mb-4 aspect-[3/4] w-full shrink-0 overflow-hidden rounded-2xl ring-1 ring-foreground/10"
+          >
+            <Image src={project.imageUrl} alt="" fill sizes="16vw" className="object-cover" />
+            <div className="absolute inset-0 bg-background/20" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function HeroMarquee() {
   const rootRef = useRef<HTMLDivElement>(null);
   const col1Ref = useRef<HTMLDivElement>(null);
   const col2Ref = useRef<HTMLDivElement>(null);
-
-  // Duplicate items for continuous infinite marquee loop
-  const column1Images = [...projects.slice(0, 3), ...projects.slice(0, 3)];
-  const column2Images = [...projects.slice(3, 6), ...projects.slice(3, 6)];
 
   useEffect(() => {
     const root = rootRef.current;
@@ -31,11 +61,11 @@ export default function HeroMarquee() {
 
     mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
       const loops = [
-        gsap.to(col1, { yPercent: -50, duration: 25, ease: "none", repeat: -1 }),
+        gsap.to(col1, { yPercent: -50, duration: 40, ease: "none", repeat: -1 }),
         gsap.fromTo(
           col2,
           { yPercent: -50 },
-          { yPercent: 0, duration: 28, ease: "none", repeat: -1 }
+          { yPercent: 0, duration: 44, ease: "none", repeat: -1 }
         ),
       ];
 
@@ -72,54 +102,15 @@ export default function HeroMarquee() {
     <div
       ref={rootRef}
       data-hero-reveal
-      className="hero-marquee relative hidden lg:flex gap-4 h-[420px] overflow-hidden rounded-3xl p-2 pointer-events-none select-none"
+      aria-hidden="true"
+      className="hero-marquee pointer-events-none absolute inset-y-0 right-0 hidden w-[32%] select-none gap-4 pr-[2.5vw] lg:flex print:hidden"
     >
-      {/* Top & Bottom Soft Fade Gradients */}
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-transparent z-10" />
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-neutral-50 dark:from-neutral-950 to-transparent z-10" />
+      {/* Top & bottom fades melt the reels into the page ground. */}
+      <div className="absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-background to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-background to-transparent" />
 
-      {/* Column 1 - Upwards Marquee. Items use margin rather than flex gap so the
-          doubled list is exactly twice one set, keeping the -50% loop seamless. */}
-      <div className="w-36">
-        <div ref={col1Ref} className="flex flex-col">
-          {column1Images.map((project, idx) => (
-            <div
-              key={`col1-${idx}`}
-              className="relative mb-4 h-44 w-36 shrink-0 overflow-hidden rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm"
-            >
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                fill
-                sizes="144px"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-neutral-950/20 dark:bg-neutral-950/40" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Column 2 - Downwards Marquee */}
-      <div className="w-36">
-        <div ref={col2Ref} className="flex flex-col">
-          {column2Images.map((project, idx) => (
-            <div
-              key={`col2-${idx}`}
-              className="relative mb-4 h-44 w-36 shrink-0 overflow-hidden rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm"
-            >
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                fill
-                sizes="144px"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-neutral-950/20 dark:bg-neutral-950/40" />
-            </div>
-          ))}
-        </div>
-      </div>
+      <ReelColumn items={column1Images} columnRef={col1Ref} prefix="col1" />
+      <ReelColumn items={column2Images} columnRef={col2Ref} prefix="col2" />
     </div>
   );
 }
