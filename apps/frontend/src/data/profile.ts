@@ -11,10 +11,15 @@ export interface CmsProfile {
   image?: CmsMedia;
   imageUrl?: string | null;
   contact: Nullable<Profile["contact"]>;
+  hero?: {
+    title?: string | null;
+    description?: Array<{ text: string; highlight?: boolean | null }> | null;
+    cta?: { label?: string | null; href?: string | null } | null;
+  } | null;
 }
 
 export function mapProfile(doc: CmsProfile): Profile {
-  const { contact } = doc;
+  const { contact, hero } = doc;
   return {
     name: doc.name,
     headline: doc.headline,
@@ -29,6 +34,17 @@ export function mapProfile(doc: CmsProfile): Profile {
       linkedin: orUndefined(contact.linkedin),
       github: orUndefined(contact.github),
       googleScholar: orUndefined(contact.googleScholar),
+    },
+    hero: {
+      title: hero?.title ?? "",
+      description: (hero?.description ?? []).map(({ text, highlight }) => ({
+        text,
+        highlight: Boolean(highlight),
+      })),
+      cta: {
+        label: hero?.cta?.label ?? "",
+        href: hero?.cta?.href ?? "/#contact",
+      },
     },
   };
 }

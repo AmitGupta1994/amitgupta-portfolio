@@ -550,6 +550,26 @@ export interface Profile {
   id: number;
   name: string;
   headline: string;
+  /**
+   * Copy for the full-screen hero section.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
   image?: (number | null) | Media;
   /**
    * Used when no image is uploaded.
@@ -598,6 +618,24 @@ export interface Navigation {
 export interface ProfileSelect<T extends boolean = true> {
   name?: T;
   headline?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
   image?: T;
   imageUrl?: T;
   contact?:

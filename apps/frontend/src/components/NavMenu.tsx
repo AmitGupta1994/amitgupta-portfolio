@@ -1,61 +1,118 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NavLink } from "@/types/navigation";
+import { HeroCopy } from "@/types/profile";
 import ThemeToggle from "./ThemeToggle";
 import MagneticButton from "./MagneticButton";
 import ScrollProgress from "./ScrollProgress";
+import ArrowIcon from "./ArrowIcon";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface NavMenuProps {
   links: NavLink[];
+  name: string;
+  imageUrl: string;
+  email: string;
+  cta: HeroCopy["cta"];
 }
 
-export default function NavMenu({ links }: NavMenuProps) {
+// Fixed page chrome rather than a header bar: portrait top-left, CTA + theme
+// toggle top-right, email bottom-right. Section links live in the side nav on
+// desktop and in the full-screen menu below lg.
+export default function NavMenu({ links, name, imageUrl, email, cta }: NavMenuProps) {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isPastHero, setIsPastHero] = useState(false);
+  // The hero carries its own CTA, so the fixed one only slides in after it.
+  const showCta = pathname !== "/" || isPastHero;
+
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: hero,
+      start: "bottom 60%",
+      onEnter: () => setIsPastHero(true),
+      onLeaveBack: () => setIsPastHero(false),
+    });
+
+    return () => trigger.kill();
+  }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-200/80 bg-neutral-50/80 backdrop-blur-md dark:border-neutral-800/80 dark:bg-neutral-950/80 print:hidden transition-colors duration-300">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 print:hidden">
       <ScrollProgress />
       <nav
-        className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3.5"
+        className="flex items-center justify-between gap-4 px-6 py-5 sm:px-10 lg:px-[2.5vw] lg:py-[2vw]"
         aria-label="Primary"
       >
-        <MagneticButton strength={0.2}>
-          <Link
-            href="/"
-            className="text-base font-semibold tracking-tight text-neutral-900 transition-colors hover:text-neutral-600 dark:text-neutral-50 dark:hover:text-neutral-300"
-            onClick={() => setIsOpen(false)}
+        <Link
+          href="/#hero"
+          aria-label={`${name}, back to top`}
+          onClick={() => setIsOpen(false)}
+          className="group pointer-events-auto relative block h-12 w-12 rounded-full md:h-14 md:w-14"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute -inset-1 rounded-full bg-gradient-to-r from-brand-deep to-brand opacity-40 blur-sm transition duration-500 group-hover:opacity-80"
+          />
+          <span className="relative block h-full w-full overflow-hidden rounded-full border-2 border-brand/60 bg-background shadow-sm transition-colors group-hover:border-brand">
+            {imageUrl && (
+              <Image
+                src={imageUrl}
+                alt=""
+                fill
+                priority
+                sizes="56px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
+          </span>
+        </Link>
+
+        <div className="pointer-events-auto flex items-center gap-3">
+          <div
+            inert={!showCta}
+            className={`hidden transition-[grid-template-columns,opacity] duration-500 ease-out md:grid ${
+              showCta ? "grid-cols-[1fr] opacity-100" : "grid-cols-[0fr] opacity-0"
+            }`}
           >
-            Amit Gupta
-          </Link>
-        </MagneticButton>
-
-        <div className="hidden items-center gap-5 md:flex">
-          {links.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-xs font-medium uppercase tracking-wider text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-            >
-              {link.name}
-            </Link>
-          ))}
-          <div className="ml-2 border-l border-neutral-200 pl-4 dark:border-neutral-800">
-            <MagneticButton strength={0.25}>
-              <ThemeToggle />
-            </MagneticButton>
+            <div className="overflow-hidden p-1">
+              <MagneticButton strength={0.2}>
+                <Link
+                  href={cta.href}
+                  className="group inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-brand-deep py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-black/20 transition-colors hover:bg-brand"
+                >
+                  {cta.label}
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 transition-transform duration-300 group-hover:rotate-45">
+                    <ArrowIcon />
+                  </span>
+                </Link>
+              </MagneticButton>
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
+          <MagneticButton strength={0.25}>
+            <ThemeToggle />
+          </MagneticButton>
+
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background/60 text-foreground backdrop-blur-md transition hover:border-brand hover:text-brand lg:hidden"
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             <svg
               className="h-4 w-4"
@@ -78,21 +135,39 @@ export default function NavMenu({ links }: NavMenuProps) {
       </nav>
 
       {isOpen && (
-        <div className="border-t border-neutral-200/80 bg-neutral-50/95 px-6 py-4 shadow-sm dark:border-neutral-800/80 dark:bg-neutral-950/95 md:hidden">
-          <div className="mx-auto flex max-w-5xl flex-col gap-2">
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-white"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
+        <div
+          id="mobile-menu"
+          data-lenis-prevent
+          className="pointer-events-auto fixed inset-0 -z-10 overflow-y-auto bg-background/95 px-6 pb-10 pt-28 backdrop-blur-xl sm:px-10 lg:hidden"
+        >
+          <ul className="flex flex-col gap-4">
+            {links.map((link, index) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="group flex items-baseline gap-4 text-4xl font-black uppercase tracking-tight text-foreground sm:text-5xl"
+                >
+                  <span className="text-sm font-bold tabular-nums text-brand">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="transition-colors group-hover:text-brand">{link.name}</span>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
+          <a href={`mailto:${email}`} className="mt-10 block break-all text-lg font-bold text-brand">
+            {email}
+          </a>
         </div>
       )}
+
+      <a
+        href={`mailto:${email}`}
+        className="pointer-events-auto fixed bottom-8 right-[2.5vw] hidden text-[clamp(1rem,1.3vw,1.4rem)] font-bold leading-none text-brand transition-opacity hover:opacity-80 lg:block"
+      >
+        {email}
+      </a>
     </header>
   );
 }

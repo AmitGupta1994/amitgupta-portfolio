@@ -11,15 +11,19 @@ import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
 import PublicationsSection from '@/components/PublicationsSection';
 
 import { getProfile } from '@/data/profile';
+import { getNavLinks } from '@/data/navigation';
 import { getProjects } from '@/data/projects';
 import { getSkillCategories } from '@/data/skills';
 import { getExperiences } from '@/data/experience';
 import { getPublications } from '@/data/publications';
 import { getExpertise } from '@/data/expertise';
 
+// `overflow-x-clip` (not `hidden`) keeps <main> from becoming a scroll container,
+// which would break sticky and pinned sections.
 export default async function Home() {
-  const [profile, projects, skills, experiences, publications, expertise] = await Promise.all([
+  const [profile, navLinks, projects, skills, experiences, publications, expertise] = await Promise.all([
     getProfile(),
+    getNavLinks(),
     getProjects(),
     getSkillCategories(),
     getExperiences(),
@@ -28,21 +32,23 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="relative min-h-screen bg-neutral-50 text-neutral-900 selection:bg-neutral-200 dark:bg-neutral-950 dark:text-neutral-100 dark:selection:bg-neutral-800 transition-colors duration-300 overflow-x-hidden">
+    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">
       <AmbientBackground />
-      <DigitalMantrasSideNav />
+      <DigitalMantrasSideNav links={navLinks} />
 
+      {/* Full-bleed sections */}
+      <div id="hero">
+        <Hero
+          name={profile.name}
+          headline={profile.headline}
+          contact={profile.contact}
+          hero={profile.hero}
+          projects={projects}
+        />
+      </div>
+
+      {/* Sections still in the contained layout, pending their redesign */}
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
-
-        <div id="hero" className="scroll-mt-28">
-          <Hero
-            name={profile.name}
-            headline={profile.headline}
-            imageUrl={profile.imageUrl}
-            contact={profile.contact}
-            projects={projects}
-          />
-        </div>
 
         <div id="about" className="scroll-mt-28">
           <About summary={profile.summary} />

@@ -17,9 +17,28 @@ const doc: CmsProfile = {
     github: 'https://github.com/amitgupta1994',
     googleScholar: null,
   },
+  hero: {
+    title: 'Engineering systems that scale',
+    description: [
+      { text: 'Lead engineer building ', highlight: null },
+      { text: 'resilient backends', highlight: true },
+    ],
+    cta: { label: "Let's build together", href: '/#contact' },
+  },
 };
 
 describe('mapProfile', () => {
+  it('maps the hero copy, normalising highlight flags', () => {
+    const { hero } = mapProfile(doc);
+
+    expect(hero.title).toBe('Engineering systems that scale');
+    expect(hero.description).toEqual([
+      { text: 'Lead engineer building ', highlight: false },
+      { text: 'resilient backends', highlight: true },
+    ]);
+    expect(hero.cta).toEqual({ label: "Let's build together", href: '/#contact' });
+  });
+
   it('maps basic profile details and falls back to the external image URL', () => {
     const profile = mapProfile(doc);
 

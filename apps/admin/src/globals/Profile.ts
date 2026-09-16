@@ -19,6 +19,53 @@ export const Profile: GlobalConfig = {
         { name: 'headline', type: 'text', required: true },
       ],
     },
+    {
+      name: 'hero',
+      type: 'group',
+      admin: { description: 'Copy for the full-screen hero section.' },
+      fields: [
+        // Defaults on the required hero fields let the schema push add these columns to
+        // an existing profile row without a data-loss prompt.
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+          defaultValue: 'Engineering systems that scale',
+        },
+        {
+          name: 'description',
+          type: 'array',
+          labels: { singular: 'Segment', plural: 'Segments' },
+          admin: {
+            description:
+              'Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.',
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'text', type: 'text', required: true },
+                { name: 'highlight', type: 'checkbox', defaultValue: false },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'cta',
+          type: 'group',
+          label: 'Call to action',
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'label', type: 'text', required: true, defaultValue: "Let's build together" },
+                { name: 'href', type: 'text', required: true, defaultValue: '/#contact' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {
       name: 'imageUrl',

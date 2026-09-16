@@ -1,7 +1,7 @@
 "use client";
 
-import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { Fragment, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -9,6 +9,9 @@ import { Profile } from '@/types/profile';
 import { Project } from '@/types/project';
 import MagneticButton from './MagneticButton';
 import HeroMarquee from './HeroMarquee';
+import ScrollCue from './ScrollCue';
+import ArrowIcon from './ArrowIcon';
+import { onPageLoaded } from './PageLoader';
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -31,14 +34,12 @@ const MailIcon = () => (
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
-    <path d="M12.04 2a9.95 9.95 0 0 0-8.56 15.2L2 22l4.9-1.28A9.95 9.95 0 1 0 12.04 2Zm0 18.11a8.16 8.16 0 0 1-4.15-1.13l-.3-.18-2.9.76.77-2.82-.2-.29A8.16 8.16 0 1 1 12.04 20.11Zm4.5-6.12c-.25-.12-1.46-.72-1.69-.8-.23-.08-.4-.12-.56.12-.16.24-.62.8-.76.96-.14.16-.28.18-.52.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.01-.39.11-.51.11-.11.24-.29.37-.43.12-.14.16-.25.24-.41.08-.16.04-.3-.02-.42-.06-.12-.56-1.35-.77-1.85-.2-.49-.4-.42-.56-.43-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2.01 0 1.19.86 2.32.98 2.48.12.16 1.7 2.59 4.12 3.63.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.46-.6 1.67-1.18.2-.58.2-1.07.14-1.17-.06-.1-.22-.16-.47-.28Z" />
+    <path d="M12.04 2a9.95 9.95 0 0 0-8.56 15.2L2 22l4.9-1.28A9.950 9.950 0 1 0 12.04 2Zm0 18.11a8.16 8.16 0 0 1-4.15-1.13l-.3-.18-2.9.76.77-2.82-.2-.29A8.16 8.16 0 1 1 12.04 20.11Zm4.5-6.12c-.25-.12-1.46-.72-1.690-.8-.23-.08-.4-.12-.56.12-.16.24-.62.8-.76.96-.14.16-.28.18-.52.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.01-.39.11-.51.11-.11.24-.29.37-.43.12-.14.16-.25.24-.41.08-.16.04-.3-.02-.42-.06-.12-.56-1.35-.77-1.85-.2-.49-.4-.42-.56-.43-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2.01 0 1.19.86 2.32.98 2.48.12.16 1.7 2.59 4.12 3.63.58.25 1.03.4 1.38.51.58.19 1.110.16 1.53.1.47-.07 1.46-.6 1.67-1.18.2-.58.2-1.07.14-1.17-.06-.1-.22-.16-.47-.28Z" />
   </svg>
 );
 
 const FreelancerIcon = () => (
   <svg
-    id="Layer_1"
-    data-name="Layer 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 122.88 91.38"
     className="h-5 w-5 shrink-0"
@@ -50,7 +51,7 @@ const FreelancerIcon = () => (
 
 const GitHubIcon = () => (
   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
-    <path d="M12 .5a12 12 0 0 0-3.79 23.04c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.44-4.04-1.44-.54-1.38-1.32-1.75-1.32-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.24 1.83 1.24 1.06 1.82 2.78 1.29 3.46.99.11-.77.42-1.29.76-1.59-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6.02 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z" />
+    <path d="M12 .5a12 12 0 0 0-3.79 23.04c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.44-4.04-1.44-.54-1.38-1.32-1.75-1.32-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.24 1.83 1.24 1.06 1.82 2.78 1.29 3.46.99.11-.77.42-1.29.76-1.59-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.230a11.4 11.4 0 0 1 6.02 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z" />
   </svg>
 );
 
@@ -71,14 +72,16 @@ const ScholarIcon = () => (
   </svg>
 );
 
-type HeroProps = Omit<Profile, 'summary'> & {
+const pillClass =
+  "rounded-full border border-foreground/15 bg-background/40 text-foreground backdrop-blur transition-colors hover:border-brand hover:text-brand";
+
+type HeroProps = Omit<Profile, 'summary' | 'imageUrl'> & {
   projects: Project[];
 };
 
-export default function Hero({ name, headline, imageUrl, contact, projects }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function Hero({ name, headline, contact, hero, projects }: HeroProps) {
+  const containerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -90,47 +93,48 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
     ).matches;
     if (prefersReducedMotion) return;
 
+    let offLoaded = () => {};
+
     const ctx = gsap.context(() => {
       const titleSplit = SplitText.create(".hero-title-text", {
         type: "words,chars",
         mask: "words",
       });
-      const headlineSplit = SplitText.create(".hero-headline-text", {
+      const descriptionSplit = SplitText.create(".hero-description", {
         type: "words",
         mask: "words",
       });
 
+      // Built paused and played once the page loader lifts, so the reveal isn't
+      // spent behind the curtain.
       const tl = gsap.timeline({
+        paused: true,
         defaults: { ease: "expo.out" },
         // Masks clip descenders at rest, so hand back the original text nodes.
         onComplete: () => {
           titleSplit.revert();
-          headlineSplit.revert();
+          descriptionSplit.revert();
         },
       });
 
-      tl.from(avatarRef.current, { opacity: 0, duration: 0.6, ease: "power2.out" }, 0)
-        .fromTo(
-          ".hero-avatar-frame",
-          { clipPath: "circle(0% at 50% 50%)", scale: 1.25 },
-          { clipPath: "circle(71% at 50% 50%)", scale: 1, duration: 1.2 },
-          0
-        )
-        .from(titleSplit.chars, { yPercent: 110, duration: 1, stagger: 0.035 }, 0.25)
+      tl.from(".hero-eyebrow", { yPercent: 100, opacity: 0, duration: 0.8 }, 0)
+        .from(titleSplit.chars, { yPercent: 110, duration: 1.1, stagger: 0.025 }, 0.1)
         .from(
-          headlineSplit.words,
-          { yPercent: 110, opacity: 0, duration: 0.8, stagger: 0.025, ease: "power3.out" },
-          "-=0.7"
+          descriptionSplit.words,
+          { yPercent: 110, opacity: 0, duration: 0.8, stagger: 0.015, ease: "power3.out" },
+          "-=0.8"
         )
         .from(
           ".hero-action-item",
-          { y: 16, scale: 0.9, opacity: 0, duration: 0.6, stagger: 0.05, ease: "back.out(1.7)" },
-          "-=0.55"
+          { y: 20, scale: 0.9, opacity: 0, duration: 0.6, stagger: 0.04, ease: "back.out(1.7)" },
+          "-=0.6"
         )
-        .from(".hero-marquee", { x: 40, opacity: 0, duration: 1.4, ease: "power3.out" }, 0.4);
+        .from(".hero-marquee", { yPercent: 15, opacity: 0, duration: 1.6, ease: "power3.out" }, 0.1)
+        .from(".hero-scroll-cue", { scale: 0, rotate: -180, duration: 1.2, ease: "back.out(1.4)" }, "-=1");
 
       // Every tween above has already rendered its start state; lift the CSS pre-hide.
       gsap.set("[data-hero-reveal]", { visibility: "visible" });
+      offLoaded = onPageLoaded(() => tl.play());
 
       // Scroll-out depth: copy drifts up and dims while the reels sink the other way.
       const scrollOut = {
@@ -139,11 +143,14 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
         end: "bottom top",
         scrub: 0.6,
       };
-      gsap.to(contentRef.current, { y: -48, opacity: 0.35, ease: "none", scrollTrigger: scrollOut });
-      gsap.to(".hero-marquee", { y: 80, ease: "none", scrollTrigger: { ...scrollOut } });
-    }, containerRef);
+      gsap.to(contentRef.current, { yPercent: -12, opacity: 0.2, ease: "none", scrollTrigger: scrollOut });
+      gsap.to(".hero-marquee", { y: 120, ease: "none", scrollTrigger: { ...scrollOut } });
+    }, container);
 
-    return () => ctx.revert();
+    return () => {
+      offLoaded();
+      ctx.revert();
+    };
   }, []);
 
   const socialItems = [
@@ -199,49 +206,80 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
   // Entrance tweens run on these wrappers, never on MagneticButton itself, so the
   // entrance `y` and the magnetic `y` never fight over the same element.
   return (
-    <section ref={containerRef} className="w-full flex items-center justify-between gap-8 pt-4 relative z-10">
-      <div ref={contentRef} className="flex flex-col items-start gap-6 max-w-2xl">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-          <div ref={avatarRef} data-hero-reveal className="relative group">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-neutral-300 to-neutral-500 opacity-30 blur-sm group-hover:opacity-60 transition duration-500 dark:from-neutral-700 dark:to-neutral-500" />
-            <div className="hero-avatar-frame relative h-24 w-24 shrink-0 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 md:h-28 md:w-28">
-              <Image
-                src={imageUrl}
-                alt={`${name} portrait`}
-                fill
-                priority
-                sizes="(max-width: 768px) 96px, 112px"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <h1 data-hero-reveal className="hero-title-text text-5xl md:text-7xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
-              {name}
-            </h1>
-            <h2 data-hero-reveal className="hero-headline-text text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              {headline}
-            </h2>
-          </div>
-        </div>
+    <section
+      ref={containerRef}
+      aria-label="Introduction"
+      className="relative z-10 flex min-h-svh w-full overflow-hidden print:min-h-0"
+    >
+      <div
+        ref={contentRef}
+        className="relative z-10 flex w-full flex-col justify-center gap-7 pb-20 pl-9 pr-6 pt-28 sm:pl-[52px] sm:pr-10 lg:w-[68%] lg:pl-[calc(6vw+12px)] lg:pr-12 print:px-0 print:pt-0"
+      >
+        <h1 data-hero-reveal className="flex flex-col gap-4">
+          <span className="hero-eyebrow block text-sm font-bold uppercase tracking-[0.4em] text-brand sm:text-base">
+            {name}
+          </span>
+          <span className="hero-title-text block text-[clamp(3rem,8.5vw,8.5rem)] font-black uppercase leading-[0.88] tracking-[-0.02em] text-foreground print:text-4xl">
+            {hero.title}
+          </span>
+        </h1>
 
-        <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-2">
+        <p
+          data-hero-reveal
+          className="hero-description max-w-2xl text-[clamp(1.125rem,1.7vw,1.75rem)] font-medium leading-snug text-muted"
+        >
+          {hero.description.map((segment, index) =>
+            segment.highlight ? (
+              <span key={index} className="font-bold text-brand">
+                {segment.text}
+              </span>
+            ) : (
+              <Fragment key={index}>{segment.text}</Fragment>
+            )
+          )}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3">
           <div data-hero-reveal className="hero-action-item flex">
-            <MagneticButton>
+            <MagneticButton strength={0.2}>
+              <Link
+                href={hero.cta.href}
+                className="group inline-flex items-center gap-4 rounded-full bg-brand-deep py-2.5 pl-7 pr-2.5 text-base font-bold uppercase tracking-wide text-white shadow-xl shadow-black/20 transition-colors hover:bg-brand sm:text-lg print:hidden"
+              >
+                {hero.cta.label}
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-white/15 transition-transform duration-300 group-hover:rotate-45">
+                  <ArrowIcon className="h-5 w-5" />
+                </span>
+              </Link>
+            </MagneticButton>
+          </div>
+
+          <div data-hero-reveal className="hero-action-item flex">
+            <MagneticButton strength={0.2}>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:hidden cursor-pointer"
+                className={`${pillClass} cursor-pointer px-6 py-3.5 text-sm font-bold uppercase tracking-wide print:hidden`}
               >
                 Save as PDF
               </button>
             </MagneticButton>
           </div>
+        </div>
 
+        <p
+          data-hero-reveal
+          className="hero-action-item flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-muted"
+        >
+          <span aria-hidden="true" className="h-px w-10 bg-brand" />
+          {headline}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3 text-sm font-medium">
           {contact.location && (
             <div data-hero-reveal className="hero-action-item">
-              <span className="flex items-center gap-1.5 border border-neutral-200 rounded-full px-4 py-1.5 bg-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className={`${pillClass} flex items-center gap-2 px-4 py-2 hover:border-foreground/15 hover:text-foreground`}>
+                <span className="h-2 w-2 animate-pulse rounded-full bg-brand" />
                 {contact.location}
               </span>
             </div>
@@ -252,7 +290,7 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
               <MagneticButton>
                 <a
                   href={`tel:${contact.phone}`}
-                  className="print-link inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+                  className={`${pillClass} print-link inline-flex items-center gap-2 px-4 py-2 print:inline print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0`}
                 >
                   <PhoneIcon />
                   <span className="print:inline print:text-black print:underline print:underline-offset-2">
@@ -271,12 +309,10 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
                   aria-label={item.ariaLabel}
                   target={item.isExternal ? "_blank" : undefined}
                   rel={item.isExternal ? "noreferrer" : undefined}
-                  className="print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white transition hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0"
+                  className={`${pillClass} print-link inline-flex h-10 w-10 items-center justify-center overflow-hidden print:inline-block print:h-auto print:w-auto print:rounded-none print:border-0 print:bg-transparent print:px-0 print:py-0`}
                 >
-                  <span className="print:hidden">
-                    {item.icon}
-                  </span>
-                  <span className="hidden print:inline break-all print:text-black print:underline print:underline-offset-2">
+                  <span className="print:hidden">{item.icon}</span>
+                  <span className="hidden break-all print:inline print:text-black print:underline print:underline-offset-2">
                     {item.printText}
                   </span>
                 </a>
@@ -286,7 +322,15 @@ export default function Hero({ name, headline, imageUrl, contact, projects }: He
         </div>
       </div>
 
-      {/* Right side infinite marquee */}
+      <div
+        data-hero-reveal
+        className="absolute bottom-10 right-[calc(32%+3rem)] z-10 hidden lg:block print:hidden"
+      >
+        <div className="hero-scroll-cue">
+          <ScrollCue href="/#about" />
+        </div>
+      </div>
+
       <HeroMarquee projects={projects} />
     </section>
   );

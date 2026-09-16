@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
 import { getProfile } from "@/data/profile";
 import { getNavLinks } from "@/data/navigation";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavMenu from "@/components/NavMenu";
+import PageLoader from "@/components/PageLoader";
+import SmoothScroll from "@/components/SmoothScroll";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getProfile();
@@ -41,10 +50,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navLinks = await getNavLinks();
+  const [profile, navLinks] = await Promise.all([getProfile(), getNavLinks()]);
 
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="en" className={`${outfit.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -65,9 +74,17 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-neutral-50 text-neutral-900 transition-colors duration-300 dark:bg-neutral-950 dark:text-neutral-100">
+      <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
-          <NavMenu links={navLinks} />
+          <PageLoader name={profile.name} />
+          <SmoothScroll />
+          <NavMenu
+            links={navLinks}
+            name={profile.name}
+            imageUrl={profile.imageUrl}
+            email={profile.contact.email}
+            cta={profile.hero.cta}
+          />
           {children}
         </ThemeProvider>
       </body>

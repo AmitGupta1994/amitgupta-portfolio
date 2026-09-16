@@ -34,7 +34,7 @@ export default function ScrollProgress() {
     <div className="absolute top-0 left-0 right-0 h-[2px] w-full bg-transparent overflow-hidden z-50 pointer-events-none">
       <div
         ref={progressBarRef}
-        className="h-full w-full bg-gradient-to-r from-neutral-400 via-neutral-900 to-neutral-500 dark:from-neutral-600 dark:via-neutral-100 dark:to-neutral-400 origin-left scale-x-0 transition-transform duration-75"
+        className="h-full w-full bg-brand origin-left scale-x-0 transition-transform duration-75"
       />
     </div>
   );
