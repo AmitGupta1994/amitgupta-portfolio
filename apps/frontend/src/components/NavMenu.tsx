@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NavLink } from "@/types/navigation";
@@ -28,8 +28,13 @@ interface NavMenuProps {
 // Fixed page chrome rather than a header bar: portrait top-left, CTA + theme
 // toggle top-right, email bottom-right. Section links live in the side nav on
 // desktop and in the full-screen menu below lg.
+// Resting size is 1; these are the oversized scales at the top of the page and
+// must match `--nav-logo-start-scale` in globals.css.
+const LOGO_START_SCALE = { mobile: 1.9, desktop: 2.4 };
+
 export default function NavMenu({ links, name, imageUrl, email, cta }: NavMenuProps) {
   const pathname = usePathname();
+  const logoRef = useRef<HTMLAnchorElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPastHero, setIsPastHero] = useState(false);
   // The hero carries its own CTA, so the fixed one only slides in after it.
@@ -49,6 +54,45 @@ export default function NavMenu({ links, name, imageUrl, email, cta }: NavMenuPr
     return () => trigger.kill();
   }, [pathname]);
 
+  // The portrait starts oversized and shrinks to its resting size over the first
+  // stretch of scrolling; matchMedia re-runs it across the breakpoint.
+  useEffect(() => {
+    const logo = logoRef.current;
+    if (typeof window === "undefined" || !logo) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      { desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" },
+      (context) => {
+        const { desktop, reduce } = context.conditions as { desktop: boolean; reduce: boolean };
+        const startScale = reduce
+          ? 1
+          : desktop
+            ? LOGO_START_SCALE.desktop
+            : LOGO_START_SCALE.mobile;
+
+        gsap.fromTo(
+          logo,
+          { scale: startScale, transformOrigin: "top left" },
+          {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: "top top",
+              end: () => window.innerHeight * 0.6,
+              scrub: 0.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    );
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 print:hidden">
       <ScrollProgress />
@@ -57,10 +101,12 @@ export default function NavMenu({ links, name, imageUrl, email, cta }: NavMenuPr
         aria-label="Primary"
       >
         <Link
+          ref={logoRef}
+          data-nav-logo
           href="/#hero"
           aria-label={`${name}, back to top`}
           onClick={() => setIsOpen(false)}
-          className="group pointer-events-auto relative block h-12 w-12 rounded-full md:h-14 md:w-14"
+          className="group pointer-events-auto relative block h-12 w-12 origin-top-left rounded-full will-change-transform md:h-14 md:w-14"
         >
           <span
             aria-hidden="true"
