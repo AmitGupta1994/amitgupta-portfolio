@@ -8,6 +8,8 @@ Nx + npm-workspaces monorepo (`apps/*`, `packages/*`). Two apps exist: `apps/fro
 
 App-specific conventions live in [apps/frontend/AGENTS.md](apps/frontend/AGENTS.md) and [apps/admin/AGENTS.md](apps/admin/AGENTS.md) (each imported by that app's `CLAUDE.md`) — read the relevant one before changing an app.
 
+Deployment (two Vercel projects, Neon Postgres) is documented in [DEPLOYMENT.md](DEPLOYMENT.md).
+
 **Content flows CMS → frontend.** The frontend fetches everything from the admin app's REST API at request/revalidate time, so the admin app (and its Postgres database) must be running for the frontend to render or build. Each app needs its env file: `apps/admin/.env` and `apps/frontend/.env.local` (see their `.env.example`), with a shared `REVALIDATE_SECRET`.
 
 ## Commands

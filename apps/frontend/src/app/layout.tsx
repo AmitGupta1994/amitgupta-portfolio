@@ -9,6 +9,11 @@ import NavMenu from "@/components/NavMenu";
 import PageLoader from "@/components/PageLoader";
 import SmoothScroll from "@/components/SmoothScroll";
 
+// Every page reads from the CMS at request time instead of being prerendered, so
+// a deploy can't fail (and the site can't go stale) because of the CMS. The fetch
+// responses are still cached and refreshed by /api/revalidate.
+export const dynamic = "force-dynamic";
+
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
