@@ -15,7 +15,7 @@ build
 dist
 
 # Payload local uploads (production uses Vercel Blob)
-apps/admin/media
+apps/frontend/media
 
 # Environment variables
 .env
