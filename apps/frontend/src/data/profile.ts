@@ -1,16 +1,16 @@
-import { cmsFetch, orUndefined, resolveImageUrl, type CmsMedia } from "@/lib/cms";
+import { orUndefined, payloadClient, resolveImageUrl, type CmsMedia } from "@/lib/payload";
 import { Profile } from "@/types/profile";
 
 type Nullable<T> = { [K in keyof T]: T[K] | null };
 
-/** `profile` global as returned by the CMS REST API. */
+/** The `profile` global as stored by Payload. */
 export interface CmsProfile {
-  name: string;
-  headline: string;
-  summary: string;
+  name?: string | null;
+  headline?: string | null;
+  summary?: string | null;
   image?: CmsMedia;
   imageUrl?: string | null;
-  contact: Nullable<Profile["contact"]>;
+  contact?: Partial<Nullable<Profile["contact"]>> | null;
   hero?: {
     title?: string | null;
     description?: Array<{ text: string; highlight?: boolean | null }> | null;
@@ -18,12 +18,14 @@ export interface CmsProfile {
   } | null;
 }
 
+// Tolerates an empty profile so a fresh deploy (empty database) still builds.
 export function mapProfile(doc: CmsProfile): Profile {
-  const { contact, hero } = doc;
+  const contact = doc.contact ?? {};
+  const { hero } = doc;
   return {
-    name: doc.name,
-    headline: doc.headline,
-    summary: doc.summary,
+    name: doc.name ?? "",
+    headline: doc.headline ?? "",
+    summary: doc.summary ?? "",
     imageUrl: resolveImageUrl(doc.image, doc.imageUrl),
     contact: {
       email: contact.email ?? "",
@@ -50,5 +52,7 @@ export function mapProfile(doc: CmsProfile): Profile {
 }
 
 export async function getProfile(): Promise<Profile> {
-  return mapProfile(await cmsFetch<CmsProfile>("/globals/profile?depth=1"));
+  const payload = await payloadClient();
+  const doc = await payload.findGlobal({ slug: "profile", depth: 1 });
+  return mapProfile(doc as unknown as CmsProfile);
 }

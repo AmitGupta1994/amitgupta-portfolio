@@ -1,17 +1,19 @@
 import { afterEach, describe, it, expect, vi } from 'vitest';
 import { getNavLinks } from '../navigation';
 
-function stubCmsResponse(body: unknown) {
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => body }));
-}
+const findGlobal = vi.fn();
+
+vi.mock('@/lib/payload', () => ({
+  payloadClient: async () => ({ findGlobal }),
+}));
 
 afterEach(() => {
-  vi.unstubAllGlobals();
+  findGlobal.mockReset();
 });
 
 describe('getNavLinks', () => {
   it('returns the navigation links from the CMS', async () => {
-    stubCmsResponse({
+    findGlobal.mockResolvedValue({
       links: [
         { id: 'a', name: 'Home', href: '/#hero' },
         { id: 'b', name: 'Contact', href: '/#contact' },
@@ -22,10 +24,11 @@ describe('getNavLinks', () => {
       { name: 'Home', href: '/#hero' },
       { name: 'Contact', href: '/#contact' },
     ]);
+    expect(findGlobal).toHaveBeenCalledWith({ slug: 'navigation', depth: 0 });
   });
 
   it('returns an empty list when no links are configured', async () => {
-    stubCmsResponse({ links: null });
+    findGlobal.mockResolvedValue({ links: null });
 
     await expect(getNavLinks()).resolves.toEqual([]);
   });

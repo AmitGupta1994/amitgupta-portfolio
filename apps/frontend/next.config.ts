@@ -1,19 +1,11 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
-
-const cmsUrl = new URL(process.env.CMS_URL ?? "http://localhost:3001");
 
 const nextConfig: NextConfig = {
   images: {
-    // Next refuses to optimize images from private IPs; the CMS runs on localhost in development.
-    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
+    // Media uploaded to the CMS is served from this same app.
+    localPatterns: [{ pathname: "/api/media/file/**" }],
     remotePatterns: [
-      // Uploads served by the Payload CMS (apps/admin)
-      {
-        protocol: cmsUrl.protocol === "https:" ? "https" : "http",
-        hostname: cmsUrl.hostname,
-        port: cmsUrl.port,
-        pathname: "/api/media/file/**",
-      },
       {
         protocol: "https",
         hostname: "github.com",
@@ -34,8 +26,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "medium.com",
       },
+      {
+        // Uploads once Vercel Blob storage is connected.
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
     ],
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig, { devBundleServerPackages: false });

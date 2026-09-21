@@ -9,9 +9,8 @@
   ],
   "scripts": {
     "dev": "nx dev frontend",
-    "dev:admin": "nx dev admin",
-    "dev:all": "nx run-many -t dev --parallel",
-    "seed": "npm run seed -w admin",
+    "seed": "npm run seed -w frontend",
+    "migrate:create": "npm run migrate:create -w frontend",
     "build": "nx run-many -t build",
     "start": "nx start frontend",
     "lint": "nx run-many -t lint",

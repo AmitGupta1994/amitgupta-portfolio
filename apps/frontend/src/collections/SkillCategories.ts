@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
-import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateFrontend'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const SkillCategories: CollectionConfig = {
   slug: 'skill-categories',

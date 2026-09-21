@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 import { getProfile } from "@/data/profile";
 import { getNavLinks } from "@/data/navigation";
@@ -9,10 +9,9 @@ import NavMenu from "@/components/NavMenu";
 import PageLoader from "@/components/PageLoader";
 import SmoothScroll from "@/components/SmoothScroll";
 
-// Every page reads from the CMS at request time instead of being prerendered, so
-// a deploy can't fail (and the site can't go stale) because of the CMS. The fetch
-// responses are still cached and refreshed by /api/revalidate.
-export const dynamic = "force-dynamic";
+// Pages are prerendered and served from the CDN; saving in the admin drops that
+// cache (src/hooks/revalidateSite.ts), and they refresh hourly as a safety net.
+export const revalidate = 3600;
 
 const outfit = Outfit({
   subsets: ["latin"],

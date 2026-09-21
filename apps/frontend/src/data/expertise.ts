@@ -1,4 +1,4 @@
-import { cmsCollection, orUndefined } from "@/lib/cms";
+import { orUndefined, payloadClient } from "@/lib/payload";
 import { Expertise } from "@/types/expertise";
 
 interface CmsExpertise {
@@ -8,8 +8,9 @@ interface CmsExpertise {
 }
 
 export async function getExpertise(): Promise<Expertise[]> {
-  const docs = await cmsCollection<CmsExpertise>("expertise");
-  return docs.map(({ domain, years, description }) => ({
+  const payload = await payloadClient();
+  const { docs } = await payload.find({ collection: "expertise", limit: 100, depth: 0, sort: "order" });
+  return (docs as unknown as CmsExpertise[]).map(({ domain, years, description }) => ({
     domain,
     years: orUndefined(years),
     description,

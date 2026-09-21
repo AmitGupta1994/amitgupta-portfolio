@@ -18,24 +18,14 @@ import { Profile } from './globals/Profile'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// Makes upload `url`s absolute, so the frontend can use them as-is. On Vercel the
-// deployment URL is used unless SERVER_URL is set explicitly.
-const serverURL =
-  process.env.SERVER_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'http://localhost:3001')
-
-const allowedOrigins = [serverURL, process.env.FRONTEND_URL].filter(Boolean) as string[]
+// No serverURL: the admin and the site share one origin, so uploads get
+// same-origin URLs (/api/media/file/…) that work in every environment.
 
 // Vercel's filesystem is read-only, so uploads go to Blob storage whenever a token
-// is present; locally they stay in apps/admin/media.
+// is present; locally they stay in apps/frontend/media.
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
 export default buildConfig({
-  serverURL,
-  cors: allowedOrigins,
-  csrf: allowedOrigins,
   admin: {
     user: Users.slug,
     importMap: {
@@ -53,7 +43,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     // Schema changes are pushed automatically in development; production runs the
-    // committed migrations instead (see the admin app's `build` script).
+    // committed migrations instead (see the `build` script).
     push: process.env.NODE_ENV !== 'production',
     migrationDir: path.resolve(dirname, 'migrations'),
   }),

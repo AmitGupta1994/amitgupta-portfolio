@@ -1,4 +1,4 @@
-import { cmsCollection, resolveImageUrl, type CmsMedia } from "@/lib/cms";
+import { payloadClient, resolveImageUrl, type CmsMedia } from "@/lib/payload";
 import { Project } from "@/types/project";
 
 export interface CmsProject {
@@ -25,5 +25,7 @@ export function mapProject(doc: CmsProject): Project {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  return (await cmsCollection<CmsProject>("projects")).map(mapProject);
+  const payload = await payloadClient();
+  const { docs } = await payload.find({ collection: "projects", limit: 100, depth: 1, sort: "order" });
+  return (docs as unknown as CmsProject[]).map(mapProject);
 }

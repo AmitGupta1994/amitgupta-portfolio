@@ -1,4 +1,4 @@
-// Replaces all portfolio content with src/seed/data.ts. Run with `npm run seed -w admin`.
+// Replaces all portfolio content with src/seed/data.ts. Run with `npm run seed`.
 // Users and media are left untouched.
 import { getPayload } from 'payload'
 

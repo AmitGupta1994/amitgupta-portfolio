@@ -1,4 +1,4 @@
-import { cmsCollection } from "@/lib/cms";
+import { payloadClient } from "@/lib/payload";
 import { SkillCategoryData } from "@/types/skill";
 
 export interface CmsSkillCategory {
@@ -21,5 +21,12 @@ export function mapSkillCategory(doc: CmsSkillCategory): SkillCategoryData {
 }
 
 export async function getSkillCategories(): Promise<SkillCategoryData[]> {
-  return (await cmsCollection<CmsSkillCategory>("skill-categories", "priority")).map(mapSkillCategory);
+  const payload = await payloadClient();
+  const { docs } = await payload.find({
+    collection: "skill-categories",
+    limit: 100,
+    depth: 0,
+    sort: "priority",
+  });
+  return (docs as unknown as CmsSkillCategory[]).map(mapSkillCategory);
 }

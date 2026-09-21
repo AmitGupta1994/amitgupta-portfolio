@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
-import { revalidateGlobalAfterChange } from '../hooks/revalidateFrontend'
+import { revalidateGlobalAfterChange } from '../hooks/revalidateSite'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',

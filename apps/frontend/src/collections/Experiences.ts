@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
 import { orderField } from '../fields/order'
-import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateFrontend'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const Experiences: CollectionConfig = {
   slug: 'experiences',
