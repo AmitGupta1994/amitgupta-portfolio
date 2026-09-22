@@ -4,17 +4,11 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-// Each column shows every project so one set is taller than the viewport; the list
-// is doubled so a -50% loop is seamless.
-const column1Images = [...projects, ...projects];
-const column2Images = [...[...projects].reverse(), ...[...projects].reverse()];
 
 function ReelColumn({
   items,
@@ -44,10 +38,22 @@ function ReelColumn({
   );
 }
 
-export default function HeroMarquee() {
+interface HeroMarqueeProps {
+  projects: Project[];
+}
+
+export default function HeroMarquee({ projects }: HeroMarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const col1Ref = useRef<HTMLDivElement>(null);
   const col2Ref = useRef<HTMLDivElement>(null);
+
+  // CMS projects may have no image; next/image can't render an empty src.
+  const withImages = projects.filter((project) => project.imageUrl);
+
+  // Each column shows every project so one set is taller than the viewport; the list
+  // is doubled so a -50% loop is seamless.
+  const column1Images = [...withImages, ...withImages];
+  const column2Images = [...[...withImages].reverse(), ...[...withImages].reverse()];
 
   useEffect(() => {
     const root = rootRef.current;

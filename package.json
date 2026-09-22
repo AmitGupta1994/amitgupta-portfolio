@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "dev": "nx dev frontend",
+    "seed": "npm run seed -w frontend",
+    "migrate:create": "npm run migrate:create -w frontend",
     "build": "nx run-many -t build",
     "start": "nx start frontend",
     "lint": "nx run-many -t lint",

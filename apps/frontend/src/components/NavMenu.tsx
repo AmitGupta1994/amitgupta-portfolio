@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { navLinks } from "@/data/navigation";
-import { profileData } from "@/data/profile";
+import { NavLink } from "@/types/navigation";
+import { HeroCopy } from "@/types/profile";
 import ThemeToggle from "./ThemeToggle";
 import MagneticButton from "./MagneticButton";
 import ScrollProgress from "./ScrollProgress";
@@ -17,14 +17,24 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const { cta } = profileData.hero;
-const { email } = profileData.contact;
+interface NavMenuProps {
+  links: NavLink[];
+  name: string;
+  imageUrl: string;
+  email: string;
+  cta: HeroCopy["cta"];
+}
 
 // Fixed page chrome rather than a header bar: portrait top-left, CTA + theme
 // toggle top-right, email bottom-right. Section links live in the side nav on
 // desktop and in the full-screen menu below lg.
-export default function NavMenu() {
+// Resting size is 1; these are the oversized scales at the top of the page and
+// must match `--nav-logo-start-scale` in globals.css.
+const LOGO_START_SCALE = { mobile: 1.9, desktop: 2.4 };
+
+export default function NavMenu({ links, name, imageUrl, email, cta }: NavMenuProps) {
   const pathname = usePathname();
+  const logoRef = useRef<HTMLAnchorElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPastHero, setIsPastHero] = useState(false);
   // The hero carries its own CTA, so the fixed one only slides in after it.
@@ -44,6 +54,45 @@ export default function NavMenu() {
     return () => trigger.kill();
   }, [pathname]);
 
+  // The portrait starts oversized and shrinks to its resting size over the first
+  // stretch of scrolling; matchMedia re-runs it across the breakpoint.
+  useEffect(() => {
+    const logo = logoRef.current;
+    if (typeof window === "undefined" || !logo) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      { desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" },
+      (context) => {
+        const { desktop, reduce } = context.conditions as { desktop: boolean; reduce: boolean };
+        const startScale = reduce
+          ? 1
+          : desktop
+            ? LOGO_START_SCALE.desktop
+            : LOGO_START_SCALE.mobile;
+
+        gsap.fromTo(
+          logo,
+          { scale: startScale, transformOrigin: "top left" },
+          {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: "top top",
+              end: () => window.innerHeight * 0.6,
+              scrub: 0.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    );
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 print:hidden">
       <ScrollProgress />
@@ -52,24 +101,28 @@ export default function NavMenu() {
         aria-label="Primary"
       >
         <Link
+          ref={logoRef}
+          data-nav-logo
           href="/#hero"
-          aria-label={`${profileData.name}, back to top`}
+          aria-label={`${name}, back to top`}
           onClick={() => setIsOpen(false)}
-          className="group pointer-events-auto relative block h-12 w-12 rounded-full md:h-14 md:w-14"
+          className="group pointer-events-auto relative block h-12 w-12 origin-top-left rounded-full will-change-transform md:h-14 md:w-14"
         >
           <span
             aria-hidden="true"
             className="absolute -inset-1 rounded-full bg-gradient-to-r from-brand-deep to-brand opacity-40 blur-sm transition duration-500 group-hover:opacity-80"
           />
           <span className="relative block h-full w-full overflow-hidden rounded-full border-2 border-brand/60 bg-background shadow-sm transition-colors group-hover:border-brand">
-            <Image
-              src={profileData.imageUrl}
-              alt=""
-              fill
-              priority
-              sizes="56px"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            {imageUrl && (
+              <Image
+                src={imageUrl}
+                alt=""
+                fill
+                priority
+                sizes="56px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
           </span>
         </Link>
 
@@ -134,7 +187,7 @@ export default function NavMenu() {
           className="pointer-events-auto fixed inset-0 -z-10 overflow-y-auto bg-background/95 px-6 pb-10 pt-28 backdrop-blur-xl sm:px-10 lg:hidden"
         >
           <ul className="flex flex-col gap-4">
-            {navLinks.map((link, index) => (
+            {links.map((link, index) => (
               <li key={link.name}>
                 <Link
                   href={link.href}

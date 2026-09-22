@@ -1,19 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { navLinks } from "@/data/navigation";
+import { NavLink } from "@/types/navigation";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const sections = navLinks.map((link) => ({ ...link, id: link.href.split("#")[1] }));
+interface DigitalMantrasSideNavProps {
+  links: NavLink[];
+}
 
 // Fixed bottom-left section index: a dot per section, with the active section's
 // label expanded. Clicks are plain hash links that SmoothScroll glides to.
-export default function DigitalMantrasSideNav() {
+export default function DigitalMantrasSideNav({ links }: DigitalMantrasSideNavProps) {
+  const sections = useMemo(
+    () => links.map((link) => ({ ...link, id: link.href.split("#")[1] })),
+    [links]
+  );
   const [activeId, setActiveId] = useState(sections[0]?.id);
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export default function DigitalMantrasSideNav() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [sections]);
 
   return (
     <nav

@@ -1,7 +1,10 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Media uploaded to the CMS is served from this same app.
+    localPatterns: [{ pathname: "/api/media/file/**" }],
     remotePatterns: [
       {
         protocol: "https",
@@ -23,8 +26,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "medium.com",
       },
+      {
+        // Uploads once Vercel Blob storage is connected.
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
     ],
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig, { devBundleServerPackages: false });

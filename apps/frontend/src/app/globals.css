@@ -78,6 +78,26 @@ html.lenis body {
   }
 }
 
+/* The fixed portrait mark (NavMenu) starts oversized and shrinks to its resting
+   size on scroll. Pre-scaled here so it never paints small first; the values
+   must match LOGO_START_SCALE in NavMenu.tsx. */
+:root {
+  --nav-logo-start-scale: 1.9;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-logo-start-scale: 2.4;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-nav-logo] {
+    transform: scale(var(--nav-logo-start-scale));
+    transform-origin: top left;
+  }
+}
+
 /* Hero entrance: keep animated pieces hidden until GSAP has rendered their
    start state, so server-rendered content never flashes. `.js` is added by the
    inline script in layout.tsx; the delayed keyframe reveals everything anyway

@@ -14,6 +14,9 @@ out/
 build
 dist
 
+# Payload local uploads (production uses Vercel Blob)
+apps/frontend/media
+
 # Environment variables
 .env
 .env*.local

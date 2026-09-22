@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import About from '../About';
-import { profileData } from '@/data/profile';
 
 describe('About component', () => {
   it('renders section title and summary HTML content correctly', () => {
@@ -14,9 +13,9 @@ describe('About component', () => {
     expect(screen.getByText('7 years')).toBeInTheDocument();
   });
 
-  it('renders actual profile summary from profileData', () => {
-    render(<About summary={profileData.summary} />);
-    
+  it('renders a multi-paragraph summary as delivered by the CMS', () => {
+    render(<About summary={'As a Tech Lead and engineer. \n \n I am a pragmatic builder.'} />);
+
     expect(screen.getByRole('heading', { level: 3, name: /about/i })).toBeInTheDocument();
     expect(screen.getByText(/Tech Lead/i)).toBeInTheDocument();
   });

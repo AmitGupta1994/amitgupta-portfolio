@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { Profile } from '@/types/profile';
+import { Project } from '@/types/project';
 import MagneticButton from './MagneticButton';
 import HeroMarquee from './HeroMarquee';
 import ScrollCue from './ScrollCue';
@@ -74,9 +75,11 @@ const ScholarIcon = () => (
 const pillClass =
   "rounded-full border border-foreground/15 bg-background/40 text-foreground backdrop-blur transition-colors hover:border-brand hover:text-brand";
 
-type HeroProps = Omit<Profile, 'summary' | 'imageUrl'>;
+type HeroProps = Omit<Profile, 'summary' | 'imageUrl'> & {
+  projects: Project[];
+};
 
-export default function Hero({ name, headline, contact, hero }: HeroProps) {
+export default function Hero({ name, headline, contact, hero, projects }: HeroProps) {
   const containerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -328,7 +331,7 @@ export default function Hero({ name, headline, contact, hero }: HeroProps) {
         </div>
       </div>
 
-      <HeroMarquee />
+      <HeroMarquee projects={projects} />
     </section>
   );
 }

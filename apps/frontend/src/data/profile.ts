@@ -1,31 +1,58 @@
+import { orUndefined, payloadClient, resolveImageUrl, type CmsMedia } from "@/lib/payload";
 import { Profile } from "@/types/profile";
 
-export const profileData: Profile = {
-  name: "Amit Gupta",
-  headline: "Lead Engineer | Full Stack Engineer (Backend-Focused)",
-  imageUrl: "https://github.com/amitgupta1994.png",
-  contact: {
-    email: "jamitgupta1994@gmail.com",
-    phone: "(+977) 9843944663",
-    whatsapp: "https://wa.me/9779843944663",
-    location: "Kathmandu (Nepal)",
-    freelancer: "https://www.freelancer.com/u/iamamitgupta1994",
-    linkedin: "https://www.linkedin.com/in/iamamitgupta1994/",
-    github: "https://github.com/amitgupta1994",
-    googleScholar: "https://scholar.google.com/citations?user=NZwhe6kAAAAJ&hl=en&oi=sra",
-  },
-  hero: {
-    title: "Engineering systems that scale",
-    description: [
-      { text: "Lead engineer building " },
-      { text: "resilient backends", highlight: true },
-      { text: ", " },
-      { text: "AI-native products", highlight: true },
-      { text: " and cloud platforms that grow from first MVP to " },
-      { text: "high-concurrency scale", highlight: true },
-      { text: "." },
-    ],
-    cta: { label: "Let's build together", href: "/#contact" },
-  },
-  summary: "As a Tech Lead and Full Stack Engineer (Backend-Focused) with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth. \n \n I am a pragmatic builder and debugger who approaches software development from a strict systems engineering perspective. By combining strong coding fundamentals with a highly iterative mindset, I build quickly, diagnose issues efficiently, and continuously refine architectures to scale seamlessly from initial single region deployments to high concurrency, multi sharded environments. Ultimately, my focus goes beyond just writing code to designing resilient systems and cultivating a culture of relentless improvement. ",
-};
+type Nullable<T> = { [K in keyof T]: T[K] | null };
+
+/** The `profile` global as stored by Payload. */
+export interface CmsProfile {
+  name?: string | null;
+  headline?: string | null;
+  summary?: string | null;
+  image?: CmsMedia;
+  imageUrl?: string | null;
+  contact?: Partial<Nullable<Profile["contact"]>> | null;
+  hero?: {
+    title?: string | null;
+    description?: Array<{ text: string; highlight?: boolean | null }> | null;
+    cta?: { label?: string | null; href?: string | null } | null;
+  } | null;
+}
+
+// Tolerates an empty profile so a fresh deploy (empty database) still builds.
+export function mapProfile(doc: CmsProfile): Profile {
+  const contact = doc.contact ?? {};
+  const { hero } = doc;
+  return {
+    name: doc.name ?? "",
+    headline: doc.headline ?? "",
+    summary: doc.summary ?? "",
+    imageUrl: resolveImageUrl(doc.image, doc.imageUrl),
+    contact: {
+      email: contact.email ?? "",
+      phone: contact.phone ?? "",
+      whatsapp: orUndefined(contact.whatsapp),
+      location: orUndefined(contact.location),
+      freelancer: orUndefined(contact.freelancer),
+      linkedin: orUndefined(contact.linkedin),
+      github: orUndefined(contact.github),
+      googleScholar: orUndefined(contact.googleScholar),
+    },
+    hero: {
+      title: hero?.title ?? "",
+      description: (hero?.description ?? []).map(({ text, highlight }) => ({
+        text,
+        highlight: Boolean(highlight),
+      })),
+      cta: {
+        label: hero?.cta?.label ?? "",
+        href: hero?.cta?.href ?? "/#contact",
+      },
+    },
+  };
+}
+
+export async function getProfile(): Promise<Profile> {
+  const payload = await payloadClient();
+  const doc = await payload.findGlobal({ slug: "profile", depth: 1 });
+  return mapProfile(doc as unknown as CmsProfile);
+}
