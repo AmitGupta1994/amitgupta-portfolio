@@ -12,7 +12,6 @@ export interface CmsProject {
   imageUrl?: string | null;
 }
 
-
 export function mapProject(doc: CmsProject): Project {
   return {
     id: String(doc.id),
