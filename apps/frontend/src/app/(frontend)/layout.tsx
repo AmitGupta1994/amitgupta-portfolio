@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "../globals.css";
 
-import { getProfile } from "@/data/profile";
-import { getNavLinks } from "@/data/navigation";
+import { getNavLinks, getProfile } from '@/content';
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavMenu from "@/components/NavMenu";
 import PageLoader from "@/components/PageLoader";

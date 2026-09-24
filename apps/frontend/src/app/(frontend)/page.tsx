@@ -9,14 +9,8 @@ import MediumArticlesSection from '@/components/MediumArticlesSection';
 import AmbientBackground from '@/components/AmbientBackground';
 import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
 import PublicationsSection from '@/components/PublicationsSection';
+import { getExperiences, getExpertise, getNavLinks, getProfile, getProjects, getPublications, getSkillCategories } from '@/content';
 
-import { getProfile } from '@/data/profile';
-import { getNavLinks } from '@/data/navigation';
-import { getProjects } from '@/data/projects';
-import { getSkillCategories } from '@/data/skills';
-import { getExperiences } from '@/data/experience';
-import { getPublications } from '@/data/publications';
-import { getExpertise } from '@/data/expertise';
 
 // `overflow-x-clip` (not `hidden`) keeps <main> from becoming a scroll container,
 // which would break sticky and pinned sections.

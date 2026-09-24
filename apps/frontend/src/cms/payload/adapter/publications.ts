@@ -1,4 +1,4 @@
-import { payloadClient } from "@/lib/payload";
+import { payloadClient } from "../client";
 import { Publication } from "@/types/publication";
 
 interface CmsPublication extends Omit<Publication, "id"> {

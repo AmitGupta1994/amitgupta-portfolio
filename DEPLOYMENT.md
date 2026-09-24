@@ -1,92 +1,76 @@
 # Deploying to Vercel
 
-Two Vercel projects come from this one repository:
-
-| Project      | Root directory  | What it serves                                  |
-| ------------ | --------------- | ----------------------------------------------- |
-| CMS (admin)  | `apps/admin`    | Payload admin at `/admin` + the content API      |
-| Website      | `apps/frontend` | The public portfolio                             |
-
-Deploy the CMS first: the website reads its content from it.
+One Vercel project serves everything: the portfolio at `/` and the Payload admin at
+`/admin`, from `apps/frontend`.
 
 ## 1. Create the database (Neon)
 
 1. Create a project at [neon.tech](https://neon.tech) and a database in it.
-2. Copy the **pooled** connection string (the host contains `-pooler`). It looks like:
+2. Copy the **pooled** connection string (the host contains `-pooler`):
    `postgres://user:password@ep-something-pooler.region.aws.neon.tech/dbname?sslmode=require`
 
-That string is the `DATABASE_URL` below.
+## 2. Create the Vercel project
 
-## 2. CMS project
+Import the repository and set **Root Directory** to `apps/frontend`. Leave the build and
+install commands on their defaults — the build runs database migrations first. Under
+**Settings → Environment Variables** add:
 
-Import the repository in Vercel, then set **Root Directory** to `apps/admin`. Leave the
-build and install commands on their defaults — the build runs database migrations before
-building. Under **Settings → Environment Variables** add:
-
-| Variable                | Value                                                           |
-| ----------------------- | --------------------------------------------------------------- |
-| `DATABASE_URL`          | The Neon pooled connection string                                 |
+| Variable                | Value                                                                    |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `DATABASE_URL`          | The Neon pooled connection string                                          |
 | `PAYLOAD_SECRET`        | A long random string (`openssl rand -hex 32`). Never change it later — it invalidates logins |
-| `FRONTEND_URL`          | The website's URL, e.g. `https://your-site.vercel.app` (add after step 3) |
-| `REVALIDATE_SECRET`     | Any random string; the website gets the same value                 |
-| `BLOB_READ_WRITE_TOKEN` | From the Blob store in step 4                                      |
+| `BLOB_READ_WRITE_TOKEN` | Added for you in step 3                                                    |
 
-`SERVER_URL` is optional: without it the CMS uses its own Vercel production URL.
+Deploy, then open `https://your-site.vercel.app/admin` and create the first admin user.
 
-Deploy, then open `https://your-cms.vercel.app/admin` and create the first admin user.
+## 3. Image uploads (Vercel Blob)
 
-## 3. Website project
+Vercel's filesystem is read-only, so uploaded images need Blob storage. In the dashboard:
+**Storage → Create → Blob**, connect it to the project, and Vercel adds
+`BLOB_READ_WRITE_TOKEN`. Redeploy.
 
-Add a second Vercel project from the same repository with **Root Directory** set to
-`apps/frontend`, and these variables:
-
-| Variable            | Value                                                    |
-| ------------------- | -------------------------------------------------------- |
-| `CMS_URL`           | The CMS URL, e.g. `https://your-cms.vercel.app` (no trailing slash) |
-| `REVALIDATE_SECRET` | Exactly the same value as in the CMS project              |
-
-Deploy, then go back to the CMS project and set `FRONTEND_URL` to this project's URL, and
-redeploy the CMS so saving content refreshes the site.
-
-## 4. Image uploads (Vercel Blob)
-
-Vercel's filesystem is read-only, so uploaded images need Blob storage. In the Vercel
-dashboard: **Storage → Create → Blob**, connect it to the CMS project, and Vercel adds
-`BLOB_READ_WRITE_TOKEN` for you. Redeploy the CMS.
-
-Without the token the CMS still runs, but uploading an image fails. Content that uses
+Without the token the site still runs, but uploading an image fails. Content that uses
 external image URLs is unaffected.
 
-## 5. First content
+## 4. First content
 
 The production database starts empty. From your machine, with the Neon URL:
 
 ```bash
-DATABASE_URL="postgres://…neon.tech/dbname?sslmode=require" npm run seed -w admin
+NODE_ENV=production DATABASE_URL="postgres://…neon.tech/dbname?sslmode=require" npm run seed
 ```
 
-This **replaces** all portfolio content with `apps/admin/src/seed/data.ts`. It leaves
+`NODE_ENV=production` matters: without it Payload treats the database as a development one
+and syncs the schema directly, which makes the *next* deploy's migration step stop and ask
+for confirmation.
+
+This **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
 users and uploaded images alone. Run it once, then edit in the admin UI.
+
+## Caching
+
+Pages are prerendered and served from Vercel's CDN, so visitors don't hit the database.
+Saving in the admin clears that cache immediately (`src/cms/payload/hooks/revalidateSite.ts`), and
+pages also refresh hourly as a safety net.
+
+If you put Cloudflare in front, leave HTML caching off (the default) or you will also need
+to purge Cloudflare on every edit. Never let a CDN cache `/admin` or `/api`.
 
 ## Database changes later
 
-Schema changes are pushed automatically in development. Production runs committed
-migrations, which the CMS build applies. After changing any collection or global:
+Schema changes are pushed automatically in development; production runs committed
+migrations, which the build applies. After changing any collection or global:
 
 ```bash
-npm run migrate:create -w admin   # creates a file in apps/admin/src/migrations
+npm run migrate:create        # creates a file in apps/frontend/src/cms/payload/migrations
 ```
 
-Commit that file. The next CMS deploy applies it.
+Commit that file — without it the next deploy won't have the change.
 
 ## Notes
 
-- **Deploy order matters only the first time.** The website renders at request time, so
-  its build never fails because the CMS is unreachable — but pages will error until
-  `CMS_URL` points at a running CMS.
 - **After changing env vars, redeploy.** They're read at build and at runtime.
-- **Images from the CMS** are allowed automatically because the host comes from `CMS_URL`.
-  Other external image hosts must be added to `images.remotePatterns` in
-  `apps/frontend/next.config.ts`.
+- **The build needs the database**, because migrations run and pages are prerendered.
+- **Custom domain:** add it in Vercel; the site and `/admin` share it (ports 80/443).
 - **If a build can't resolve workspace packages**, enable "Include files outside the root
   directory" in the project's Build settings.

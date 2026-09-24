@@ -17,6 +17,8 @@ import { Profile } from './globals/Profile'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+// This adapter lives in src/cms/payload; the generated admin routes live in src/app/(payload).
+const srcDir = path.resolve(dirname, '../..')
 
 // No serverURL: the admin and the site share one origin, so uploads get
 // same-origin URLs (/api/media/file/…) that work in every environment.
@@ -29,7 +31,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: srcDir,
     },
   },
   collections: [Projects, Experiences, Expertise, SkillCategories, Publications, Media, Users],
