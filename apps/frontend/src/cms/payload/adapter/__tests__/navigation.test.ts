@@ -3,7 +3,7 @@ import { getNavLinks } from '../navigation';
 
 const findGlobal = vi.fn();
 
-vi.mock('@/lib/payload', () => ({
+vi.mock('../../client', () => ({
   payloadClient: async () => ({ findGlobal }),
 }));
 

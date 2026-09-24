@@ -1,4 +1,4 @@
-import { orUndefined, payloadClient, resolveImageUrl, type CmsMedia } from "@/lib/payload";
+import { orUndefined, payloadClient, resolveImageUrl, type CmsMedia } from "../client";
 import { Profile } from "@/types/profile";
 
 type Nullable<T> = { [K in keyof T]: T[K] | null };

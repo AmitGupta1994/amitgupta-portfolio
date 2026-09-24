@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "../globals.css";
 
-import { getProfile } from "@/data/profile";
-import { getNavLinks } from "@/data/navigation";
+import { getNavLinks, getProfile } from '@/content';
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavMenu from "@/components/NavMenu";
 import PageLoader from "@/components/PageLoader";
 import SmoothScroll from "@/components/SmoothScroll";
 
 // Pages are prerendered and served from the CDN; saving in the admin drops that
-// cache (src/hooks/revalidateSite.ts), and they refresh hourly as a safety net.
-export const revalidate = 3600;
+// cache (src/cms/payload/hooks/revalidateSite.ts), so this daily refresh is only a
+// safety net. Kept long on purpose: each scheduled regeneration wakes Neon's compute
+// for its idle window, which is what burns the free compute-hours budget.
+export const revalidate = 86400;
 
 const outfit = Outfit({
   subsets: ["latin"],

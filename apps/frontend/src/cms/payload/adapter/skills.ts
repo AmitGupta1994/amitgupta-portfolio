@@ -1,4 +1,4 @@
-import { payloadClient } from "@/lib/payload";
+import { payloadClient } from "../client";
 import { SkillCategoryData } from "@/types/skill";
 
 export interface CmsSkillCategory {

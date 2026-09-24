@@ -1,4 +1,4 @@
-import { orUndefined, payloadClient } from "@/lib/payload";
+import { orUndefined, payloadClient } from "../client";
 import { Expertise } from "@/types/expertise";
 
 interface CmsExpertise {

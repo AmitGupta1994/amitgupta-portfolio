@@ -1,4 +1,4 @@
-import { payloadClient } from "@/lib/payload";
+import { payloadClient } from "../client";
 import { NavLink } from "@/types/navigation";
 
 interface CmsNavigation {

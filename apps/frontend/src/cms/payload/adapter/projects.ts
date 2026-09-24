@@ -1,4 +1,4 @@
-import { payloadClient, resolveImageUrl, type CmsMedia } from "@/lib/payload";
+import { payloadClient, resolveImageUrl, type CmsMedia } from "../client";
 import { Project } from "@/types/project";
 
 export interface CmsProject {
