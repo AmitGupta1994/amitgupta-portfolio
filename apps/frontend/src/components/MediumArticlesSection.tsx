@@ -17,7 +17,9 @@ export default async function MediumArticlesSection() {
   
   try {
     const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@iamamitgupta1994', {
-      next: { revalidate: 3600 }
+      // Matches the page's daily revalidate; a shorter window here would drag the
+      // whole route (and a Neon wake-up) down to that interval.
+      next: { revalidate: 86400 }
     });
     const data = await res.json();
     if (data.status === 'ok') {

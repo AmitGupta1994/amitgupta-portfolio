@@ -41,8 +41,9 @@ NODE_ENV=production DATABASE_URL="postgres://…neon.tech/dbname?sslmode=require
 ```
 
 `NODE_ENV=production` matters: without it Payload treats the database as a development one
-and syncs the schema directly, which makes the *next* deploy's migration step stop and ask
-for confirmation.
+and syncs the schema directly, which marks the database as dev-pushed. The build answers the
+resulting confirmation prompt automatically, but from then on every deploy runs migrations
+against a schema that was never migrated — which can fail. Keep production migration-only.
 
 This **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
 users and uploaded images alone. Run it once, then edit in the admin UI.
@@ -51,7 +52,8 @@ users and uploaded images alone. Run it once, then edit in the admin UI.
 
 Pages are prerendered and served from Vercel's CDN, so visitors don't hit the database.
 Saving in the admin clears that cache immediately (`src/cms/payload/hooks/revalidateSite.ts`), and
-pages also refresh hourly as a safety net.
+pages also refresh once a day as a safety net — kept long so scheduled regenerations don't
+wake the Neon compute (and spend free compute-hours) for no reason.
 
 If you put Cloudflare in front, leave HTML caching off (the default) or you will also need
 to purge Cloudflare on every edit. Never let a CDN cache `/admin` or `/api`.
