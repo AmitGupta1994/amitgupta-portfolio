@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         hostname: "medium.com",
       },
       {
+        // YouTube thumbnails for the film galleries.
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
+      {
         // Uploads once Vercel Blob storage is connected.
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",

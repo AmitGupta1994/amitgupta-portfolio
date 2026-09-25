@@ -72,6 +72,8 @@ export interface Config {
     expertise: Expertise;
     'skill-categories': SkillCategory;
     publications: Publication;
+    photos: Photo;
+    videos: Video;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -86,6 +88,8 @@ export interface Config {
     expertise: ExpertiseSelect<false> | ExpertiseSelect<true>;
     'skill-categories': SkillCategoriesSelect<false> | SkillCategoriesSelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
+    photos: PhotosSelect<false> | PhotosSelect<true>;
+    videos: VideosSelect<false> | VideosSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -101,11 +105,13 @@ export interface Config {
     profile: Profile;
     navigation: Navigation;
     research: Research;
+    trek: Trek;
   };
   globalsSelect: {
     profile: ProfileSelect<false> | ProfileSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     research: ResearchSelect<false> | ResearchSelect<true>;
+    trek: TrekSelect<false> | TrekSelect<true>;
   };
   locale: null;
   widgets: {
@@ -165,7 +171,7 @@ export interface Project {
    */
   placements?:
     | {
-        site: 'research';
+        site: 'research' | 'trek';
         order: number;
         id?: string | null;
       }[]
@@ -214,7 +220,7 @@ export interface Experience {
    */
   placements?:
     | {
-        site: 'research';
+        site: 'research' | 'trek';
         order: number;
         id?: string | null;
       }[]
@@ -243,7 +249,7 @@ export interface Expertise {
    */
   placements?:
     | {
-        site: 'research';
+        site: 'research' | 'trek';
         order: number;
         id?: string | null;
       }[]
@@ -279,7 +285,7 @@ export interface SkillCategory {
    */
   placements?:
     | {
-        site: 'research';
+        site: 'research' | 'trek';
         order: number;
         id?: string | null;
       }[]
@@ -309,11 +315,73 @@ export interface Publication {
    */
   placements?:
     | {
-        site: 'research';
+        site: 'research' | 'trek';
         order: number;
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos".
+ */
+export interface Photo {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Which site these photos belong to.
+   */
+  site: 'research' | 'trek';
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name.
+   */
+  album?: string | null;
+  /**
+   * Which site these films belong to.
+   */
+  site: 'research' | 'trek';
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -385,6 +453,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
+      } | null)
+    | ({
+        relationTo: 'photos';
+        value: number | Photo;
+      } | null)
+    | ({
+        relationTo: 'videos';
+        value: number | Video;
       } | null)
     | ({
         relationTo: 'media';
@@ -551,6 +627,42 @@ export interface PublicationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos_select".
+ */
+export interface PhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  site?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
+  site?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -707,11 +819,18 @@ export interface Research {
   title: string;
   tagline?: string | null;
   /**
+   * Optional. Leave empty to reuse the main portfolio hero.
+   */
+  hero?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
    * Rendered as HTML, so inline tags like <strong> are allowed. Research and coding focus.
    */
   about: string;
   /**
-   * This site's own navigation. Hrefs are section ids on the research page.
+   * This site's own navigation. Hrefs are section ids on its page.
    */
   nav?:
     | {
@@ -722,7 +841,46 @@ export interface Research {
     | null;
   seo?: {
     /**
-     * Defaults to "<name> | Research".
+     * Defaults to "<name> | <title>".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek".
+ */
+export interface Trek {
+  id: number;
+  title: string;
+  tagline?: string | null;
+  /**
+   * Optional. Leave empty to reuse the main portfolio hero.
+   */
+  hero?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * Rendered as HTML, so inline tags like <strong> are allowed. Trekking focus: routes, altitude, gear, what the walking is like.
+   */
+  about: string;
+  /**
+   * This site's own navigation. Hrefs are section ids on its page.
+   */
+  nav?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | <title>".
      */
     title?: string | null;
     description?: string | null;
@@ -797,6 +955,43 @@ export interface NavigationSelect<T extends boolean = true> {
 export interface ResearchSelect<T extends boolean = true> {
   title?: T;
   tagline?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  about?: T;
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek_select".
+ */
+export interface TrekSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   about?: T;
   nav?:
     | T

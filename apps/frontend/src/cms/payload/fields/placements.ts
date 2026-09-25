@@ -2,6 +2,7 @@ import type { ArrayField } from 'payload'
 
 export const SITE_OPTIONS = [
   { label: 'Research (research.…)', value: 'research' },
+  { label: 'Trek (trek.…)', value: 'trek' },
 ]
 
 /**

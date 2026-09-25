@@ -8,12 +8,15 @@ import { fileURLToPath } from 'url'
 import { Experiences } from './collections/Experiences'
 import { Expertise } from './collections/Expertise'
 import { Media } from './collections/Media'
+import { Photos } from './collections/Photos'
 import { Projects } from './collections/Projects'
 import { Publications } from './collections/Publications'
+import { Videos } from './collections/Videos'
 import { SkillCategories } from './collections/SkillCategories'
 import { Users } from './collections/Users'
 import { Navigation } from './globals/Navigation'
 import { Research } from './globals/Research'
+import { Trek } from './globals/Trek'
 import { Profile } from './globals/Profile'
 
 const filename = fileURLToPath(import.meta.url)
@@ -35,8 +38,8 @@ export default buildConfig({
       baseDir: srcDir,
     },
   },
-  collections: [Projects, Experiences, Expertise, SkillCategories, Publications, Media, Users],
-  globals: [Profile, Navigation, Research],
+  collections: [Projects, Experiences, Expertise, SkillCategories, Publications, Photos, Videos, Media, Users],
+  globals: [Profile, Navigation, Research, Trek],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -55,7 +58,7 @@ export default buildConfig({
     ? [
         vercelBlobStorage({
           enabled: true,
-          collections: { media: true },
+          collections: { media: true, photos: true },
           token: blobToken,
         }),
       ]

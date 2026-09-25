@@ -17,7 +17,16 @@ describe('forSite', () => {
     expect(forSite(docs, 'research').map((d) => d.name)).toEqual(['research role', 'other research role']);
   });
 
-  it('falls back to every item when nothing is curated yet', () => {
+  it('shows nothing on trek until items are curated, since trek content is unrelated', () => {
+    const untagged = [{ id: 1, name: 'coding role', placements: null }];
+    expect(forSite(untagged, 'trek')).toEqual([]);
+  });
+
+  it('keeps trek items off the research site', () => {
+    expect(forSite(docs, 'trek').map((d) => d.name)).toEqual(['trek role']);
+  });
+
+  it('falls back to every item on research when nothing is curated yet', () => {
     const untagged = [
       { id: 1, name: 'a', placements: null },
       { id: 2, name: 'b', placements: [] },

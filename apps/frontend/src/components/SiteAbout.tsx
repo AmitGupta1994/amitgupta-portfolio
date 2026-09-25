@@ -1,13 +1,13 @@
 import ScrollReveal from "./ScrollReveal";
 
-interface ResearchAboutProps {
+interface SiteAboutProps {
   title: string;
   tagline?: string;
   /** HTML from the CMS, same contract as profile.summary. */
   about: string;
 }
 
-export default function ResearchAbout({ title, tagline, about }: ResearchAboutProps) {
+export default function SiteAbout({ title, tagline, about }: SiteAboutProps) {
   return (
     <ScrollReveal direction="up" distance={30} className="w-full scroll-mt-24">
       <section className="flex w-full flex-col gap-5">
