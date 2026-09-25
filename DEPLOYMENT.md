@@ -48,6 +48,21 @@ against a schema that was never migrated — which can fail. Keep production mig
 This **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
 users and uploaded images alone. Run it once, then edit in the admin UI.
 
+## Subdomains (research.…)
+
+The research site is the same deployment, served on its own host by
+`src/middleware.ts`. To put it live:
+
+1. Vercel → your project → **Settings → Domains → Add**: `research.yourdomain.com`.
+2. Vercel shows the DNS record to create. In Cloudflare add a **CNAME** for `research`
+   pointing at the target Vercel gives you. Leave the proxy off (grey cloud) unless you
+   have a reason to proxy — see the caching note below.
+3. Wait for the certificate to be issued, then open `https://research.yourdomain.com`.
+
+No extra project, build or environment variable is needed; `/research` keeps working on
+the main domain too. Adding `trek.` or `creatives.` later is the same three steps plus a
+row in `SITE_BY_SUBDOMAIN`.
+
 ## Caching
 
 Pages are prerendered and served from Vercel's CDN, so visitors don't hit the database.

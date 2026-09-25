@@ -1,6 +1,10 @@
 // Initial CMS content, migrated from the frontend's former src/data files.
 // Shapes match the Payload collections; `order` is assigned from array position.
 
+/** Curation for the research site: which items it shows, and in what order. */
+type Placement = { site: 'research'; order: number }
+const onResearch = (order: number): Placement[] => [{ site: 'research', order }]
+
 export const profile = {
   name: 'Amit Gupta',
   headline: 'Lead Engineer | Full Stack Engineer (Backend-Focused)',
@@ -107,6 +111,7 @@ export const experiences = [
     date: '07/01/2024 - Current',
     description:
       'Architected and led scalable backend and application systems across fintech, ride-sharing, travel, and AI platforms, supporting multi-product architecture with CI/CD pipelines and cloud-ready deployments.',
+    placements: onResearch(2),
   },
   {
     role: 'Professional Freelancer (Senior Software Engineer)',
@@ -114,6 +119,7 @@ export const experiences = [
     date: '17/05/2021 - Current',
     description:
       'Developed AI/ML systems including recommendation engines and generative AI applications, improving personalization quality and response relevance through NLP and machine learning pipelines.',
+    placements: onResearch(3),
   },
   {
     role: 'Research Exchange',
@@ -121,6 +127,7 @@ export const experiences = [
     date: '08/08/2023 - 08/12/2024',
     description:
       'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems.',
+    placements: onResearch(0),
   },
   {
     role: 'Research Assistant',
@@ -128,6 +135,7 @@ export const experiences = [
     date: '02/01/2022 - 02/01/2024',
     description:
       'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance.',
+    placements: onResearch(1),
   },
 ]
 
@@ -137,12 +145,14 @@ export const expertise = [
     years: '7+ Years',
     description:
       'Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring.',
+    placements: onResearch(2),
   },
   {
     domain: 'Backend & Databases',
     years: '4+ Years',
     description:
       'Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB.',
+    placements: onResearch(3),
   },
   {
     domain: 'DevOps & Cloud',
@@ -155,6 +165,7 @@ export const expertise = [
     years: '2+ Years',
     description:
       'Leveraging university research experience to build AI-native products, integrate intelligent data-driven models into production systems, and accelerate workflows using AI-assisted coding.',
+    placements: onResearch(1),
   },
   {
     domain: 'Frontend',
@@ -172,6 +183,7 @@ export const expertise = [
     years: '2 Years',
     description:
       'Served as a Research Assistant at Design Lab, Kathmandu University, specializing in Human Gait Analysis. Authored published papers and applied Machine Learning (ML) and Computer Vision (CV) techniques to advance data-driven research.',
+    placements: onResearch(0),
   },
 ]
 
@@ -182,12 +194,14 @@ export const publications = [
     authors: 'Pant, U., Baral, S., Gupta, A., & Shrestha, P. L.',
     date: '2024, September',
     publisher: 'IOP Conference Series: Materials Science and Engineering',
+    placements: onResearch(0),
   },
   {
     title: 'Application of Machine Learning Algorithm for Fault Detection in Pump',
     authors: 'Bhattarai, A., Gupta, A., Kafle, A., Sapkota, P., Chitrakar, S., Dahlhaug, O. G., & Pradhan, S.',
     date: '2023, August',
     publisher: 'International conference on the Efficiency and Performance Engineering Network (Springer Nature)',
+    placements: onResearch(1),
   },
   {
     title:
@@ -195,6 +209,7 @@ export const publications = [
     authors: 'Gupta, A., Shrestha, P. L., Thapa, B., Silwal, R., & Shrestha, R.',
     date: '2023, March',
     publisher: 'IOP Conference Series: Materials Science and Engineering',
+    placements: onResearch(2),
   },
 ]
 
@@ -210,6 +225,7 @@ export const skillCategories = [
       { name: 'SOLID Principles', rating: 9 },
       { name: 'MVVM', rating: 9 },
     ],
+    placements: onResearch(2),
   },
   {
     key: 'web',
@@ -222,6 +238,7 @@ export const skillCategories = [
       { name: 'PostgreSQL', rating: 8 },
       { name: 'AI/ML', rating: 8 },
     ],
+    placements: onResearch(1),
   },
   {
     key: 'mobile',
@@ -240,6 +257,7 @@ export const skillCategories = [
       { name: 'Docker', rating: 8 },
       { name: 'CI/CD', rating: 8 },
     ],
+    placements: onResearch(3),
   },
   {
     key: 'iot_embedded',
@@ -264,6 +282,7 @@ export const skillCategories = [
       { name: 'Sensor Fusion', rating: 7 },
       { name: 'Academic Writing', rating: 8 },
     ],
+    placements: onResearch(0),
   },
   {
     key: 'frontend',
@@ -288,6 +307,28 @@ export const skillCategories = [
       { name: 'Terraform', rating: 4 },
       { name: 'Agentic AI', rating: 4 },
     ],
+    placements: onResearch(4),
   },
 ]
 
+
+export const research = {
+  title: 'Research',
+  tagline: 'Gait analysis, sensing hardware and applied machine learning',
+  about:
+    'I work where <strong>research meets engineering</strong>: building the sensing hardware, computer-vision pipelines and analysis behind human gait studies, then turning the results into software that holds up outside the lab. My published work covers FSR-instrumented insoles for gait phase detection, pose-estimation based joint measurement validated against Kinovea, and machine learning for fault detection in pumps. \n \n Alongside the research I build the systems it depends on — data acquisition, APIs, pipelines and deployment — which is the same engineering practice I apply to production software.',
+  nav: [
+    { name: 'Home', href: '/#hero' },
+    { name: 'About', href: '/#about' },
+    { name: 'Publications', href: '/#publications' },
+    { name: 'Experience', href: '/#experience' },
+    { name: 'Skills', href: '/#skills' },
+    { name: 'Expertise', href: '/#expertise' },
+    { name: 'Contact', href: '/#contact' },
+  ],
+  seo: {
+    title: 'Amit Gupta | Research',
+    description:
+      'Published research on human gait analysis, FSR insoles, pose estimation and applied machine learning, by Amit Gupta.',
+  },
+}

@@ -29,6 +29,9 @@ interface SiteShellProps {
 export default function SiteShell({ navLinks, name, imageUrl, email, cta, children }: SiteShellProps) {
   return (
     <html lang="en" className={`${outfit.variable} h-full antialiased`} suppressHydrationWarning>
+      {/* App Router document shell: <head> is correct here. The lint rule targets
+          next/head, which is Pages Router only. */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <script
           dangerouslySetInnerHTML={{
