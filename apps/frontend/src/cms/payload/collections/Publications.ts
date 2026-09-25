@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
 import { orderField } from '../fields/order'
+import { placementsField } from '../fields/placements'
 import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const Publications: CollectionConfig = {
@@ -29,5 +30,6 @@ export const Publications: CollectionConfig = {
       ],
     },
     orderField,
+    placementsField,
   ],
 }

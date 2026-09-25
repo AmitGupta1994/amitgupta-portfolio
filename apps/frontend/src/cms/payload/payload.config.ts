@@ -13,6 +13,7 @@ import { Publications } from './collections/Publications'
 import { SkillCategories } from './collections/SkillCategories'
 import { Users } from './collections/Users'
 import { Navigation } from './globals/Navigation'
+import { Research } from './globals/Research'
 import { Profile } from './globals/Profile'
 
 const filename = fileURLToPath(import.meta.url)
@@ -35,7 +36,7 @@ export default buildConfig({
     },
   },
   collections: [Projects, Experiences, Expertise, SkillCategories, Publications, Media, Users],
-  globals: [Profile, Navigation],
+  globals: [Profile, Navigation, Research],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

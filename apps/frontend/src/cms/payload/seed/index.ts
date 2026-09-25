@@ -10,6 +10,7 @@ import {
   profile,
   projects,
   publications,
+  research,
   skillCategories,
 } from './data'
 
@@ -21,6 +22,7 @@ const payload = await getPayload({ config })
 
 await payload.updateGlobal({ slug: 'profile', data: profile, context })
 await payload.updateGlobal({ slug: 'navigation', data: { links: navigationLinks }, context })
+await payload.updateGlobal({ slug: 'research', data: research, context })
 
 await payload.delete({ collection: 'projects', where: everything, context })
 for (const [order, project] of projects.entries()) {

@@ -100,10 +100,12 @@ export interface Config {
   globals: {
     profile: Profile;
     navigation: Navigation;
+    research: Research;
   };
   globalsSelect: {
     profile: ProfileSelect<false> | ProfileSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    research: ResearchSelect<false> | ResearchSelect<true>;
   };
   locale: null;
   widgets: {
@@ -158,6 +160,16 @@ export interface Project {
    * Lower numbers appear first.
    */
   order: number;
+  /**
+   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
+   */
+  placements?:
+    | {
+        site: 'research';
+        order: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -197,6 +209,16 @@ export interface Experience {
    * Lower numbers appear first.
    */
   order: number;
+  /**
+   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
+   */
+  placements?:
+    | {
+        site: 'research';
+        order: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -216,6 +238,16 @@ export interface Expertise {
    * Lower numbers appear first.
    */
   order: number;
+  /**
+   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
+   */
+  placements?:
+    | {
+        site: 'research';
+        order: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -242,6 +274,16 @@ export interface SkillCategory {
    * 1 is highest priority.
    */
   priority: number;
+  /**
+   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
+   */
+  placements?:
+    | {
+        site: 'research';
+        order: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -262,6 +304,16 @@ export interface Publication {
    * Lower numbers appear first.
    */
   order: number;
+  /**
+   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
+   */
+  placements?:
+    | {
+        site: 'research';
+        order: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -402,6 +454,13 @@ export interface ProjectsSelect<T extends boolean = true> {
   image?: T;
   imageUrl?: T;
   order?: T;
+  placements?:
+    | T
+    | {
+        site?: T;
+        order?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -415,6 +474,13 @@ export interface ExperiencesSelect<T extends boolean = true> {
   date?: T;
   description?: T;
   order?: T;
+  placements?:
+    | T
+    | {
+        site?: T;
+        order?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -427,6 +493,13 @@ export interface ExpertiseSelect<T extends boolean = true> {
   years?: T;
   description?: T;
   order?: T;
+  placements?:
+    | T
+    | {
+        site?: T;
+        order?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -446,6 +519,13 @@ export interface SkillCategoriesSelect<T extends boolean = true> {
       };
   show?: T;
   priority?: T;
+  placements?:
+    | T
+    | {
+        site?: T;
+        order?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -459,6 +539,13 @@ export interface PublicationsSelect<T extends boolean = true> {
   date?: T;
   publisher?: T;
   order?: T;
+  placements?:
+    | T
+    | {
+        site?: T;
+        order?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -613,6 +700,38 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research".
+ */
+export interface Research {
+  id: number;
+  title: string;
+  tagline?: string | null;
+  /**
+   * Rendered as HTML, so inline tags like <strong> are allowed. Research and coding focus.
+   */
+  about: string;
+  /**
+   * This site's own navigation. Hrefs are section ids on the research page.
+   */
+  nav?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | Research".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "profile_select".
  */
 export interface ProfileSelect<T extends boolean = true> {
@@ -666,6 +785,31 @@ export interface NavigationSelect<T extends boolean = true> {
         name?: T;
         href?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research_select".
+ */
+export interface ResearchSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  about?: T;
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;

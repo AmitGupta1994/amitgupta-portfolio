@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
 import { orderField } from '../fields/order'
+import { placementsField } from '../fields/placements'
 import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const Projects: CollectionConfig = {
@@ -42,5 +43,6 @@ export const Projects: CollectionConfig = {
       admin: { description: 'Used when no image is uploaded.' },
     },
     orderField,
+    placementsField,
   ],
 }

@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
 import "../globals.css";
 
-import { getNavLinks, getProfile } from "@/content";
+import { getProfile, getResearchPage } from "@/content";
 import SiteShell from "@/components/SiteShell";
 
-// Pages are prerendered and served from the CDN; saving in the admin drops that
-// cache (src/cms/payload/hooks/revalidateSite.ts), so this daily refresh is only a
-// safety net. Kept long on purpose: each scheduled regeneration wakes Neon's compute
-// for its idle window, which is what burns the free compute-hours budget.
+// Same caching model as the main site: prerendered, cleared on save, daily fallback.
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const profile = await getProfile();
-  const title = `${profile.name} | Portfolio`;
-  const description = `${profile.name} - ${profile.headline}`;
+  const [profile, research] = await Promise.all([getProfile(), getResearchPage()]);
+  const title = research.seo.title ?? `${profile.name} | ${research.title}`;
+  const description =
+    research.seo.description ?? research.tagline ?? `Research work by ${profile.name}`;
 
   return {
     title,
@@ -28,16 +26,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function FrontendLayout({
+export default async function ResearchLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [profile, navLinks] = await Promise.all([getProfile(), getNavLinks()]);
+  const [profile, research] = await Promise.all([getProfile(), getResearchPage()]);
 
   return (
     <SiteShell
-      navLinks={navLinks}
+      navLinks={research.navLinks}
       name={profile.name}
       imageUrl={profile.imageUrl}
       email={profile.contact.email}
