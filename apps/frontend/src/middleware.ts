@@ -7,6 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 const SITE_BY_SUBDOMAIN: Record<string, string> = {
   research: "/research",
+  trek: "/trek",
 };
 
 export function middleware(request: NextRequest) {
