@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
 import { orderField } from '../fields/order'
+import { placementsField } from '../fields/placements'
 import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const Expertise: CollectionConfig = {
@@ -29,5 +30,6 @@ export const Expertise: CollectionConfig = {
     },
     { name: 'description', type: 'textarea', required: true },
     orderField,
+    placementsField,
   ],
 }

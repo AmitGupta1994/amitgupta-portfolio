@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { publicRead } from '../access/publicRead'
+import { placementsField } from '../fields/placements'
 import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
 
 export const SkillCategories: CollectionConfig = {
@@ -60,5 +61,6 @@ export const SkillCategories: CollectionConfig = {
       max: 99,
       admin: { position: 'sidebar', description: '1 is highest priority.' },
     },
+    placementsField,
   ],
 }
