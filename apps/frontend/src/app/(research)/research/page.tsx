@@ -1,79 +1,74 @@
-import AmbientBackground from '@/components/AmbientBackground';
-import ContactSection from '@/components/ContactSection';
-import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
-import ExperienceSection from '@/components/ExperienceSection';
-import ExpertiseSection from '@/components/ExpertiseSection';
-import Hero from '@/components/Hero';
-import PublicationsSection from '@/components/PublicationsSection';
-import SiteAbout from '@/components/SiteAbout';
-import SkillsSection from '@/components/SkillsSection';
+import LabelledList from '@/components/research/LabelledList';
+import PublicationEntry from '@/components/research/PublicationEntry';
+import ResearchFooter from '@/components/research/ResearchFooter';
+import ResearchMasthead from '@/components/research/ResearchMasthead';
+import RoleEntry from '@/components/research/RoleEntry';
+import YearSection from '@/components/research/YearSection';
 
-import { heroForSite } from '@/lib/siteHero';
+import { groupByYear } from '@/lib/year';
 import {
   getExperiences,
   getExpertise,
   getProfile,
-  getProjects,
   getPublications,
   getSitePage,
   getSkillCategories,
 } from '@/content';
 
-// Research-only view of the same content: publications lead, research roles and
-// skills come first, and the About copy is this site's own.
+// An academic page: masthead, then year-grouped publications and posts, then the
+// research skills. Same CMS tables as the portfolio, different presentation.
 export default async function ResearchHome() {
-  const [profile, site, publications, experiences, skills, expertise, projects] = await Promise.all([
+  const [profile, site, publications, experiences, skills, expertise] = await Promise.all([
     getProfile(),
     getSitePage('research'),
     getPublications('research'),
     getExperiences('research'),
     getSkillCategories('research'),
     getExpertise('research'),
-    getProjects('research'),
   ]);
 
+  const publicationGroups = groupByYear(publications, (publication) => publication.date).map((group) => ({
+    year: group.year,
+    items: group.items.map((publication) => (
+      <PublicationEntry key={publication.id} publication={publication} authorName={profile.name} />
+    )),
+  }));
+
+  const roleGroups = groupByYear(experiences, (experience) => experience.date).map((group) => ({
+    year: group.year,
+    items: group.items.map((experience) => <RoleEntry key={experience.id} experience={experience} />),
+  }));
+
   return (
-    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">
-      <AmbientBackground />
-      <DigitalMantrasSideNav links={site.navLinks} />
+    <main className="flex flex-col gap-16 pb-4 md:gap-20">
+      <ResearchMasthead
+        name={profile.name}
+        about={site.about}
+        tagline={site.tagline}
+        contact={profile.contact}
+      />
 
-      <div id="hero">
-        <Hero
-          name={profile.name}
-          headline={profile.headline}
-          contact={profile.contact}
-          hero={heroForSite(profile.hero, site.hero)}
-          projects={projects}
-        />
-      </div>
+      <YearSection title="Publications" groups={publicationGroups} />
+      <YearSection title="Experience" groups={roleGroups} />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
+      <LabelledList
+        title="Research skills"
+        rows={skills.map((category) => ({
+          label: category.title,
+          body: category.items.map((skill) => skill.name).join(' · '),
+        }))}
+      />
 
-        <div id="about" className="scroll-mt-28">
-          <SiteAbout title={site.title} tagline={site.tagline} about={site.about} />
-        </div>
+      <LabelledList
+        title="Expertise"
+        rows={expertise.map((item) => ({
+          label: item.domain,
+          detail: item.years,
+          body: item.description,
+        }))}
+      />
 
-        <div id="publications" className="scroll-mt-28">
-          <PublicationsSection publications={publications} />
-        </div>
-
-        <div id="experience" className="scroll-mt-28">
-          <ExperienceSection experiences={experiences} />
-        </div>
-
-        <div id="skills" className="scroll-mt-28">
-          <SkillsSection skills={skills} />
-        </div>
-
-        <div id="expertise" className="scroll-mt-28">
-          <ExpertiseSection expertise={expertise} />
-        </div>
-
-        <div id="contact" className="scroll-mt-28 pb-12">
-          <ContactSection />
-        </div>
-
-      </div>
+      <ResearchFooter name={profile.name} contact={profile.contact} mainSiteUrl={profile.mainSiteUrl} />
     </main>
   );
 }

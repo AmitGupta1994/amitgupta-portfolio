@@ -30,7 +30,8 @@
   --color-muted: var(--muted);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
-  --font-sans: var(--font-outfit), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-site-sans, var(--font-outfit)), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-site-serif, Georgia, "Times New Roman"), serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
@@ -38,6 +39,26 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* The research site is its own design: a light academic page on white with a blue
+   accent and a different type pairing. Scoped so the portfolio is untouched. */
+[data-site="research"] {
+  --background: #ffffff;
+  --foreground: #10161c;
+  --muted: #55606a;
+  --brand: #0088ff;
+  --brand-deep: #0058a6;
+  --glow-from: #e6f2ff;
+  --glow-to: #ffffff;
+  --font-site-sans: var(--font-hanken);
+  --font-site-serif: var(--font-crimson);
+}
+
+/* Faint dot grid behind the research masthead. */
+[data-site="research"] .dot-grid {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 /* Lenis (SmoothScroll.tsx) owns smooth scrolling, so no `scroll-behavior: smooth`

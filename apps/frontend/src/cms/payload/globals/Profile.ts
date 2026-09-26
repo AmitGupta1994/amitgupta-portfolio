@@ -66,6 +66,15 @@ export const Profile: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'mainSiteUrl',
+      type: 'text',
+      label: 'Main portfolio URL',
+      admin: {
+        description:
+          'Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — the other sites link back to it. A relative "/" would loop on a subdomain.',
+      },
+    },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {
       name: 'imageUrl',

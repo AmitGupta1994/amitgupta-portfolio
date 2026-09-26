@@ -1,6 +1,7 @@
 import * as migration_20260918_143456_initial from './20260918_143456_initial';
 import * as migration_20260925_033556_research_sites from './20260925_033556_research_sites';
 import * as migration_20260925_101309_trek_site from './20260925_101309_trek_site';
+import * as migration_20260926_043052_main_site_url from './20260926_043052_main_site_url';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20260925_101309_trek_site.up,
     down: migration_20260925_101309_trek_site.down,
-    name: '20260925_101309_trek_site'
+    name: '20260925_101309_trek_site',
+  },
+  {
+    up: migration_20260926_043052_main_site_url.up,
+    down: migration_20260926_043052_main_site_url.down,
+    name: '20260926_043052_main_site_url'
   },
 ];
