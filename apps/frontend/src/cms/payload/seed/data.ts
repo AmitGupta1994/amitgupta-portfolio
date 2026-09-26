@@ -9,6 +9,7 @@ export const profile = {
   name: 'Amit Gupta',
   headline: 'Lead Engineer | Full Stack Engineer (Backend-Focused)',
   imageUrl: 'https://github.com/amitgupta1994.png',
+  mainSiteUrl: 'https://guptaamit.com.np',
   contact: {
     email: 'iamitgupta1994@gmail.com',
     phone: '(+977) 9843944663',

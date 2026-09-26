@@ -9,6 +9,8 @@ export interface Profile {
   name: string;
   headline: string;
   imageUrl: string;
+  /** Absolute URL of the main portfolio, used by the other sites to link back. */
+  mainSiteUrl?: string;
   contact: {
     email: string;
     phone: string;

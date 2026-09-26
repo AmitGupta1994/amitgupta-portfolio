@@ -10,6 +10,7 @@ export interface CmsProfile {
   summary?: string | null;
   image?: CmsMedia;
   imageUrl?: string | null;
+  mainSiteUrl?: string | null;
   contact?: Partial<Nullable<Profile["contact"]>> | null;
   hero?: {
     title?: string | null;
@@ -27,6 +28,7 @@ export function mapProfile(doc: CmsProfile): Profile {
     headline: doc.headline ?? "",
     summary: doc.summary ?? "",
     imageUrl: resolveImageUrl(doc.image, doc.imageUrl),
+    mainSiteUrl: orUndefined(doc.mainSiteUrl),
     contact: {
       email: contact.email ?? "",
       phone: contact.phone ?? "",

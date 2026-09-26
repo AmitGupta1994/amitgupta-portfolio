@@ -769,6 +769,10 @@ export interface Profile {
       href: string;
     };
   };
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — the other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
   image?: (number | null) | Media;
   /**
    * Used when no image is uploaded.
@@ -913,6 +917,7 @@ export interface ProfileSelect<T extends boolean = true> {
               href?: T;
             };
       };
+  mainSiteUrl?: T;
   image?: T;
   imageUrl?: T;
   contact?:
