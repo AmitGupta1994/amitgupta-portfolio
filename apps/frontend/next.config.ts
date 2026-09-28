@@ -1,10 +1,21 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
+// Preview/staging deployments must never be indexed.
+const isProduction = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production";
+
 const nextConfig: NextConfig = {
   // The CMS must never be cached by a CDN, however Cloudflare's rules are set up.
   async headers() {
     return [
+      ...(isProduction
+        ? []
+        : [
+            {
+              source: "/:path*",
+              headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+            },
+          ]),
       {
         source: "/admin/:path*",
         headers: [{ key: "Cache-Control", value: "private, no-store, max-age=0" }],

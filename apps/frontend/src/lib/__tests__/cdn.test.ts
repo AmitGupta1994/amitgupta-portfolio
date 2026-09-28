@@ -39,6 +39,16 @@ describe('purgeCdnCache', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('never purges the shared zone from a staging deployment', async () => {
+    process.env.VERCEL_ENV = 'preview';
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(purgeCdnCache()).resolves.toEqual({ purged: false, reason: 'skipped on preview' });
+    expect(fetchMock).not.toHaveBeenCalled();
+    delete process.env.VERCEL_ENV;
+  });
+
   it('reports a failed purge instead of throwing', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 403 }));
     await expect(purgeCdnCache()).resolves.toEqual({
