@@ -11,6 +11,12 @@ export async function purgeCdnCache(): Promise<{ purged: boolean; reason?: strin
   const token = process.env.CLOUDFLARE_API_TOKEN;
   if (!zoneId || !token) return { purged: false, reason: "no Cloudflare credentials" };
 
+  // Staging shares the Cloudflare zone with production, and a purge is zone-wide:
+  // publishing on staging must not wipe production's cache.
+  if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
+    return { purged: false, reason: `skipped on ${process.env.VERCEL_ENV}` };
+  }
+
   try {
     const res = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
       method: "POST",

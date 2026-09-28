@@ -1,20 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { siteForHost } from "@/lib/siteForHost";
 
 /**
  * Host-based routing: research.<domain> serves the /research route, so each site
  * gets its own hostname out of one deployment. The path stays clean because this
- * is a rewrite, not a redirect. `/research` still works on the main domain.
+ * is a rewrite, not a redirect. `/research` still works on the main domain, and
+ * staging hosts (staging.research.…, research-staging.…) resolve the same way.
  */
-const SITE_BY_SUBDOMAIN: Record<string, string> = {
-  research: "/research",
-  trek: "/trek",
-};
-
 export function middleware(request: NextRequest) {
-  const host = request.headers.get("host")?.split(":")[0] ?? "";
-  const subdomain = host.split(".")[0];
-  const basePath = SITE_BY_SUBDOMAIN[subdomain];
-
+  const basePath = siteForHost(request.headers.get("host"));
   if (!basePath) return NextResponse.next();
 
   const url = request.nextUrl.clone();

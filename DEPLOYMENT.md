@@ -107,6 +107,33 @@ Without the two variables nothing breaks: only Vercel is purged, so leave Cloudf
 HTML caching off (its default) — otherwise your edits sit behind a stale copy until the
 TTL expires.
 
+## Staging (staging.research.…)
+
+Staging is the **same Vercel project**, deployed from a `staging` branch with its own
+database. Nothing extra is needed in code: `staging.research.<domain>` and
+`research-staging.<domain>` both resolve to the research site.
+
+1. **Branch:** `git switch -c staging && git push -u origin staging`.
+2. **Database:** create a Neon branch (e.g. `staging`) and copy its pooled connection
+   string.
+3. **Vercel → Settings → Environment Variables**, for **Preview** only:
+   `DATABASE_URL` = the Neon staging string, plus `PAYLOAD_SECRET` (any value; a different
+   one from production is fine).
+4. **Vercel → Settings → Domains → Add** `staging.research.<domain>`, and in the dialog
+   **assign it to the `staging` branch** instead of production.
+5. **Cloudflare → DNS**: CNAME `staging.research` → the target Vercel shows, **DNS only
+   (grey cloud)**. This matters: Cloudflare's free Universal SSL only covers one level of
+   subdomain, so a proxied `staging.research.…` would fail TLS. Either keep it DNS-only, or
+   name it `research-staging.<domain>` (a single level) if you want it proxied.
+6. Push to `staging` and the domain serves that branch; `main` keeps serving production.
+
+Notes:
+
+- Staging deployments send `X-Robots-Tag: noindex` so they never reach search results.
+- Publishing on staging does **not** purge Cloudflare — the purge is zone-wide and would
+  clear production's cache. Staging pages still refresh through Vercel's own invalidation.
+- Run the seed against the staging database the same way, with its own `DATABASE_URL`.
+
 ## Database changes later
 
 Schema changes are pushed automatically in development; production runs committed
