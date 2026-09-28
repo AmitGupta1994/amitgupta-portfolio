@@ -2,6 +2,19 @@ import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The CMS must never be cached by a CDN, however Cloudflare's rules are set up.
+  async headers() {
+    return [
+      {
+        source: "/admin/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store, max-age=0" }],
+      },
+      {
+        source: "/api/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store, max-age=0" }],
+      },
+    ];
+  },
   images: {
     // Media uploaded to the CMS is served from this same app.
     localPatterns: [{ pathname: "/api/media/file/**" }],
