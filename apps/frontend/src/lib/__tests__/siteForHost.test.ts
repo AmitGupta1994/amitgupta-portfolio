@@ -7,6 +7,13 @@ describe('siteForHost', () => {
     expect(siteForHost('trek.guptaamit.com.np')).toBe('/trek');
   });
 
+  it('routes www variants of a site to the same site', () => {
+    expect(siteForHost('www.research.guptaamit.com.np')).toBe('/research');
+    expect(siteForHost('www.trek.guptaamit.com.np')).toBe('/trek');
+    expect(siteForHost('www.staging.research.guptaamit.com.np')).toBe('/research');
+    expect(siteForHost('staging.www.trek.guptaamit.com.np')).toBe('/trek');
+  });
+
   it('routes staging hosts to the same site', () => {
     expect(siteForHost('staging.research.guptaamit.com.np')).toBe('/research');
     expect(siteForHost('research-staging.guptaamit.com.np')).toBe('/research');
