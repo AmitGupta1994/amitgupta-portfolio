@@ -75,7 +75,22 @@ Next.js 16 App Router + React 19 + Tailwind CSS v4 + GSAP. `@/*` maps to `src/*`
 
 **Content comes from the CMS through `@/content`, typed by `src/types`.** The adapter modules (`src/cms/payload/adapter/profile.ts`, `projects.ts`, `skills.ts`, `experience.ts`, `publications.ts`, `expertise.ts`, `navigation.ts`) each export an async `get*()` that queries Payload's local API through `src/cms/payload/client.ts` and maps the doc onto the frontend type (nulls → undefined, uploads → same-origin URLs). Mappers are exported separately (`mapProfile`, `mapProject`, `mapSkillCategory`) because the tests cover them. Only server components call the getters; components take data as props — a client component importing them would pull Payload into the browser bundle. `mapProfile` tolerates an empty profile so a first deploy against an empty database still builds. Copy edits happen in the admin UI, not in code. Note `profile.summary` contains HTML and is rendered with `dangerouslySetInnerHTML` in `About.tsx`. Skill categories carry `show` and `priority` used for filtering/ordering.
 
-**Caching.** `src/app/(frontend)/layout.tsx` sets `revalidate = 86400`, so `/` and `/projects` are prerendered and served from the CDN; visitors don't hit Postgres. Saving in the admin runs the `revalidateSite` hooks (`revalidatePath('/', 'layout')`), which invalidates those pages immediately, so the daily window is only a fallback — it's deliberately long because each scheduled regeneration wakes Neon's compute for its idle window and burns free compute-hours. `/admin` and `/api/**` are dynamic and query on every request.
+## Caching and CDN (Cloudflare DNS → Vercel)
+
+Every site and subdomain is served from a CDN; Postgres is only touched when a page is regenerated or when the admin/API is used.
+
+**Layer 1 — Vercel's CDN (the one that matters).** Each site layout sets `revalidate = 86400`, so `/`, `/projects`, `/research` and `/trek` are prerendered and served as static HTML from Vercel's edge. Keep every page in that mode: no `force-dynamic`, no `cookies()`/`headers()` inside a page, and no short-lived `fetch` in one — Next applies the **shortest** window on a route, which is why `MediumArticlesSection` also uses `revalidate: 86400`. `/admin` and `/api/**` are dynamic by nature and must never be cached.
+
+**Invalidation on publish.** Saving in the admin runs the `revalidateSite` hooks (`src/cms/payload/hooks/revalidateSite.ts`): `revalidatePath('/', 'layout')` clears every site's pages, then `purgeCdnCache()` (`src/lib/cdn.ts`) purges Cloudflare. Both are fire-and-forget — a CDN failure must never block a save. The daily window is only a fallback, kept long because each scheduled regeneration wakes Neon's compute for its idle window and burns free compute-hours.
+
+**Layer 2 — Cloudflare.** Proxying (orange cloud) is safe because of that purge. Rules:
+
+- `CLOUDFLARE_ZONE_ID` + `CLOUDFLARE_API_TOKEN` (token needs only *Zone → Cache Purge*) enable purging. Without them purging is skipped and only Vercel is invalidated — then leave Cloudflare's HTML caching off, or edits sit behind a stale copy.
+- **No cache rule may touch `/admin` or `/api`.** `next.config.ts` sends `Cache-Control: private, no-store` on both, so a misconfigured rule still can't cache a logged-in admin response.
+- SSL/TLS mode must be **Full (strict)**, and a subdomain must exist in Vercel *before* it is proxied, or certificate issuance fails.
+- Static assets (`/_next/static/**`, uploads) are immutable and cached hard by both CDNs; nothing to configure.
+
+**A new site inherits all of this** (prerendered layout + shared hooks). Adding one is a hostname in Vercel and a CNAME in Cloudflare.
 
 **The whole site is one scrolling page.** `src/app/(frontend)/page.tsx` composes every section inside anchor `<div id="...">` wrappers whose ids must match the Navigation global's hrefs in the CMS (`/#hero`, `/#about`, …). Adding a section means touching the page and the CMS navigation. `src/app/(frontend)/projects/page.tsx` is a separate unstyled route that predates the main page.
 

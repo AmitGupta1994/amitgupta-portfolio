@@ -68,15 +68,44 @@ The trek site's photo gallery uploads through the admin, so it needs the Blob st
 step 3; its films only store YouTube URLs and cost nothing. Sections with no content yet
 don't render, so the page is presentable before you upload anything.
 
-## Caching
+## Caching and the CDN
 
-Pages are prerendered and served from Vercel's CDN, so visitors don't hit the database.
-Saving in the admin clears that cache immediately (`src/cms/payload/hooks/revalidateSite.ts`), and
-pages also refresh once a day as a safety net — kept long so scheduled regenerations don't
-wake the Neon compute (and spend free compute-hours) for no reason.
+Pages are prerendered and served from Vercel's edge, so visitors never reach Postgres:
+`/`, `/projects`, `/research` and `/trek` all carry
+`Cache-Control: s-maxage=86400, stale-while-revalidate=…`. Saving in the admin clears
+those pages immediately (`src/cms/payload/hooks/revalidateSite.ts`) and purges Cloudflare;
+the daily window is only a fallback. `/admin` and `/api/**` send
+`Cache-Control: private, no-store` and must never be cached.
 
-If you put Cloudflare in front, leave HTML caching off (the default) or you will also need
-to purge Cloudflare on every edit. Never let a CDN cache `/admin` or `/api`.
+### Cloudflare (proxied, orange cloud)
+
+Proxying is fine as long as the app can purge Cloudflare when you publish. Set it up once:
+
+1. Cloudflare → **My Profile → API Tokens → Create Token → Create Custom Token**.
+   Permissions: **Zone → Cache Purge → Purge**. Zone Resources: **Include → Specific zone →
+   your domain**. Copy the token.
+2. Cloudflare → your domain → **Overview**, copy the **Zone ID** from the right-hand panel.
+3. Vercel → Settings → Environment Variables, add for Production and Preview:
+
+| Variable               | Value                     |
+| ---------------------- | ------------------------- |
+| `CLOUDFLARE_ZONE_ID`   | The zone id from step 2   |
+| `CLOUDFLARE_API_TOKEN` | The token from step 1     |
+
+4. Redeploy. From then on, every save purges both caches.
+
+Also in Cloudflare:
+
+- **SSL/TLS → Overview → Full (strict)**.
+- Add each subdomain in **Vercel first**, then point a CNAME at the target Vercel shows.
+  Keep a new record DNS-only until its certificate is issued, then proxy it if you want.
+- **Never add a cache rule for `/admin*` or `/api*`.** If you add an HTML cache rule for the
+  rest, keep Edge TTL on "respect origin headers" so the `s-maxage` above is honoured.
+- Leave Browser Cache TTL on **Respect Existing Headers**.
+
+Without the two variables nothing breaks: only Vercel is purged, so leave Cloudflare's
+HTML caching off (its default) — otherwise your edits sit behind a stale copy until the
+TTL expires.
 
 ## Database changes later
 
