@@ -1,4 +1,4 @@
-import type { StandaloneSiteKey } from "@/content/ports";
+import type { SiteKey } from "@/types/sites";
 import type { Photo } from "@/types/photo";
 import { orUndefined, payloadClient } from "../client";
 
@@ -24,11 +24,10 @@ export function mapPhoto(doc: CmsPhoto): Photo {
   };
 }
 
-export async function getPhotos(site: StandaloneSiteKey): Promise<Photo[]> {
+export async function getPhotos(site: SiteKey): Promise<Photo[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({
-    collection: "photos",
-    where: { site: { equals: site } },
+    collection: `${site}-photos`,
     limit: 200,
     depth: 0,
     sort: "order",

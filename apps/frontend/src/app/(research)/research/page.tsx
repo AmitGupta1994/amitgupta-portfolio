@@ -6,26 +6,19 @@ import RoleEntry from '@/components/research/RoleEntry';
 import YearSection from '@/components/research/YearSection';
 
 import { groupByYear } from '@/lib/year';
-import {
-  getExperiences,
-  getExpertise,
-  getProfile,
-  getPublications,
-  getSitePage,
-  getSkillCategories,
-} from '@/content';
+import { getExperiences, getExpertise, getPublications, getSite, getSkillCategories } from '@/content';
 
 // An academic page: masthead, then year-grouped publications and posts, then the
 // research skills. Same CMS tables as the portfolio, different presentation.
 export default async function ResearchHome() {
-  const [profile, site, publications, experiences, skills, expertise] = await Promise.all([
-    getProfile(),
-    getSitePage('research'),
+  const [site, publications, experiences, skills, expertise] = await Promise.all([
+    getSite('research'),
     getPublications('research'),
     getExperiences('research'),
     getSkillCategories('research'),
     getExpertise('research'),
   ]);
+  const { profile } = site;
 
   const publicationGroups = groupByYear(publications, (publication) => publication.date).map((group) => ({
     year: group.year,
@@ -43,7 +36,7 @@ export default async function ResearchHome() {
     <main className="flex flex-col gap-16 pb-4 md:gap-20">
       <ResearchMasthead
         name={profile.name}
-        about={site.about}
+        about={profile.summary}
         tagline={site.tagline}
         contact={profile.contact}
       />

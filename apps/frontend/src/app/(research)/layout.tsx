@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Crimson_Text, Hanken_Grotesk } from "next/font/google";
 import "../globals.css";
 
-import { getProfile, getSitePage } from "@/content";
+import { getSite } from "@/content";
 
 // Prerendered and cleared on save, like the other sites; daily fallback.
 export const revalidate = 86400;
@@ -25,7 +25,8 @@ const crimson = Crimson_Text({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [profile, site] = await Promise.all([getProfile(), getSitePage("research")]);
+  const site = await getSite("research");
+  const { profile } = site;
   const title = site.seo.title ?? `${profile.name} | ${site.title}`;
   const description = site.seo.description ?? site.tagline ?? `Research work by ${profile.name}`;
 

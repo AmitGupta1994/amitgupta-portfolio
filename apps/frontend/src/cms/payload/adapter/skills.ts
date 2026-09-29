@@ -1,9 +1,8 @@
-import type { SiteKey } from "@/content/ports";
+import type { SiteKey } from "@/types/sites";
 import { payloadClient } from "../client";
-import { forSite, type WithPlacements } from "./site";
 import { SkillCategoryData } from "@/types/skill";
 
-export interface CmsSkillCategory extends WithPlacements {
+export interface CmsSkillCategory {
   id: number | string;
   key: string;
   title: string;
@@ -22,13 +21,13 @@ export function mapSkillCategory(doc: CmsSkillCategory): SkillCategoryData {
   };
 }
 
-export async function getSkillCategories(site: SiteKey = "personal"): Promise<SkillCategoryData[]> {
+export async function getSkillCategories(site: SiteKey): Promise<SkillCategoryData[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({
-    collection: "skill-categories",
+    collection: `${site}-skill-categories`,
     limit: 100,
     depth: 0,
     sort: "priority",
   });
-  return forSite(docs as unknown as CmsSkillCategory[], site).map(mapSkillCategory);
+  return (docs as unknown as CmsSkillCategory[]).map(mapSkillCategory);
 }

@@ -67,13 +67,27 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    projects: Project;
-    experiences: Experience;
-    expertise: Expertise;
-    'skill-categories': SkillCategory;
-    publications: Publication;
-    photos: Photo;
-    videos: Video;
+    'tech-experiences': TechExperience;
+    'tech-skill-categories': TechSkillCategory;
+    'tech-expertise': TechExpertise;
+    'tech-projects': TechProject;
+    'tech-publications': TechPublication;
+    'tech-photos': TechPhoto;
+    'tech-videos': TechVideo;
+    'research-experiences': ResearchExperience;
+    'research-skill-categories': ResearchSkillCategory;
+    'research-expertise': ResearchExpertise;
+    'research-projects': ResearchProject;
+    'research-publications': ResearchPublication;
+    'research-photos': ResearchPhoto;
+    'research-videos': ResearchVideo;
+    'trek-experiences': TrekExperience;
+    'trek-skill-categories': TrekSkillCategory;
+    'trek-expertise': TrekExpertise;
+    'trek-projects': TrekProject;
+    'trek-publications': TrekPublication;
+    'trek-photos': TrekPhoto;
+    'trek-videos': TrekVideo;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -83,13 +97,27 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    projects: ProjectsSelect<false> | ProjectsSelect<true>;
-    experiences: ExperiencesSelect<false> | ExperiencesSelect<true>;
-    expertise: ExpertiseSelect<false> | ExpertiseSelect<true>;
-    'skill-categories': SkillCategoriesSelect<false> | SkillCategoriesSelect<true>;
-    publications: PublicationsSelect<false> | PublicationsSelect<true>;
-    photos: PhotosSelect<false> | PhotosSelect<true>;
-    videos: VideosSelect<false> | VideosSelect<true>;
+    'tech-experiences': TechExperiencesSelect<false> | TechExperiencesSelect<true>;
+    'tech-skill-categories': TechSkillCategoriesSelect<false> | TechSkillCategoriesSelect<true>;
+    'tech-expertise': TechExpertiseSelect<false> | TechExpertiseSelect<true>;
+    'tech-projects': TechProjectsSelect<false> | TechProjectsSelect<true>;
+    'tech-publications': TechPublicationsSelect<false> | TechPublicationsSelect<true>;
+    'tech-photos': TechPhotosSelect<false> | TechPhotosSelect<true>;
+    'tech-videos': TechVideosSelect<false> | TechVideosSelect<true>;
+    'research-experiences': ResearchExperiencesSelect<false> | ResearchExperiencesSelect<true>;
+    'research-skill-categories': ResearchSkillCategoriesSelect<false> | ResearchSkillCategoriesSelect<true>;
+    'research-expertise': ResearchExpertiseSelect<false> | ResearchExpertiseSelect<true>;
+    'research-projects': ResearchProjectsSelect<false> | ResearchProjectsSelect<true>;
+    'research-publications': ResearchPublicationsSelect<false> | ResearchPublicationsSelect<true>;
+    'research-photos': ResearchPhotosSelect<false> | ResearchPhotosSelect<true>;
+    'research-videos': ResearchVideosSelect<false> | ResearchVideosSelect<true>;
+    'trek-experiences': TrekExperiencesSelect<false> | TrekExperiencesSelect<true>;
+    'trek-skill-categories': TrekSkillCategoriesSelect<false> | TrekSkillCategoriesSelect<true>;
+    'trek-expertise': TrekExpertiseSelect<false> | TrekExpertiseSelect<true>;
+    'trek-projects': TrekProjectsSelect<false> | TrekProjectsSelect<true>;
+    'trek-publications': TrekPublicationsSelect<false> | TrekPublicationsSelect<true>;
+    'trek-photos': TrekPhotosSelect<false> | TrekPhotosSelect<true>;
+    'trek-videos': TrekVideosSelect<false> | TrekVideosSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -102,14 +130,12 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    profile: Profile;
-    navigation: Navigation;
+    tech: Tech;
     research: Research;
     trek: Trek;
   };
   globalsSelect: {
-    profile: ProfileSelect<false> | ProfileSelect<true>;
-    navigation: NavigationSelect<false> | NavigationSelect<true>;
+    tech: TechSelect<false> | TechSelect<true>;
     research: ResearchSelect<false> | ResearchSelect<true>;
     trek: TrekSelect<false> | TrekSelect<true>;
   };
@@ -143,9 +169,74 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
+ * via the `definition` "tech-experiences".
  */
-export interface Project {
+export interface TechExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-skill-categories".
+ */
+export interface TechSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-expertise".
+ */
+export interface TechExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-projects".
+ */
+export interface TechProject {
   id: number;
   title: string;
   description: string;
@@ -166,16 +257,6 @@ export interface Project {
    * Lower numbers appear first.
    */
   order: number;
-  /**
-   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
-   */
-  placements?:
-    | {
-        site: 'research' | 'trek';
-        order: number;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -200,104 +281,9 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "experiences".
+ * via the `definition` "tech-publications".
  */
-export interface Experience {
-  id: number;
-  role: string;
-  company: string;
-  /**
-   * Shown as written, e.g. "07/01/2024 - Current".
-   */
-  date: string;
-  description: string;
-  /**
-   * Lower numbers appear first.
-   */
-  order: number;
-  /**
-   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
-   */
-  placements?:
-    | {
-        site: 'research' | 'trek';
-        order: number;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "expertise".
- */
-export interface Expertise {
-  id: number;
-  domain: string;
-  /**
-   * e.g. "4+ Years"
-   */
-  years?: string | null;
-  description: string;
-  /**
-   * Lower numbers appear first.
-   */
-  order: number;
-  /**
-   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
-   */
-  placements?:
-    | {
-        site: 'research' | 'trek';
-        order: number;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "skill-categories".
- */
-export interface SkillCategory {
-  id: number;
-  title: string;
-  /**
-   * Stable identifier, e.g. "web".
-   */
-  key: string;
-  items?:
-    | {
-        name: string;
-        rating: number;
-        id?: string | null;
-      }[]
-    | null;
-  show?: boolean | null;
-  /**
-   * 1 is highest priority.
-   */
-  priority: number;
-  /**
-   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
-   */
-  placements?:
-    | {
-        site: 'research' | 'trek';
-        order: number;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publications".
- */
-export interface Publication {
+export interface TechPublication {
   id: number;
   title: string;
   authors: string;
@@ -310,24 +296,14 @@ export interface Publication {
    * Lower numbers appear first.
    */
   order: number;
-  /**
-   * Add a row per other site this should appear on, with its position there (lower shows first). Leave empty to keep it on the main portfolio only.
-   */
-  placements?:
-    | {
-        site: 'research' | 'trek';
-        order: number;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "photos".
+ * via the `definition` "tech-photos".
  */
-export interface Photo {
+export interface TechPhoto {
   id: number;
   /**
    * Shown under the photo and used as its alt text.
@@ -338,10 +314,6 @@ export interface Photo {
    */
   album?: string | null;
   location?: string | null;
-  /**
-   * Which site these photos belong to.
-   */
-  site: 'research' | 'trek';
   /**
    * Lower numbers appear first.
    */
@@ -360,9 +332,9 @@ export interface Photo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
+ * via the `definition` "tech-videos".
  */
-export interface Video {
+export interface TechVideo {
   id: number;
   title: string;
   /**
@@ -375,9 +347,339 @@ export interface Video {
    */
   album?: string | null;
   /**
-   * Which site these films belong to.
+   * Lower numbers appear first.
    */
-  site: 'research' | 'trek';
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-experiences".
+ */
+export interface ResearchExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-skill-categories".
+ */
+export interface ResearchSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-expertise".
+ */
+export interface ResearchExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-projects".
+ */
+export interface ResearchProject {
+  id: number;
+  title: string;
+  description: string;
+  techStack?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-publications".
+ */
+export interface ResearchPublication {
+  id: number;
+  title: string;
+  authors: string;
+  /**
+   * e.g. "2024, September"
+   */
+  date: string;
+  publisher: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-photos".
+ */
+export interface ResearchPhoto {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-videos".
+ */
+export interface ResearchVideo {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name.
+   */
+  album?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-experiences".
+ */
+export interface TrekExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-skill-categories".
+ */
+export interface TrekSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-expertise".
+ */
+export interface TrekExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-projects".
+ */
+export interface TrekProject {
+  id: number;
+  title: string;
+  description: string;
+  techStack?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-publications".
+ */
+export interface TrekPublication {
+  id: number;
+  title: string;
+  authors: string;
+  /**
+   * e.g. "2024, September"
+   */
+  date: string;
+  publisher: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-photos".
+ */
+export interface TrekPhoto {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-videos".
+ */
+export interface TrekVideo {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name.
+   */
+  album?: string | null;
   /**
    * Lower numbers appear first.
    */
@@ -435,32 +737,88 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'projects';
-        value: number | Project;
+        relationTo: 'tech-experiences';
+        value: number | TechExperience;
       } | null)
     | ({
-        relationTo: 'experiences';
-        value: number | Experience;
+        relationTo: 'tech-skill-categories';
+        value: number | TechSkillCategory;
       } | null)
     | ({
-        relationTo: 'expertise';
-        value: number | Expertise;
+        relationTo: 'tech-expertise';
+        value: number | TechExpertise;
       } | null)
     | ({
-        relationTo: 'skill-categories';
-        value: number | SkillCategory;
+        relationTo: 'tech-projects';
+        value: number | TechProject;
       } | null)
     | ({
-        relationTo: 'publications';
-        value: number | Publication;
+        relationTo: 'tech-publications';
+        value: number | TechPublication;
       } | null)
     | ({
-        relationTo: 'photos';
-        value: number | Photo;
+        relationTo: 'tech-photos';
+        value: number | TechPhoto;
       } | null)
     | ({
-        relationTo: 'videos';
-        value: number | Video;
+        relationTo: 'tech-videos';
+        value: number | TechVideo;
+      } | null)
+    | ({
+        relationTo: 'research-experiences';
+        value: number | ResearchExperience;
+      } | null)
+    | ({
+        relationTo: 'research-skill-categories';
+        value: number | ResearchSkillCategory;
+      } | null)
+    | ({
+        relationTo: 'research-expertise';
+        value: number | ResearchExpertise;
+      } | null)
+    | ({
+        relationTo: 'research-projects';
+        value: number | ResearchProject;
+      } | null)
+    | ({
+        relationTo: 'research-publications';
+        value: number | ResearchPublication;
+      } | null)
+    | ({
+        relationTo: 'research-photos';
+        value: number | ResearchPhoto;
+      } | null)
+    | ({
+        relationTo: 'research-videos';
+        value: number | ResearchVideo;
+      } | null)
+    | ({
+        relationTo: 'trek-experiences';
+        value: number | TrekExperience;
+      } | null)
+    | ({
+        relationTo: 'trek-skill-categories';
+        value: number | TrekSkillCategory;
+      } | null)
+    | ({
+        relationTo: 'trek-expertise';
+        value: number | TrekExpertise;
+      } | null)
+    | ({
+        relationTo: 'trek-projects';
+        value: number | TrekProject;
+      } | null)
+    | ({
+        relationTo: 'trek-publications';
+        value: number | TrekPublication;
+      } | null)
+    | ({
+        relationTo: 'trek-photos';
+        value: number | TrekPhoto;
+      } | null)
+    | ({
+        relationTo: 'trek-videos';
+        value: number | TrekVideo;
       } | null)
     | ({
         relationTo: 'media';
@@ -514,9 +872,53 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects_select".
+ * via the `definition` "tech-experiences_select".
  */
-export interface ProjectsSelect<T extends boolean = true> {
+export interface TechExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-skill-categories_select".
+ */
+export interface TechSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-expertise_select".
+ */
+export interface TechExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-projects_select".
+ */
+export interface TechProjectsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   techStack?:
@@ -530,110 +932,30 @@ export interface ProjectsSelect<T extends boolean = true> {
   image?: T;
   imageUrl?: T;
   order?: T;
-  placements?:
-    | T
-    | {
-        site?: T;
-        order?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "experiences_select".
+ * via the `definition` "tech-publications_select".
  */
-export interface ExperiencesSelect<T extends boolean = true> {
-  role?: T;
-  company?: T;
-  date?: T;
-  description?: T;
-  order?: T;
-  placements?:
-    | T
-    | {
-        site?: T;
-        order?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "expertise_select".
- */
-export interface ExpertiseSelect<T extends boolean = true> {
-  domain?: T;
-  years?: T;
-  description?: T;
-  order?: T;
-  placements?:
-    | T
-    | {
-        site?: T;
-        order?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "skill-categories_select".
- */
-export interface SkillCategoriesSelect<T extends boolean = true> {
-  title?: T;
-  key?: T;
-  items?:
-    | T
-    | {
-        name?: T;
-        rating?: T;
-        id?: T;
-      };
-  show?: T;
-  priority?: T;
-  placements?:
-    | T
-    | {
-        site?: T;
-        order?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publications_select".
- */
-export interface PublicationsSelect<T extends boolean = true> {
+export interface TechPublicationsSelect<T extends boolean = true> {
   title?: T;
   authors?: T;
   date?: T;
   publisher?: T;
   order?: T;
-  placements?:
-    | T
-    | {
-        site?: T;
-        order?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "photos_select".
+ * via the `definition` "tech-photos_select".
  */
-export interface PhotosSelect<T extends boolean = true> {
+export interface TechPhotosSelect<T extends boolean = true> {
   caption?: T;
   album?: T;
   location?: T;
-  site?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -649,14 +971,237 @@ export interface PhotosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos_select".
+ * via the `definition` "tech-videos_select".
  */
-export interface VideosSelect<T extends boolean = true> {
+export interface TechVideosSelect<T extends boolean = true> {
   title?: T;
   url?: T;
   description?: T;
   album?: T;
-  site?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-experiences_select".
+ */
+export interface ResearchExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-skill-categories_select".
+ */
+export interface ResearchSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-expertise_select".
+ */
+export interface ResearchExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-projects_select".
+ */
+export interface ResearchProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  techStack?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  githubUrl?: T;
+  liveUrl?: T;
+  image?: T;
+  imageUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-publications_select".
+ */
+export interface ResearchPublicationsSelect<T extends boolean = true> {
+  title?: T;
+  authors?: T;
+  date?: T;
+  publisher?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-photos_select".
+ */
+export interface ResearchPhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research-videos_select".
+ */
+export interface ResearchVideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-experiences_select".
+ */
+export interface TrekExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-skill-categories_select".
+ */
+export interface TrekSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-expertise_select".
+ */
+export interface TrekExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-projects_select".
+ */
+export interface TrekProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  techStack?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  githubUrl?: T;
+  liveUrl?: T;
+  image?: T;
+  imageUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-publications_select".
+ */
+export interface TrekPublicationsSelect<T extends boolean = true> {
+  title?: T;
+  authors?: T;
+  date?: T;
+  publisher?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-photos_select".
+ */
+export interface TrekPhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-videos_select".
+ */
+export interface TrekVideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -743,14 +1288,39 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "profile".
+ * via the `definition` "tech".
  */
-export interface Profile {
+export interface Tech {
   id: number;
+  title: string;
+  tagline?: string | null;
   name: string;
   headline: string;
+  image?: (number | null) | Media;
   /**
-   * Copy for the full-screen hero section.
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
+  };
+  /**
+   * About copy for this site. Rendered as HTML.
+   */
+  summary: string;
+  /**
+   * This site's full-screen hero.
    */
   hero: {
     title: string;
@@ -770,47 +1340,22 @@ export interface Profile {
     };
   };
   /**
-   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — the other sites link back to it. A relative "/" would loop on a subdomain.
+   * This site's own navigation; hrefs are section ids on its page.
    */
-  mainSiteUrl?: string | null;
-  image?: (number | null) | Media;
-  /**
-   * Used when no image is uploaded.
-   */
-  imageUrl?: string | null;
-  contact: {
-    email: string;
-    phone: string;
-    location?: string | null;
-    whatsapp?: string | null;
-    linkedin?: string | null;
-    github?: string | null;
-    freelancer?: string | null;
-    googleScholar?: string | null;
-  };
-  /**
-   * Rendered as HTML, so inline tags like <strong> are allowed.
-   */
-  summary: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation".
- */
-export interface Navigation {
-  id: number;
-  /**
-   * Each href must point at a section id on the home page, e.g. "/#about".
-   */
-  links?:
+  nav?:
     | {
         name: string;
         href: string;
         id?: string | null;
       }[]
     | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | <title>".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -822,19 +1367,53 @@ export interface Research {
   id: number;
   title: string;
   tagline?: string | null;
+  name: string;
+  headline: string;
+  image?: (number | null) | Media;
   /**
-   * Optional. Leave empty to reuse the main portfolio hero.
+   * Used when no image is uploaded.
    */
-  hero?: {
-    title?: string | null;
-    description?: string | null;
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
   };
   /**
-   * Rendered as HTML, so inline tags like <strong> are allowed. Research and coding focus.
+   * About copy for this site. Rendered as HTML.
    */
-  about: string;
+  summary: string;
   /**
-   * This site's own navigation. Hrefs are section ids on its page.
+   * This site's full-screen hero.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * This site's own navigation; hrefs are section ids on its page.
    */
   nav?:
     | {
@@ -861,19 +1440,53 @@ export interface Trek {
   id: number;
   title: string;
   tagline?: string | null;
+  name: string;
+  headline: string;
+  image?: (number | null) | Media;
   /**
-   * Optional. Leave empty to reuse the main portfolio hero.
+   * Used when no image is uploaded.
    */
-  hero?: {
-    title?: string | null;
-    description?: string | null;
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
   };
   /**
-   * Rendered as HTML, so inline tags like <strong> are allowed. Trekking focus: routes, altitude, gear, what the walking is like.
+   * About copy for this site. Rendered as HTML.
    */
-  about: string;
+  summary: string;
   /**
-   * This site's own navigation. Hrefs are section ids on its page.
+   * This site's full-screen hero.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * This site's own navigation; hrefs are section ids on its page.
    */
   nav?:
     | {
@@ -894,11 +1507,29 @@ export interface Trek {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "profile_select".
+ * via the `definition` "tech_select".
  */
-export interface ProfileSelect<T extends boolean = true> {
+export interface TechSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
   name?: T;
   headline?: T;
+  image?: T;
+  imageUrl?: T;
+  mainSiteUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        location?: T;
+        whatsapp?: T;
+        linkedin?: T;
+        github?: T;
+        freelancer?: T;
+        googleScholar?: T;
+      };
+  summary?: T;
   hero?:
     | T
     | {
@@ -917,9 +1548,35 @@ export interface ProfileSelect<T extends boolean = true> {
               href?: T;
             };
       };
-  mainSiteUrl?: T;
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research_select".
+ */
+export interface ResearchSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  name?: T;
+  headline?: T;
   image?: T;
   imageUrl?: T;
+  mainSiteUrl?: T;
   contact?:
     | T
     | {
@@ -933,40 +1590,24 @@ export interface ProfileSelect<T extends boolean = true> {
         googleScholar?: T;
       };
   summary?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation_select".
- */
-export interface NavigationSelect<T extends boolean = true> {
-  links?:
-    | T
-    | {
-        name?: T;
-        href?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "research_select".
- */
-export interface ResearchSelect<T extends boolean = true> {
-  title?: T;
-  tagline?: T;
   hero?:
     | T
     | {
         title?: T;
-        description?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
       };
-  about?: T;
   nav?:
     | T
     | {
@@ -991,13 +1632,42 @@ export interface ResearchSelect<T extends boolean = true> {
 export interface TrekSelect<T extends boolean = true> {
   title?: T;
   tagline?: T;
+  name?: T;
+  headline?: T;
+  image?: T;
+  imageUrl?: T;
+  mainSiteUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        location?: T;
+        whatsapp?: T;
+        linkedin?: T;
+        github?: T;
+        freelancer?: T;
+        googleScholar?: T;
+      };
+  summary?: T;
   hero?:
     | T
     | {
         title?: T;
-        description?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
       };
-  about?: T;
   nav?:
     | T
     | {

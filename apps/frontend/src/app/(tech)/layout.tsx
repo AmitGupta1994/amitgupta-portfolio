@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 
-import { getNavLinks, getProfile } from "@/content";
+import { getSite } from "@/content";
 import SiteShell from "@/components/SiteShell";
 
 // Pages are prerendered and served from the CDN; saving in the admin drops that
@@ -11,9 +11,9 @@ import SiteShell from "@/components/SiteShell";
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const profile = await getProfile();
-  const title = `${profile.name} | Portfolio`;
-  const description = `${profile.name} - ${profile.headline}`;
+  const { profile, title: siteTitle, seo } = await getSite("tech");
+  const title = seo.title ?? `${profile.name} | ${siteTitle}`;
+  const description = seo.description ?? `${profile.name} - ${profile.headline}`;
 
   return {
     title,
@@ -33,7 +33,7 @@ export default async function FrontendLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [profile, navLinks] = await Promise.all([getProfile(), getNavLinks()]);
+  const { profile, navLinks } = await getSite("tech");
 
   return (
     <SiteShell
