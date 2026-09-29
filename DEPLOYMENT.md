@@ -134,6 +134,21 @@ Notes:
   clear production's cache. Staging pages still refresh through Vercel's own invalidation.
 - Run the seed against the staging database the same way, with its own `DATABASE_URL`.
 
+## Schema reset (one-off, when moving to per-site tables)
+
+The per-site restructure replaced every collection, so the migration history was
+regenerated as a single `initial` migration. An existing database still holds the old
+tables and old migration rows, and `payload migrate` would refuse to replay over them.
+For each environment (production, staging, local), once:
+
+1. Create a fresh database — in Neon, a new branch or a new database on the project.
+2. Point that environment's `DATABASE_URL` at it and deploy (the build runs the migration).
+3. Seed it: `NODE_ENV=production DATABASE_URL="<new url>" npm run seed`.
+4. Recreate your admin user at `/admin`, and re-upload any media.
+
+Nothing carries over automatically: sites now own their rows, so the old shared tables
+have no direct equivalent.
+
 ## Database changes later
 
 Schema changes are pushed automatically in development; production runs committed
