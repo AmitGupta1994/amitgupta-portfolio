@@ -5,19 +5,11 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
-import { Experiences } from './collections/Experiences'
-import { Expertise } from './collections/Expertise'
+import { SITES } from '@/types/sites'
 import { Media } from './collections/Media'
-import { Photos } from './collections/Photos'
-import { Projects } from './collections/Projects'
-import { Publications } from './collections/Publications'
-import { Videos } from './collections/Videos'
-import { SkillCategories } from './collections/SkillCategories'
+import { collectionsForSite } from './collections/perSite'
 import { Users } from './collections/Users'
-import { Navigation } from './globals/Navigation'
-import { Research } from './globals/Research'
-import { Trek } from './globals/Trek'
-import { Profile } from './globals/Profile'
+import { ResearchSite, TechSite, TrekSite } from './globals/sites'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -38,8 +30,8 @@ export default buildConfig({
       baseDir: srcDir,
     },
   },
-  collections: [Projects, Experiences, Expertise, SkillCategories, Publications, Photos, Videos, Media, Users],
-  globals: [Profile, Navigation, Research, Trek],
+  collections: [...SITES.flatMap(collectionsForSite), Media, Users],
+  globals: [TechSite, ResearchSite, TrekSite],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -58,7 +50,10 @@ export default buildConfig({
     ? [
         vercelBlobStorage({
           enabled: true,
-          collections: { media: true, photos: true },
+          collections: {
+            media: true,
+            ...Object.fromEntries(SITES.map((site) => [`${site}-photos`, true])),
+          },
           token: blobToken,
         }),
       ]

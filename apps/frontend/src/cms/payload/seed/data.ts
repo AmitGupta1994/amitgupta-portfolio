@@ -1,55 +1,231 @@
-// Initial CMS content, migrated from the frontend's former src/data files.
-// Shapes match the Payload collections; `order` is assigned from array position.
+// Seed content, one block per site. Every site owns its own tables, so the same
+// fact can appear on two sites as two rows — that is the trade-off of keeping
+// them separable.
 
-/** Curation for the research site: which items it shows, and in what order. */
-type Placement = { site: 'research'; order: number }
-const onResearch = (order: number): Placement[] => [{ site: 'research', order }]
-
-export const profile = {
-  name: 'Amit Gupta',
-  headline: 'Lead Engineer | Full Stack Engineer (Backend-Focused)',
-  imageUrl: 'https://github.com/amitgupta1994.png',
-  mainSiteUrl: 'https://guptaamit.com.np',
-  contact: {
-    email: 'iamitgupta1994@gmail.com',
-    phone: '(+977) 9843944663',
-    whatsapp: 'https://wa.me/9779843944663',
-    location: 'Kathmandu (Nepal)',
-    freelancer: 'https://www.freelancer.com/u/iamamitgupta1994',
-    linkedin: 'https://www.linkedin.com/in/iamamitgupta1994/',
-    github: 'https://github.com/amitgupta1994',
-    googleScholar: 'https://scholar.google.com/citations?user=NZwhe6kAAAAJ&hl=en&oi=sra',
-  },
-  hero: {
-    title: 'Engineering systems that scale',
-    description: [
-      { text: 'Lead engineer building ' },
-      { text: 'resilient backends', highlight: true },
-      { text: ', ' },
-      { text: 'AI-native products', highlight: true },
-      { text: ' and cloud platforms that grow from first MVP to ' },
-      { text: 'high-concurrency scale', highlight: true },
-      { text: '.' },
-    ],
-    cta: { label: "Let's build together", href: '/#contact' },
-  },
-  summary:
-    'As a Tech Lead and Full Stack Engineer (Backend-Focused) with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth. \n \n I am a pragmatic builder and debugger who approaches software development from a strict systems engineering perspective. By combining strong coding fundamentals with a highly iterative mindset, I build quickly, diagnose issues efficiently, and continuously refine architectures to scale seamlessly from initial single region deployments to high concurrency, multi sharded environments. Ultimately, my focus goes beyond just writing code to designing resilient systems and cultivating a culture of relentless improvement. ',
+const CONTACT = {
+  email: 'iamitgupta1994@gmail.com',
+  phone: '(+977) 9843944663',
+  whatsapp: 'https://wa.me/9779843944663',
+  location: 'Kathmandu (Nepal)',
+  freelancer: 'https://www.freelancer.com/u/iamamitgupta1994',
+  linkedin: 'https://www.linkedin.com/in/iamamitgupta1994/',
+  github: 'https://github.com/amitgupta1994',
+  googleScholar: 'https://scholar.google.com/citations?user=NZwhe6kAAAAJ&hl=en&oi=sra',
 }
 
-export const navigationLinks = [
-  { name: 'Home', href: '/#hero' },
-  { name: 'About', href: '/#about' },
-  { name: 'Expertise', href: '/#expertise' },
-  { name: 'Projects', href: '/#projects' },
-  { name: 'Skills', href: '/#skills' },
-  { name: 'Experience', href: '/#experience' },
-  { name: 'Publications', href: '/#publications' },
-  { name: 'Articles', href: '/#articles' },
-  { name: 'Contact', href: '/#contact' },
+const MAIN_SITE_URL = 'https://guptaamit.com.np'
+const PORTRAIT = 'https://github.com/amitgupta1994.png'
+
+/** Values written into each site's global. Field defaults cover anything omitted. */
+export const siteGlobals = {
+  tech: {
+    title: 'Portfolio',
+    tagline: 'Backend-focused full stack engineering',
+    name: 'Amit Gupta',
+    headline: 'Lead Engineer | Full Stack Engineer (Backend-Focused)',
+    imageUrl: PORTRAIT,
+    mainSiteUrl: MAIN_SITE_URL,
+    contact: CONTACT,
+    summary:
+      'As a Tech Lead and Full Stack Engineer (Backend-Focused) with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth. \n \n I am a pragmatic builder and debugger who approaches software development from a strict systems engineering perspective. By combining strong coding fundamentals with a highly iterative mindset, I build quickly, diagnose issues efficiently, and continuously refine architectures to scale seamlessly from initial single region deployments to high concurrency, multi sharded environments.',
+    hero: {
+      title: 'Engineering systems that scale',
+      description: [
+        { text: 'Lead engineer building ' },
+        { text: 'resilient backends', highlight: true },
+        { text: ', ' },
+        { text: 'AI-native products', highlight: true },
+        { text: ' and cloud platforms that grow from first MVP to ' },
+        { text: 'high-concurrency scale', highlight: true },
+        { text: '.' },
+      ],
+      cta: { label: "Let's build together", href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#hero' },
+      { name: 'About', href: '/#about' },
+      { name: 'Expertise', href: '/#expertise' },
+      { name: 'Projects', href: '/#projects' },
+      { name: 'Skills', href: '/#skills' },
+      { name: 'Experience', href: '/#experience' },
+      { name: 'Publications', href: '/#publications' },
+      { name: 'Articles', href: '/#articles' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    seo: {
+      title: 'Amit Gupta | Portfolio',
+      description: 'Lead engineer building resilient backends, AI-native products and cloud platforms.',
+    },
+  },
+  research: {
+    title: 'Research',
+    tagline: 'Gait analysis, sensing hardware and applied machine learning',
+    name: 'Amit Gupta',
+    headline: 'Researcher | Human gait analysis and applied machine learning',
+    imageUrl: PORTRAIT,
+    mainSiteUrl: MAIN_SITE_URL,
+    contact: CONTACT,
+    summary:
+      'I work where <strong>research meets engineering</strong>: building the sensing hardware, computer-vision pipelines and analysis behind human gait studies, then turning the results into software that holds up outside the lab. My published work covers FSR-instrumented insoles for gait phase detection, pose-estimation based joint measurement validated against Kinovea, and machine learning for fault detection in pumps. \n \n Alongside the research I build the systems it depends on — data acquisition, APIs, pipelines and deployment.',
+    hero: {
+      title: 'Measuring how people move',
+      description: [
+        { text: 'Published work on ' },
+        { text: 'gait analysis', highlight: true },
+        { text: ', ' },
+        { text: 'FSR-instrumented insoles', highlight: true },
+        { text: ' and pose-estimation based measurement, with the data pipelines behind them.' },
+      ],
+      cta: { label: 'Get in touch', href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#hero' },
+      { name: 'About', href: '/#about' },
+      { name: 'Publications', href: '/#publications' },
+      { name: 'Experience', href: '/#experience' },
+      { name: 'Skills', href: '/#skills' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    seo: {
+      title: 'Amit Gupta | Research',
+      description:
+        'Published research on human gait analysis, FSR insoles, pose estimation and applied machine learning.',
+    },
+  },
+  trek: {
+    title: 'Trek',
+    tagline: 'Himalayan trails, long walks and the gear that survives them',
+    name: 'Amit Gupta',
+    headline: 'Trekker | Himalayan trails',
+    imageUrl: PORTRAIT,
+    mainSiteUrl: MAIN_SITE_URL,
+    contact: CONTACT,
+    summary:
+      'Away from the screen I walk. This is where the <strong>trails, passes and altitude</strong> live — the routes, the photographs and the films. Add your treks, photos and films in the admin; sections stay hidden until they have content.',
+    hero: {
+      title: 'Walking the Himalaya',
+      description: [
+        { text: 'Trails, passes and ' },
+        { text: 'high camps', highlight: true },
+        { text: ' — the routes, the photographs and the films.' },
+      ],
+      cta: { label: 'Say hello', href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#hero' },
+      { name: 'About', href: '/#about' },
+      { name: 'Photos', href: '/#photos' },
+      { name: 'Films', href: '/#videos' },
+      { name: 'Treks', href: '/#experience' },
+      { name: 'Skills', href: '/#skills' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    seo: {
+      title: 'Amit Gupta | Trek',
+      description: 'Trekking routes in Nepal and beyond, with photographs and films.',
+    },
+  },
+}
+
+const ALL_EXPERIENCES = [
+  {
+    role: 'Lead Software Engineer',
+    company: 'TheGemsTech',
+    date: '07/01/2024 - Current',
+    description:
+      'Architected and led scalable backend and application systems across fintech, ride-sharing, travel, and AI platforms, supporting multi-product architecture with CI/CD pipelines and cloud-ready deployments.',
+  },
+  {
+    role: 'Professional Freelancer (Senior Software Engineer)',
+    company: 'Freelancer.com',
+    date: '17/05/2021 - Current',
+    description:
+      'Developed AI/ML systems including recommendation engines and generative AI applications, improving personalization quality and response relevance through NLP and machine learning pipelines.',
+  },
+  {
+    role: 'Research Exchange',
+    company: 'Department of Biomedical Engineering, IIT Hyderabad',
+    date: '08/08/2023 - 08/12/2024',
+    description:
+      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems.',
+  },
+  {
+    role: 'Research Assistant',
+    company: 'Kathmandu University',
+    date: '02/01/2022 - 02/01/2024',
+    description:
+      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance.',
+  },
 ]
 
-export const projects = [
+const ALL_EXPERTISE = [
+  {
+    domain: 'Total Software Development',
+    years: '7+ Years',
+    description:
+      'Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring.',
+  },
+  {
+    domain: 'Backend & Databases',
+    years: '4+ Years',
+    description:
+      'Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB.',
+  },
+  {
+    domain: 'DevOps & Cloud',
+    years: '1.5+ Years',
+    description:
+      'Executing end-to-end system deployment, continuous monitoring, containerization, and CI/CD pipeline automation utilizing AWS, Docker, Nginx, and GitHub Actions.',
+  },
+  {
+    domain: 'AI & Machine Learning',
+    years: '2+ Years',
+    description:
+      'Leveraging university research experience to build AI-native products, integrate intelligent data-driven models into production systems, and accelerate workflows using AI-assisted coding.',
+  },
+  {
+    domain: 'Frontend',
+    years: '1+ Years',
+    description:
+      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, React, and Next.js.',
+  },
+  {
+    domain: 'Native Android',
+    years: '4+ Years',
+    description: 'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP.',
+  },
+  {
+    domain: 'Professional Research',
+    years: '2 Years',
+    description:
+      'Served as a Research Assistant at Design Lab, Kathmandu University, specializing in Human Gait Analysis. Authored published papers and applied Machine Learning (ML) and Computer Vision (CV) techniques to advance data-driven research.',
+  },
+]
+
+const ALL_PUBLICATIONS = [
+  {
+    title:
+      'Design of Force Sensitive Resistor (FSR) embedded insole for phase detection during human gait and its classification',
+    authors: 'Pant, U., Baral, S., Gupta, A., & Shrestha, P. L.',
+    date: '2024, September',
+    publisher: 'IOP Conference Series: Materials Science and Engineering',
+  },
+  {
+    title: 'Application of Machine Learning Algorithm for Fault Detection in Pump',
+    authors: 'Bhattarai, A., Gupta, A., Kafle, A., Sapkota, P., Chitrakar, S., Dahlhaug, O. G., & Pradhan, S.',
+    date: '2023, August',
+    publisher: 'International conference on the Efficiency and Performance Engineering Network (Springer Nature)',
+  },
+  {
+    title:
+      'Knee flexion/extension angle measurement for gait analysis using machine learning solution "mediapipe pose" and its comparison with Kinovea®',
+    authors: 'Gupta, A., Shrestha, P. L., Thapa, B., Silwal, R., & Shrestha, R.',
+    date: '2023, March',
+    publisher: 'IOP Conference Series: Materials Science and Engineering',
+  },
+]
+
+const ALL_PROJECTS = [
   {
     title: 'Monorepo Portfolio',
     description:
@@ -105,116 +281,7 @@ export const projects = [
   },
 ]
 
-export const experiences = [
-  {
-    role: 'Lead Software Engineer',
-    company: 'TheGemsTech',
-    date: '07/01/2024 - Current',
-    description:
-      'Architected and led scalable backend and application systems across fintech, ride-sharing, travel, and AI platforms, supporting multi-product architecture with CI/CD pipelines and cloud-ready deployments.',
-    placements: onResearch(2),
-  },
-  {
-    role: 'Professional Freelancer (Senior Software Engineer)',
-    company: 'Freelancer.com',
-    date: '17/05/2021 - Current',
-    description:
-      'Developed AI/ML systems including recommendation engines and generative AI applications, improving personalization quality and response relevance through NLP and machine learning pipelines.',
-    placements: onResearch(3),
-  },
-  {
-    role: 'Research Exchange',
-    company: 'Department of Biomedical Engineering, IIT Hyderabad',
-    date: '08/08/2023 - 08/12/2024',
-    description:
-      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems.',
-    placements: onResearch(0),
-  },
-  {
-    role: 'Research Assistant',
-    company: 'Kathmandu University',
-    date: '02/01/2022 - 02/01/2024',
-    description:
-      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance.',
-    placements: onResearch(1),
-  },
-]
-
-export const expertise = [
-  {
-    domain: 'Total Software Development',
-    years: '7+ Years',
-    description:
-      'Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring.',
-    placements: onResearch(2),
-  },
-  {
-    domain: 'Backend & Databases',
-    years: '4+ Years',
-    description:
-      'Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB.',
-    placements: onResearch(3),
-  },
-  {
-    domain: 'DevOps & Cloud',
-    years: '1.5+ Years',
-    description:
-      'Executing end-to-end system deployment, continuous monitoring, containerization, and CI/CD pipeline automation utilizing AWS, Docker, Nginx, and GitHub Actions.',
-  },
-  {
-    domain: 'AI & Machine Learning',
-    years: '2+ Years',
-    description:
-      'Leveraging university research experience to build AI-native products, integrate intelligent data-driven models into production systems, and accelerate workflows using AI-assisted coding.',
-    placements: onResearch(1),
-  },
-  {
-    domain: 'Frontend',
-    years: '1+ Years',
-    description:
-      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, React, and Next.js.',
-  },
-  {
-    domain: 'Native Android',
-    years: '4+ Years',
-    description: 'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP.',
-  },
-  {
-    domain: 'Professional Research',
-    years: '2 Years',
-    description:
-      'Served as a Research Assistant at Design Lab, Kathmandu University, specializing in Human Gait Analysis. Authored published papers and applied Machine Learning (ML) and Computer Vision (CV) techniques to advance data-driven research.',
-    placements: onResearch(0),
-  },
-]
-
-export const publications = [
-  {
-    title:
-      'Design of Force Sensitive Resistor (FSR) embedded insole for phase detection during human gait and its classification',
-    authors: 'Pant, U., Baral, S., Gupta, A., & Shrestha, P. L.',
-    date: '2024, September',
-    publisher: 'IOP Conference Series: Materials Science and Engineering',
-    placements: onResearch(0),
-  },
-  {
-    title: 'Application of Machine Learning Algorithm for Fault Detection in Pump',
-    authors: 'Bhattarai, A., Gupta, A., Kafle, A., Sapkota, P., Chitrakar, S., Dahlhaug, O. G., & Pradhan, S.',
-    date: '2023, August',
-    publisher: 'International conference on the Efficiency and Performance Engineering Network (Springer Nature)',
-    placements: onResearch(1),
-  },
-  {
-    title:
-      'Knee flexion/extension angle measurement for gait analysis using machine learning solution "mediapipe pose" and its comparison with Kinovea®',
-    authors: 'Gupta, A., Shrestha, P. L., Thapa, B., Silwal, R., & Shrestha, R.',
-    date: '2023, March',
-    publisher: 'IOP Conference Series: Materials Science and Engineering',
-    placements: onResearch(2),
-  },
-]
-
-export const skillCategories = [
+const ALL_SKILLS = [
   {
     key: 'architecture',
     title: 'System Design & Architecture',
@@ -226,7 +293,6 @@ export const skillCategories = [
       { name: 'SOLID Principles', rating: 9 },
       { name: 'MVVM', rating: 9 },
     ],
-    placements: onResearch(2),
   },
   {
     key: 'web',
@@ -239,7 +305,6 @@ export const skillCategories = [
       { name: 'PostgreSQL', rating: 8 },
       { name: 'AI/ML', rating: 8 },
     ],
-    placements: onResearch(1),
   },
   {
     key: 'mobile',
@@ -258,7 +323,6 @@ export const skillCategories = [
       { name: 'Docker', rating: 8 },
       { name: 'CI/CD', rating: 8 },
     ],
-    placements: onResearch(3),
   },
   {
     key: 'iot_embedded',
@@ -283,7 +347,6 @@ export const skillCategories = [
       { name: 'Sensor Fusion', rating: 7 },
       { name: 'Academic Writing', rating: 8 },
     ],
-    placements: onResearch(0),
   },
   {
     key: 'frontend',
@@ -308,28 +371,40 @@ export const skillCategories = [
       { name: 'Terraform', rating: 4 },
       { name: 'Agentic AI', rating: 4 },
     ],
-    placements: onResearch(4),
   },
 ]
 
+const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
-export const research = {
-  title: 'Research',
-  tagline: 'Gait analysis, sensing hardware and applied machine learning',
-  about:
-    'I work where <strong>research meets engineering</strong>: building the sensing hardware, computer-vision pipelines and analysis behind human gait studies, then turning the results into software that holds up outside the lab. My published work covers FSR-instrumented insoles for gait phase detection, pose-estimation based joint measurement validated against Kinovea, and machine learning for fault detection in pumps. \n \n Alongside the research I build the systems it depends on — data acquisition, APIs, pipelines and deployment — which is the same engineering practice I apply to production software.',
-  nav: [
-    { name: 'Home', href: '/#hero' },
-    { name: 'About', href: '/#about' },
-    { name: 'Publications', href: '/#publications' },
-    { name: 'Experience', href: '/#experience' },
-    { name: 'Skills', href: '/#skills' },
-    { name: 'Expertise', href: '/#expertise' },
-    { name: 'Contact', href: '/#contact' },
-  ],
-  seo: {
-    title: 'Amit Gupta | Research',
-    description:
-      'Published research on human gait analysis, FSR insoles, pose estimation and applied machine learning, by Amit Gupta.',
+/**
+ * Per-site rows. Research repeats the research roles, skills and publications
+ * that also belong on the tech portfolio — separate tables mean separate rows.
+ * Trek starts empty: add real treks, photos and films in the admin.
+ */
+export const siteContent = {
+  tech: {
+    experiences: ALL_EXPERIENCES,
+    expertise: ALL_EXPERTISE,
+    publications: ALL_PUBLICATIONS,
+    projects: ALL_PROJECTS,
+    skillCategories: ALL_SKILLS,
+  },
+  research: {
+    experiences: pick(ALL_EXPERIENCES, (e) =>
+      ['Research Exchange', 'Research Assistant'].includes(e.role)
+    ),
+    expertise: pick(ALL_EXPERTISE, (e) =>
+      ['Professional Research', 'AI & Machine Learning', 'Backend & Databases'].includes(e.domain)
+    ),
+    publications: ALL_PUBLICATIONS,
+    projects: [] as typeof ALL_PROJECTS,
+    skillCategories: pick(ALL_SKILLS, (s) => ['research', 'web', 'architecture', 'learning'].includes(s.key)),
+  },
+  trek: {
+    experiences: [] as typeof ALL_EXPERIENCES,
+    expertise: [] as typeof ALL_EXPERTISE,
+    publications: [] as typeof ALL_PUBLICATIONS,
+    projects: [] as typeof ALL_PROJECTS,
+    skillCategories: [] as typeof ALL_SKILLS,
   },
 }

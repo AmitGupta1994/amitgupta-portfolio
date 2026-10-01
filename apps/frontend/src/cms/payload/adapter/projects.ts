@@ -1,9 +1,8 @@
-import type { SiteKey } from "@/content/ports";
+import type { SiteKey } from "@/types/sites";
 import { payloadClient, resolveImageUrl, type CmsMedia } from "../client";
-import { forSite, type WithPlacements } from "./site";
 import { Project } from "@/types/project";
 
-export interface CmsProject extends WithPlacements {
+export interface CmsProject {
   id: number | string;
   title: string;
   description: string;
@@ -26,8 +25,13 @@ export function mapProject(doc: CmsProject): Project {
   };
 }
 
-export async function getProjects(site: SiteKey = "personal"): Promise<Project[]> {
+export async function getProjects(site: SiteKey): Promise<Project[]> {
   const payload = await payloadClient();
-  const { docs } = await payload.find({ collection: "projects", limit: 100, depth: 1, sort: "order" });
-  return forSite(docs as unknown as CmsProject[], site).map(mapProject);
+  const { docs } = await payload.find({
+    collection: `${site}-projects`,
+    limit: 100,
+    depth: 1,
+    sort: "order",
+  });
+  return (docs as unknown as CmsProject[]).map(mapProject);
 }

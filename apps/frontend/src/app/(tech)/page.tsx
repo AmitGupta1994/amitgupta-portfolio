@@ -9,21 +9,21 @@ import MediumArticlesSection from '@/components/MediumArticlesSection';
 import AmbientBackground from '@/components/AmbientBackground';
 import DigitalMantrasSideNav from '@/components/DigitalMantrasSideNav';
 import PublicationsSection from '@/components/PublicationsSection';
-import { getExperiences, getExpertise, getNavLinks, getProfile, getProjects, getPublications, getSkillCategories } from '@/content';
+import { getExperiences, getExpertise, getProjects, getPublications, getSite, getSkillCategories } from '@/content';
 
 
 // `overflow-x-clip` (not `hidden`) keeps <main> from becoming a scroll container,
 // which would break sticky and pinned sections.
 export default async function Home() {
-  const [profile, navLinks, projects, skills, experiences, publications, expertise] = await Promise.all([
-    getProfile(),
-    getNavLinks(),
-    getProjects(),
-    getSkillCategories(),
-    getExperiences(),
-    getPublications(),
-    getExpertise(),
+  const [site, projects, skills, experiences, publications, expertise] = await Promise.all([
+    getSite('tech'),
+    getProjects('tech'),
+    getSkillCategories('tech'),
+    getExperiences('tech'),
+    getPublications('tech'),
+    getExpertise('tech'),
   ]);
+  const { profile, navLinks } = site;
 
   return (
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">

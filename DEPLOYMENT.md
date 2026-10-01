@@ -134,7 +134,38 @@ Notes:
   clear production's cache. Staging pages still refresh through Vercel's own invalidation.
 - Run the seed against the staging database the same way, with its own `DATABASE_URL`.
 
-## Database changes later
+## Upgrading an existing database to per-site tables
+
+No reset needed: the `initial` migration upgrades a database that still holds the old
+shared schema. Deploying is enough — the build runs it. What it does, in one transaction:
+
+1. Moves the old `research`/`trek` global tables aside (their names collide with the new
+   per-site ones).
+2. Creates everything missing, and adds the new columns to `payload_locked_documents_rels`
+   and `payload_preferences_rels`, which already exist.
+3. Copies content: every old row goes to the tech portfolio, and rows that carried a
+   `placements` entry are copied to that site too (so a research-placed job lands in both
+   `tech_experiences` and `research_experiences`). Projects keep their tech stack, skill
+   categories keep their items, and the old `profile`/`navigation` globals plus each site's
+   page copy become the site globals.
+4. Drops the legacy tables.
+
+**`users` and `media` are untouched**, so your admin login and uploaded files survive.
+Because it runs in one transaction, a failure rolls everything back and the deploy fails
+with the old database intact.
+
+Rehearsed against a copy of the old schema: 2 experiences → 2 tech + 1 research, publications
+and skill categories copied with their children, globals populated, legacy tables gone, and
+the site rendering the migrated content.
+
+Two caveats:
+
+- **Uploaded photos/films**: rows are copied table-to-table, but Blob URLs are per
+  collection, so check any uploads in the admin afterwards. (Nothing to do if you have none.)
+- **Back up first anyway.** In Neon, take a branch of production before deploying — then a
+  rollback is switching `DATABASE_URL` back.
+
+## Database changes later## Database changes later
 
 Schema changes are pushed automatically in development; production runs committed
 migrations, which the build applies. After changing any collection or global:
