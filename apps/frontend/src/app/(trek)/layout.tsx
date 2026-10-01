@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import "../globals.css";
 
-import { getProfile, getSitePage } from "@/content";
+import { getSite } from "@/content";
 import SiteShell from "@/components/SiteShell";
 
 // Same caching model as the other sites: prerendered, cleared on save, daily fallback.
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [profile, site] = await Promise.all([getProfile(), getSitePage("trek")]);
+  const site = await getSite("trek");
+  const { profile } = site;
   const title = site.seo.title ?? `${profile.name} | ${site.title}`;
   const description = site.seo.description ?? site.tagline ?? `Trekking journal of ${profile.name}`;
 
@@ -30,11 +31,11 @@ export default async function TrekLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [profile, site] = await Promise.all([getProfile(), getSitePage("trek")]);
+  const { profile, navLinks } = await getSite("trek");
 
   return (
     <SiteShell
-      navLinks={site.navLinks}
+      navLinks={navLinks}
       name={profile.name}
       imageUrl={profile.imageUrl}
       email={profile.contact.email}

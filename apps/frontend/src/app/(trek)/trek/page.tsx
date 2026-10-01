@@ -8,27 +8,19 @@ import SiteAbout from '@/components/SiteAbout';
 import SkillsSection from '@/components/SkillsSection';
 import VideoGallery from '@/components/VideoGallery';
 
-import { heroForSite } from '@/lib/siteHero';
-import {
-  getExperiences,
-  getPhotos,
-  getProfile,
-  getSitePage,
-  getSkillCategories,
-  getVideos,
-} from '@/content';
+import { getExperiences, getPhotos, getSite, getSkillCategories, getVideos } from '@/content';
 
 // The trekking site: photos and films lead, then the treks themselves and the
 // skills behind them. Sections with no content yet simply don't render.
 export default async function TrekHome() {
-  const [profile, site, photos, videos, experiences, skills] = await Promise.all([
-    getProfile(),
-    getSitePage('trek'),
+  const [site, photos, videos, experiences, skills] = await Promise.all([
+    getSite('trek'),
     getPhotos('trek'),
     getVideos('trek'),
     getExperiences('trek'),
     getSkillCategories('trek'),
   ]);
+  const { profile } = site;
 
   return (
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">
@@ -38,9 +30,9 @@ export default async function TrekHome() {
       <div id="hero">
         <Hero
           name={profile.name}
-          headline={site.tagline ?? profile.headline}
+          headline={profile.headline}
           contact={profile.contact}
-          hero={heroForSite(profile.hero, site.hero)}
+          hero={profile.hero}
           projects={[]}
         />
       </div>
@@ -48,7 +40,7 @@ export default async function TrekHome() {
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20 flex flex-col gap-16 md:gap-24">
 
         <div id="about" className="scroll-mt-28">
-          <SiteAbout title={site.title} tagline={site.tagline} about={site.about} />
+          <SiteAbout title={site.title} tagline={site.tagline} about={profile.summary} />
         </div>
 
         {photos.length > 0 && (

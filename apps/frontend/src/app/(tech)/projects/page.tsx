@@ -2,7 +2,7 @@ import ProjectCard from "@/components/ProjectCard";
 import { getProjects } from '@/content';
 
 export default async function Project() {
-  const projects = await getProjects();
+  const projects = await getProjects('tech');
 
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>

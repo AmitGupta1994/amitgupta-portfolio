@@ -1,4 +1,4 @@
-import type { StandaloneSiteKey } from "@/content/ports";
+import type { SiteKey } from "@/types/sites";
 import type { Video } from "@/types/video";
 import { orUndefined, payloadClient } from "../client";
 
@@ -37,11 +37,10 @@ export function mapVideo(doc: CmsVideo): Video {
   };
 }
 
-export async function getVideos(site: StandaloneSiteKey): Promise<Video[]> {
+export async function getVideos(site: SiteKey): Promise<Video[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({
-    collection: "videos",
-    where: { site: { equals: site } },
+    collection: `${site}-videos`,
     limit: 200,
     depth: 0,
     sort: "order",
