@@ -6,15 +6,17 @@ import Hero from '@/components/Hero';
 import PhotoGallery from '@/components/PhotoGallery';
 import SiteAbout from '@/components/SiteAbout';
 import SkillsSection from '@/components/SkillsSection';
+import TrekList from '@/components/trek/TrekList';
 import VideoGallery from '@/components/VideoGallery';
 
-import { getExperiences, getPhotos, getSite, getSkillCategories, getVideos } from '@/content';
+import { getExperiences, getPhotos, getSite, getSkillCategories, getTreks, getVideos } from '@/content';
 
 // The trekking site: photos and films lead, then the treks themselves and the
 // skills behind them. Sections with no content yet simply don't render.
 export default async function TrekHome() {
-  const [site, photos, videos, experiences, skills] = await Promise.all([
+  const [site, treks, photos, videos, experiences, skills] = await Promise.all([
     getSite('trek'),
+    getTreks('trek'),
     getPhotos('trek'),
     getVideos('trek'),
     getExperiences('trek'),
@@ -42,6 +44,16 @@ export default async function TrekHome() {
         <div id="about" className="scroll-mt-28">
           <SiteAbout title={site.title} tagline={site.tagline} about={profile.summary} />
         </div>
+
+        {treks.length > 0 && (
+          <div id="treks" className="scroll-mt-28">
+            <TrekList
+              treks={treks}
+              title="Treks"
+              description="Each route has its own page: the numbers, the account and the photographs."
+            />
+          </div>
+        )}
 
         {photos.length > 0 && (
           <div id="photos" className="scroll-mt-28">
