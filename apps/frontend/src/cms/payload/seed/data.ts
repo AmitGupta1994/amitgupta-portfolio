@@ -116,7 +116,7 @@ export const siteGlobals = {
       { name: 'About', href: '/#about' },
       { name: 'Photos', href: '/#photos' },
       { name: 'Films', href: '/#videos' },
-      { name: 'Treks', href: '/#experience' },
+      { name: 'Treks', href: '/#treks' },
       { name: 'Skills', href: '/#skills' },
       { name: 'Contact', href: '/#contact' },
     ],
@@ -374,6 +374,38 @@ const ALL_SKILLS = [
   },
 ]
 
+
+/**
+ * Routes, with the published figures for each trail. The `body` is intentionally
+ * empty: that is your own account of the walk, written in the admin.
+ */
+const TREKS = [
+  {
+    slug: 'everest-base-camp',
+    title: 'Everest Base Camp',
+    region: 'Khumbu, Nepal',
+    season: 'Mar–May, Sep–Nov',
+    days: 13,
+    maxAltitudeM: 5545,
+    distanceKm: 130,
+    summary:
+      'The classic Khumbu route: fly into Lukla, follow the Dudh Koshi through Namche and Tengboche, then up the glacial moraine to Base Camp at 5,364 m, with the dawn climb of Kala Patthar at 5,545 m for the view of the summit.',
+    body: '',
+  },
+  {
+    slug: 'annapurna-base-camp',
+    title: 'Annapurna Base Camp',
+    region: 'Annapurna, Nepal',
+    season: 'Mar–May, Oct–Nov',
+    days: 9,
+    maxAltitudeM: 4130,
+    distanceKm: 110,
+    summary:
+      'Through terraced hills and rhododendron forest above Pokhara, up the Modi Khola gorge past Chhomrong and Machhapuchhre Base Camp into the Annapurna Sanctuary — a glacial amphitheatre ringed by peaks at 4,130 m.',
+    body: '',
+  },
+]
+
 const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
 /**
@@ -383,6 +415,7 @@ const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(p
  */
 export const siteContent = {
   tech: {
+    treks: [] as typeof TREKS,
     experiences: ALL_EXPERIENCES,
     expertise: ALL_EXPERTISE,
     publications: ALL_PUBLICATIONS,
@@ -390,6 +423,7 @@ export const siteContent = {
     skillCategories: ALL_SKILLS,
   },
   research: {
+    treks: [] as typeof TREKS,
     experiences: pick(ALL_EXPERIENCES, (e) =>
       ['Research Exchange', 'Research Assistant'].includes(e.role)
     ),
@@ -401,6 +435,7 @@ export const siteContent = {
     skillCategories: pick(ALL_SKILLS, (s) => ['research', 'web', 'architecture', 'learning'].includes(s.key)),
   },
   trek: {
+    treks: TREKS,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
