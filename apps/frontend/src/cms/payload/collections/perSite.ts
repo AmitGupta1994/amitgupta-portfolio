@@ -192,6 +192,59 @@ export const createVideos = (site: SiteKey): CollectionConfig => ({
   ],
 })
 
+
+/** Trekking routes, each with its own page at /trek/<slug>. */
+export const createTreks = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'treks', 'Trek', 'Treks'),
+  admin: { ...base(site, 'treks', '', '').admin, useAsTitle: 'title', defaultColumns: ['title', 'region', 'days', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        {
+          name: 'slug',
+          type: 'text',
+          required: true,
+          unique: true,
+          admin: { description: 'URL segment, e.g. "everest-base-camp" → /trek/everest-base-camp.' },
+        },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'region', type: 'text', admin: { description: 'e.g. "Khumbu, Nepal"' } },
+        { name: 'season', type: 'text', admin: { description: 'e.g. "Mar–May, Sep–Nov"' } },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'days', type: 'number', admin: { description: 'Typical days on the trail.' } },
+        { name: 'maxAltitudeM', type: 'number', label: 'Max altitude (m)' },
+        { name: 'distanceKm', type: 'number', label: 'Distance (km)' },
+      ],
+    },
+    { name: 'summary', type: 'textarea', required: true, admin: { description: 'One or two lines, shown on the cards.' } },
+    {
+      name: 'body',
+      type: 'textarea',
+      admin: { rows: 10, description: 'Your account of the trek. Rendered as HTML; leave empty to show only the summary.' },
+    },
+    { name: 'heroImage', type: 'upload', relationTo: `${site}-photos` as 'trek-photos' },
+    {
+      name: 'gallery',
+      type: 'relationship',
+      relationTo: `${site}-photos` as 'trek-photos',
+      hasMany: true,
+      admin: { description: 'Photos shown on this trek\'s page.' },
+    },
+    orderField,
+  ],
+})
+
+/** Types every site gets, plus the ones only some sites need. */
 export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createExperiences(site),
   createSkillCategories(site),
@@ -200,4 +253,5 @@ export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createPublications(site),
   createPhotos(site),
   createVideos(site),
+  ...(site === 'trek' ? [createTreks(site)] : []),
 ]

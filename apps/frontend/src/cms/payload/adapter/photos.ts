@@ -2,7 +2,7 @@ import type { SiteKey } from "@/types/sites";
 import type { Photo } from "@/types/photo";
 import { orUndefined, payloadClient } from "../client";
 
-interface CmsPhoto {
+export interface CmsPhoto {
   id: number | string;
   url?: string | null;
   caption?: string | null;
