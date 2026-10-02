@@ -88,6 +88,7 @@ export interface Config {
     'trek-publications': TrekPublication;
     'trek-photos': TrekPhoto;
     'trek-videos': TrekVideo;
+    'trek-treks': TrekTrek;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -118,6 +119,7 @@ export interface Config {
     'trek-publications': TrekPublicationsSelect<false> | TrekPublicationsSelect<true>;
     'trek-photos': TrekPhotosSelect<false> | TrekPhotosSelect<true>;
     'trek-videos': TrekVideosSelect<false> | TrekVideosSelect<true>;
+    'trek-treks': TrekTreksSelect<false> | TrekTreksSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -689,6 +691,51 @@ export interface TrekVideo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-treks".
+ */
+export interface TrekTrek {
+  id: number;
+  title: string;
+  /**
+   * URL segment, e.g. "everest-base-camp" → /trek/everest-base-camp.
+   */
+  slug: string;
+  /**
+   * e.g. "Khumbu, Nepal"
+   */
+  region?: string | null;
+  /**
+   * e.g. "Mar–May, Sep–Nov"
+   */
+  season?: string | null;
+  /**
+   * Typical days on the trail.
+   */
+  days?: number | null;
+  maxAltitudeM?: number | null;
+  distanceKm?: number | null;
+  /**
+   * One or two lines, shown on the cards.
+   */
+  summary: string;
+  /**
+   * Your account of the trek. Rendered as HTML; leave empty to show only the summary.
+   */
+  body?: string | null;
+  heroImage?: (number | null) | TrekPhoto;
+  /**
+   * Photos shown on this trek's page.
+   */
+  gallery?: (number | TrekPhoto)[] | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -819,6 +866,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trek-videos';
         value: number | TrekVideo;
+      } | null)
+    | ({
+        relationTo: 'trek-treks';
+        value: number | TrekTrek;
       } | null)
     | ({
         relationTo: 'media';
@@ -1202,6 +1253,26 @@ export interface TrekVideosSelect<T extends boolean = true> {
   url?: T;
   description?: T;
   album?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek-treks_select".
+ */
+export interface TrekTreksSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  region?: T;
+  season?: T;
+  days?: T;
+  maxAltitudeM?: T;
+  distanceKm?: T;
+  summary?: T;
+  body?: T;
+  heroImage?: T;
+  gallery?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
