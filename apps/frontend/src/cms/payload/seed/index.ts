@@ -41,6 +41,13 @@ for (const site of SITES) {
     })
   }
 
+  if (site === 'trek') {
+    await payload.delete({ collection: 'trek-treks', where: everything, context })
+    for (const [order, trek] of content.treks.entries()) {
+      await payload.create({ collection: 'trek-treks', data: { ...trek, order }, context })
+    }
+  }
+
   await payload.delete({ collection: `${site}-skill-categories`, where: everything, context })
   for (const category of content.skillCategories) {
     await payload.create({ collection: `${site}-skill-categories`, data: category, context })

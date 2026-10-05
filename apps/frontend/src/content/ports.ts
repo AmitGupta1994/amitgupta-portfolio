@@ -6,6 +6,7 @@ import type { Publication } from "@/types/publication";
 import type { SiteContent } from "@/types/siteContent";
 import type { SiteKey } from "@/types/sites";
 import type { SkillCategoryData } from "@/types/skill";
+import type { Trek } from "@/types/trek";
 import type { Video } from "@/types/video";
 
 /**
@@ -24,6 +25,8 @@ export interface ContentSource {
   getExpertise(site: SiteKey): Promise<Expertise[]>;
   getPhotos(site: SiteKey): Promise<Photo[]>;
   getVideos(site: SiteKey): Promise<Video[]>;
+  getTreks(site: SiteKey): Promise<Trek[]>;
+  getTrek(site: SiteKey, slug: string): Promise<Trek | null>;
 }
 
 export type { SiteKey } from "@/types/sites";
