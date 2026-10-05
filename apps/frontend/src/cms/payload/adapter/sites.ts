@@ -21,6 +21,7 @@ export interface CmsSite {
     cta?: { label?: string | null; href?: string | null } | null;
   } | null;
   nav?: Array<{ name: string; href: string }> | null;
+  stats?: Array<{ value: string; label: string }> | null;
   seo?: { title?: string | null; description?: string | null } | null;
 }
 
@@ -34,6 +35,7 @@ export function mapSite(doc: CmsSite, site: SiteKey): SiteContent {
     title: doc.title ?? site,
     tagline: orUndefined(doc.tagline),
     navLinks: (doc.nav ?? []).map(({ name, href }) => ({ name, href })),
+    stats: (doc.stats ?? []).map(({ value, label }) => ({ value, label })),
     seo: {
       title: orUndefined(doc.seo?.title),
       description: orUndefined(doc.seo?.description),
@@ -53,6 +55,9 @@ export function mapSite(doc: CmsSite, site: SiteKey): SiteContent {
         linkedin: orUndefined(contact.linkedin),
         github: orUndefined(contact.github),
         googleScholar: orUndefined(contact.googleScholar),
+        instagram: orUndefined(contact.instagram),
+        youtube: orUndefined(contact.youtube),
+        facebook: orUndefined(contact.facebook),
       },
       hero: {
         title: hero?.title ?? "",

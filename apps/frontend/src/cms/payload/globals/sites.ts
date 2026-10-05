@@ -92,3 +92,49 @@ export const TrekSite = createSiteGlobal({
     { name: 'Contact', href: '/#contact' },
   ],
 })
+
+/** The digital marketing & branding studio: services, packages, work and reviews. */
+export const CreativesSite = createSiteGlobal({
+  site: 'creatives',
+  title: 'Creatives',
+  tagline: 'Digital marketing & branding studio',
+  name: 'Amit Gupta',
+  headline: 'Digital Marketing & Branding',
+  imageUrl: 'https://github.com/amitgupta1994.png',
+  summary:
+    'We build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing under one roof.',
+  heroTitle: 'Ideas that move people',
+  heroDescription: [
+    { text: 'Brand identity, ' },
+    { text: 'social content', highlight: true },
+    { text: ' and ' },
+    { text: 'performance campaigns', highlight: true },
+    { text: ' for businesses ready to grow.' },
+  ],
+  ctaLabel: 'Get started',
+  nav: [
+    { name: 'Home', href: '/#home' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Packages', href: '/#packages' },
+    { name: 'Work', href: '/#work' },
+    { name: 'Reviews', href: '/#reviews' },
+    { name: 'Contact', href: '/#contact' },
+  ],
+  extraFields: [
+    {
+      name: 'stats',
+      type: 'array',
+      labels: { singular: 'Stat', plural: 'Stats' },
+      admin: { description: 'Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'value', type: 'text', required: true },
+            { name: 'label', type: 'text', required: true },
+          ],
+        },
+      ],
+    },
+  ],
+})

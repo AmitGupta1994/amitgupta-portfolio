@@ -10,5 +10,7 @@ export interface SiteContent {
   tagline?: string;
   profile: Profile;
   navLinks: NavLink[];
+  /** Headline figures; only sites whose global has the field fill it. */
+  stats: Array<{ value: string; label: string }>;
   seo: { title?: string; description?: string };
 }

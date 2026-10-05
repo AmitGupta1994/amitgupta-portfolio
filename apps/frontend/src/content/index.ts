@@ -18,5 +18,8 @@ export const getPhotos = (site: SiteKey) => source.getPhotos(site);
 export const getVideos = (site: SiteKey) => source.getVideos(site);
 export const getTreks = (site: SiteKey) => source.getTreks(site);
 export const getTrek = (site: SiteKey, slug: string) => source.getTrek(site, slug);
+export const getServices = (site: SiteKey) => source.getServices(site);
+export const getPackages = (site: SiteKey) => source.getPackages(site);
+export const getReviews = (site: SiteKey) => source.getReviews(site);
 
 export type { ContentSource, SiteKey } from "./ports";
