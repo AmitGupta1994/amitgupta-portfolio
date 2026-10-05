@@ -11,9 +11,12 @@ interface StudioHeroProps {
   /** Shown only when there is work to scroll to. */
   showWorkLink: boolean;
   copy: VoiceCopy;
+  /** A company's logo mark, shown above the headline. */
+  logoUrl?: string;
+  brand: string;
 }
 
-export default function StudioHero({ profile, tagline, stats, showWorkLink, copy }: StudioHeroProps) {
+export default function StudioHero({ profile, tagline, stats, showWorkLink, copy, logoUrl, brand }: StudioHeroProps) {
   const { hero } = profile;
 
   return (
@@ -24,6 +27,18 @@ export default function StudioHero({ profile, tagline, stats, showWorkLink, copy
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 text-center sm:px-6">
         <div className="studio-rise">
+          {logoUrl && (
+            <div className="mb-8 flex justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element -- a small static mark or CMS upload */}
+              <img
+                src={logoUrl}
+                alt={`${brand} logo`}
+                width={176}
+                height={176}
+                className="h-32 w-32 rounded-3xl object-cover shadow-2xl shadow-brand/25 ring-1 ring-white/10 md:h-44 md:w-44"
+              />
+            </div>
+          )}
           {tagline && (
             <p className="mx-auto mb-8 inline-block rounded-full border border-brand/40 bg-brand/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               {tagline}

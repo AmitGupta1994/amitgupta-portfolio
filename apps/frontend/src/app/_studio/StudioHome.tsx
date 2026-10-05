@@ -32,6 +32,8 @@ export default async function StudioHome({ site: key, voice }: { site: SiteKey; 
   ]);
   const { profile } = site;
   const copy = VOICE[voice];
+  // A company presents its logo; the personal site leads with the words alone.
+  const logoUrl = isCompany && profile.imageUrl ? profile.imageUrl : undefined;
 
   const rendered = new Set(['home', 'contact']);
   if (services.length > 0) rendered.add('services');
@@ -49,13 +51,22 @@ export default async function StudioHome({ site: key, voice }: { site: SiteKey; 
     <>
       <StudioNav
         brand={site.title}
+        logoUrl={logoUrl}
         links={navLinks}
         contact={profile.contact}
         ctaLabel={profile.hero.cta.label}
         prompt={copy.dialogPrompt}
       />
       <main className="overflow-x-clip">
-        <StudioHero profile={profile} tagline={site.tagline} stats={site.stats} showWorkLink={videos.length > 0} copy={copy} />
+        <StudioHero
+          profile={profile}
+          tagline={site.tagline}
+          stats={site.stats}
+          showWorkLink={videos.length > 0}
+          copy={copy}
+          logoUrl={logoUrl}
+          brand={site.title}
+        />
         {clients.length > 0 && <ClientsStrip clients={clients} title={copy.clientsTitle} />}
         {services.length > 0 && <ServicesSection services={services} about={profile.summary} copy={copy} />}
         {packages.length > 0 && <PackagesSection packages={packages} contact={profile.contact} copy={copy} />}

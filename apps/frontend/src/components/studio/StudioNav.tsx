@@ -10,6 +10,8 @@ import { Icon } from "./icons";
 
 interface StudioNavProps {
   brand: string;
+  /** A company's logo mark, shown before the name. */
+  logoUrl?: string;
   links: NavLink[];
   contact: Profile["contact"];
   ctaLabel: string;
@@ -17,7 +19,7 @@ interface StudioNavProps {
 }
 
 /** Fixed bar: transparent over the hero, solid once scrolled; tracks the section in view. */
-export default function StudioNav({ brand, links, contact, ctaLabel, prompt }: StudioNavProps) {
+export default function StudioNav({ brand, logoUrl, links, contact, ctaLabel, prompt }: StudioNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
@@ -60,10 +62,16 @@ export default function StudioNav({ brand, links, contact, ctaLabel, prompt }: S
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <a href="#home" className="text-2xl font-black tracking-tight" onClick={() => setOpen(false)}>
-          <span className="text-brand">{first}</span>
-          {rest.length > 0 && <span> {rest.join(" ")}</span>}
-          <span className="text-brand">.</span>
+        <a href="#home" className="flex items-center gap-3 text-2xl font-black tracking-tight" onClick={() => setOpen(false)}>
+          {logoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element -- a small static mark or CMS upload
+            <img src={logoUrl} alt="" width={40} height={40} className="h-10 w-10 rounded-lg object-cover ring-1 ring-white/10" />
+          )}
+          <span>
+            <span className="text-brand">{first}</span>
+            {rest.length > 0 && <span> {rest.join(" ")}</span>}
+            <span className="text-brand">.</span>
+          </span>
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
