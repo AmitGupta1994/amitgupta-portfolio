@@ -153,7 +153,9 @@ export const VoxelateSite = createSiteGlobal({
   tagline: 'Digital marketing & branding company',
   name: 'Voxelate',
   headline: 'Digital Marketing & Branding',
-  imageUrl: 'https://github.com/amitgupta1994.png',
+  // The logo mark (public/voxelate); shown in the nav and hero. Share previews use
+  // the opengraph-image file in the route instead.
+  imageUrl: '/voxelate/logo-mark.jpg',
   summary:
     'Voxelate is a digital marketing and branding company. Our team of strategists, designers and creators builds brands people remember and campaigns that pay for themselves.',
   heroTitle: 'Brands built to be remembered',
