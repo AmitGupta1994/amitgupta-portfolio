@@ -1,20 +1,22 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import type { Service } from "@/types/creatives";
+import type { Service } from "@/types/studio";
 import { Icon } from "./icons";
+import type { VoiceCopy } from "./voice";
 
 interface ServicesSectionProps {
   services: Service[];
   about: string;
+  copy: VoiceCopy;
 }
 
 /** Service cards; each reveals its details on hover or keyboard focus. */
-export default function ServicesSection({ services, about }: ServicesSectionProps) {
+export default function ServicesSection({ services, about, copy }: ServicesSectionProps) {
   return (
     <section id="services" className="scroll-mt-20 bg-surface py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            What we <span className="text-brand">do</span>
+            {copy.servicesLead} <span className="text-brand">do</span>
           </h2>
           {/* About copy is HTML from the CMS. */}
           <p className="mt-4 text-lg text-muted [&_strong]:text-foreground" dangerouslySetInnerHTML={{ __html: about }} />

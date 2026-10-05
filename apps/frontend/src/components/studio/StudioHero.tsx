@@ -2,16 +2,18 @@ import type { Profile } from "@/types/profile";
 import type { SiteContent } from "@/types/siteContent";
 import GetStartedButton from "./GetStartedButton";
 import { Icon } from "./icons";
+import type { VoiceCopy } from "./voice";
 
-interface CreativesHeroProps {
+interface StudioHeroProps {
   profile: Profile;
   tagline?: string;
   stats: SiteContent["stats"];
   /** Shown only when there is work to scroll to. */
   showWorkLink: boolean;
+  copy: VoiceCopy;
 }
 
-export default function CreativesHero({ profile, tagline, stats, showWorkLink }: CreativesHeroProps) {
+export default function StudioHero({ profile, tagline, stats, showWorkLink, copy }: StudioHeroProps) {
   const { hero } = profile;
 
   return (
@@ -21,7 +23,7 @@ export default function CreativesHero({ profile, tagline, stats, showWorkLink }:
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 text-center sm:px-6">
-        <div className="creatives-rise">
+        <div className="studio-rise">
           {tagline && (
             <p className="mx-auto mb-8 inline-block rounded-full border border-brand/40 bg-brand/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               {tagline}
@@ -53,12 +55,13 @@ export default function CreativesHero({ profile, tagline, stats, showWorkLink }:
                 href="#work"
                 className="group inline-flex items-center rounded-xl bg-brand px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-brand-deep"
               >
-                View our work
+                {copy.workLink}
                 <Icon name="arrow" size={20} className="ml-2 transition-transform group-hover:translate-x-1" />
               </a>
             )}
             <GetStartedButton
               contact={profile.contact}
+              prompt={copy.dialogPrompt}
               className="group inline-flex items-center rounded-xl border border-brand px-8 py-4 text-lg font-semibold text-brand transition-colors hover:bg-brand hover:text-white"
             >
               <Icon name="play" size={18} className="mr-2 transition-transform group-hover:scale-110" />
@@ -68,7 +71,7 @@ export default function CreativesHero({ profile, tagline, stats, showWorkLink }:
         </div>
 
         {stats.length > 0 && (
-          <dl className="creatives-rise mt-20 grid grid-cols-2 gap-8 [animation-delay:250ms] md:grid-cols-4">
+          <dl className="studio-rise mt-20 grid grid-cols-2 gap-8 [animation-delay:250ms] md:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label} className="flex flex-col-reverse">
                 <dt className="text-sm text-muted">{stat.label}</dt>

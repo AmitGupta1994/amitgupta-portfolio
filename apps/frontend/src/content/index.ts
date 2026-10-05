@@ -21,5 +21,7 @@ export const getTrek = (site: SiteKey, slug: string) => source.getTrek(site, slu
 export const getServices = (site: SiteKey) => source.getServices(site);
 export const getPackages = (site: SiteKey) => source.getPackages(site);
 export const getReviews = (site: SiteKey) => source.getReviews(site);
+export const getTeam = (site: SiteKey) => source.getTeam(site);
+export const getClients = (site: SiteKey) => source.getClients(site);
 
 export type { ContentSource, SiteKey } from "./ports";

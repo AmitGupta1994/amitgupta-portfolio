@@ -326,6 +326,52 @@ export const createReviews = (site: SiteKey): CollectionConfig => ({
   ],
 })
 
+/** A company site's people. Photos live in the site's own photo collection. */
+export const createTeam = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'team', 'Team member', 'Team'),
+  admin: { ...base(site, 'team', '', '').admin, useAsTitle: 'name', defaultColumns: ['name', 'role', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'role', type: 'text', required: true, admin: { description: 'e.g. "Creative Director"' } },
+      ],
+    },
+    { name: 'bio', type: 'textarea', admin: { description: 'One or two lines.' } },
+    { name: 'photo', type: 'upload', relationTo: `${site}-photos` as 'voxelate-photos' },
+    {
+      type: 'row',
+      fields: [
+        { name: 'photoUrl', type: 'text', label: 'External photo URL', admin: { description: 'Used when no photo is uploaded.' } },
+        { name: 'linkedin', type: 'text', label: 'LinkedIn URL' },
+      ],
+    },
+    orderField,
+  ],
+})
+
+/** Brands a company site has worked for, shown as a logo strip. */
+export const createClients = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'clients', 'Client', 'Clients'),
+  admin: { ...base(site, 'clients', '', '').admin, useAsTitle: 'name', defaultColumns: ['name', 'website', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'website', type: 'text', label: 'Website URL' },
+      ],
+    },
+    { name: 'logo', type: 'upload', relationTo: `${site}-photos` as 'voxelate-photos' },
+    { name: 'logoUrl', type: 'text', label: 'External logo URL', admin: { description: 'Used when no logo is uploaded; the name shows when neither is set.' } },
+    orderField,
+  ],
+})
+
+/** The studio layout's tables: the personal site and the company site share these. */
+const STUDIO_SITES: SiteKey[] = ['creatives', 'voxelate']
+
 /** Types every site gets, plus the ones only some sites need. */
 export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createExperiences(site),
@@ -336,5 +382,6 @@ export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createPhotos(site),
   createVideos(site),
   ...(site === 'trek' ? [createTreks(site)] : []),
-  ...(site === 'creatives' ? [createServices(site), createPackages(site), createReviews(site)] : []),
+  ...(STUDIO_SITES.includes(site) ? [createServices(site), createPackages(site), createReviews(site)] : []),
+  ...(site === 'voxelate' ? [createTeam(site), createClients(site)] : []),
 ]

@@ -1,9 +1,9 @@
-import type { ServiceIcon } from "@/types/creatives";
+import type { ServiceIcon } from "@/types/studio";
 
 type IconProps = { className?: string; size?: number };
 
 // Line icons on a 24px grid, stroked with currentColor so the parent sets the colour.
-const PATHS: Record<ServiceIcon | "star" | "quote" | "arrow" | "close" | "menu" | "mail" | "phone" | "whatsapp" | "pin" | "play" | "check" | "instagram" | "youtube" | "facebook" | "send", string> = {
+const PATHS: Record<ServiceIcon | "star" | "quote" | "arrow" | "close" | "menu" | "mail" | "phone" | "whatsapp" | "pin" | "play" | "check" | "instagram" | "youtube" | "facebook" | "linkedin" | "send", string> = {
   megaphone: "M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Zm12-3a5 5 0 0 1 0 8m3-11a9 9 0 0 1 0 14",
   palette:
     "M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.9 1.4-1.9-.3-.9.3-2.1 1.6-2.1H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10Zm-5 9h.01M8.5 7.5h.01M13 6h.01M16.5 9h.01",
@@ -30,6 +30,7 @@ const PATHS: Record<ServiceIcon | "star" | "quote" | "arrow" | "close" | "menu" 
   youtube:
     "M2.5 8.2c.2-1.6 1.3-2.7 2.9-2.8C7.5 5.2 9.7 5 12 5s4.5.2 6.6.4c1.6.1 2.7 1.2 2.9 2.8.2 1.3.3 2.5.3 3.8s-.1 2.5-.3 3.8c-.2 1.6-1.3 2.7-2.9 2.8-2.1.2-4.3.4-6.6.4s-4.5-.2-6.6-.4c-1.6-.1-2.7-1.2-2.9-2.8-.2-1.3-.3-2.5-.3-3.8s.1-2.5.3-3.8ZM10 9v6l5-3Z",
   facebook: "M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2Z",
+  linkedin: "M4 9h4v12H4ZM6 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm4 6h4v2c.6-1.1 2-2.2 4-2.2 3.3 0 4 2.1 4 5V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4Z",
   send: "m22 2-7 20-4-9-9-4Zm0 0L11 13",
 };
 

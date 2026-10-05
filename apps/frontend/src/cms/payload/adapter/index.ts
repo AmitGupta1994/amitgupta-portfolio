@@ -1,5 +1,5 @@
 import type { ContentSource } from "@/content/ports";
-import { getPackages, getReviews, getServices } from "./creatives";
+import { getClients, getPackages, getReviews, getServices, getTeam } from "./studio";
 import { getExperiences } from "./experience";
 import { getExpertise } from "./expertise";
 import { getPhotos } from "./photos";
@@ -25,4 +25,6 @@ export const payloadContentSource: ContentSource = {
   getServices,
   getPackages,
   getReviews,
+  getTeam,
+  getClients,
 };

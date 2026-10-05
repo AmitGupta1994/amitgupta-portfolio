@@ -56,21 +56,21 @@ for (const site of sites) {
     }
   }
 
-  if (site === 'creatives') {
-    await payload.delete({ collection: 'creatives-services', where: everything, context })
+  if (site === 'creatives' || site === 'voxelate') {
+    await payload.delete({ collection: `${site}-services`, where: everything, context })
     for (const [order, service] of content.services.entries()) {
-      await payload.create({ collection: 'creatives-services', data: { ...service, order }, context })
+      await payload.create({ collection: `${site}-services`, data: { ...service, order }, context })
     }
 
-    await payload.delete({ collection: 'creatives-packages', where: everything, context })
+    await payload.delete({ collection: `${site}-packages`, where: everything, context })
     for (const [order, pkg] of content.packages.entries()) {
       await payload.create({
-        collection: 'creatives-packages',
+        collection: `${site}-packages`,
         data: { ...pkg, features: pkg.features.map((text) => ({ text })), order },
         context,
       })
     }
-    // Reviews are left alone: they are real testimonials added in the admin.
+    // Reviews, team and clients are left alone: they are real facts added in the admin.
   }
 
   await payload.delete({ collection: `${site}-skill-categories`, where: everything, context })

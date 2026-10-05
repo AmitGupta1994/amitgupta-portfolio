@@ -10,12 +10,14 @@ interface GetStartedButtonProps {
   contact: Profile["contact"];
   /** Named in the prefilled message when the button belongs to a package. */
   packageName?: string;
+  /** Line under the dialog title, in the site's voice. */
+  prompt: string;
   className?: string;
   children: React.ReactNode;
 }
 
 /** Opens a small dialog: continue on WhatsApp, or by email. */
-export default function GetStartedButton({ contact, packageName, className, children }: GetStartedButtonProps) {
+export default function GetStartedButton({ contact, packageName, prompt, className, children }: GetStartedButtonProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const message = enquiryMessage(packageName);
   const whatsapp = whatsappHref(contact, message);
@@ -48,7 +50,8 @@ export default function GetStartedButton({ contact, packageName, className, chil
             Get started
           </h2>
           <p className="mt-2 text-center text-sm text-muted">
-            {packageName ? `About the ${packageName} package — ` : ""}choose how you&apos;d like to reach us.
+            {packageName ? `About the ${packageName} package — ` : ""}
+            {prompt}
           </p>
 
           <div className="mt-6 flex flex-col gap-3">

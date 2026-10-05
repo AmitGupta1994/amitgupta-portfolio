@@ -99,6 +99,18 @@ export interface Config {
     'creatives-services': CreativesService;
     'creatives-packages': CreativesPackage;
     'creatives-reviews': CreativesReview;
+    'voxelate-experiences': VoxelateExperience;
+    'voxelate-skill-categories': VoxelateSkillCategory;
+    'voxelate-expertise': VoxelateExpertise;
+    'voxelate-projects': VoxelateProject;
+    'voxelate-publications': VoxelatePublication;
+    'voxelate-photos': VoxelatePhoto;
+    'voxelate-videos': VoxelateVideo;
+    'voxelate-services': VoxelateService;
+    'voxelate-packages': VoxelatePackage;
+    'voxelate-reviews': VoxelateReview;
+    'voxelate-team': VoxelateTeam;
+    'voxelate-clients': VoxelateClient;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -140,6 +152,18 @@ export interface Config {
     'creatives-services': CreativesServicesSelect<false> | CreativesServicesSelect<true>;
     'creatives-packages': CreativesPackagesSelect<false> | CreativesPackagesSelect<true>;
     'creatives-reviews': CreativesReviewsSelect<false> | CreativesReviewsSelect<true>;
+    'voxelate-experiences': VoxelateExperiencesSelect<false> | VoxelateExperiencesSelect<true>;
+    'voxelate-skill-categories': VoxelateSkillCategoriesSelect<false> | VoxelateSkillCategoriesSelect<true>;
+    'voxelate-expertise': VoxelateExpertiseSelect<false> | VoxelateExpertiseSelect<true>;
+    'voxelate-projects': VoxelateProjectsSelect<false> | VoxelateProjectsSelect<true>;
+    'voxelate-publications': VoxelatePublicationsSelect<false> | VoxelatePublicationsSelect<true>;
+    'voxelate-photos': VoxelatePhotosSelect<false> | VoxelatePhotosSelect<true>;
+    'voxelate-videos': VoxelateVideosSelect<false> | VoxelateVideosSelect<true>;
+    'voxelate-services': VoxelateServicesSelect<false> | VoxelateServicesSelect<true>;
+    'voxelate-packages': VoxelatePackagesSelect<false> | VoxelatePackagesSelect<true>;
+    'voxelate-reviews': VoxelateReviewsSelect<false> | VoxelateReviewsSelect<true>;
+    'voxelate-team': VoxelateTeamSelect<false> | VoxelateTeamSelect<true>;
+    'voxelate-clients': VoxelateClientsSelect<false> | VoxelateClientsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -156,12 +180,14 @@ export interface Config {
     research: Research;
     trek: Trek;
     creatives: Creative;
+    voxelate: Voxelate;
   };
   globalsSelect: {
     tech: TechSelect<false> | TechSelect<true>;
     research: ResearchSelect<false> | ResearchSelect<true>;
     trek: TrekSelect<false> | TrekSelect<true>;
     creatives: CreativesSelect<false> | CreativesSelect<true>;
+    voxelate: VoxelateSelect<false> | VoxelateSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1004,6 +1030,300 @@ export interface CreativesReview {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-experiences".
+ */
+export interface VoxelateExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-skill-categories".
+ */
+export interface VoxelateSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-expertise".
+ */
+export interface VoxelateExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-projects".
+ */
+export interface VoxelateProject {
+  id: number;
+  title: string;
+  description: string;
+  techStack?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-publications".
+ */
+export interface VoxelatePublication {
+  id: number;
+  title: string;
+  authors: string;
+  /**
+   * e.g. "2024, September"
+   */
+  date: string;
+  publisher: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-photos".
+ */
+export interface VoxelatePhoto {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-videos".
+ */
+export interface VoxelateVideo {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
+   */
+  album?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-services".
+ */
+export interface VoxelateService {
+  id: number;
+  title: string;
+  icon: 'megaphone' | 'palette' | 'chart' | 'camera' | 'video' | 'pen' | 'search' | 'globe';
+  /**
+   * One line, always shown.
+   */
+  description: string;
+  /**
+   * Revealed when the card is hovered or focused.
+   */
+  details?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-packages".
+ */
+export interface VoxelatePackage {
+  id: number;
+  name: string;
+  /**
+   * Shown as written, e.g. "NPR 15,000".
+   */
+  price: string;
+  /**
+   * e.g. "per month", "one-off".
+   */
+  period?: string | null;
+  description: string;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Highlights this package.
+   */
+  popular?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-reviews".
+ */
+export interface VoxelateReview {
+  id: number;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  text: string;
+  rating: number;
+  avatarUrl?: string | null;
+  /**
+   * Where the review was left, if public.
+   */
+  link?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-team".
+ */
+export interface VoxelateTeam {
+  id: number;
+  name: string;
+  /**
+   * e.g. "Creative Director"
+   */
+  role: string;
+  /**
+   * One or two lines.
+   */
+  bio?: string | null;
+  photo?: (number | null) | VoxelatePhoto;
+  /**
+   * Used when no photo is uploaded.
+   */
+  photoUrl?: string | null;
+  linkedin?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-clients".
+ */
+export interface VoxelateClient {
+  id: number;
+  name: string;
+  website?: string | null;
+  logo?: (number | null) | VoxelatePhoto;
+  /**
+   * Used when no logo is uploaded; the name shows when neither is set.
+   */
+  logoUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1178,6 +1498,54 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'creatives-reviews';
         value: number | CreativesReview;
+      } | null)
+    | ({
+        relationTo: 'voxelate-experiences';
+        value: number | VoxelateExperience;
+      } | null)
+    | ({
+        relationTo: 'voxelate-skill-categories';
+        value: number | VoxelateSkillCategory;
+      } | null)
+    | ({
+        relationTo: 'voxelate-expertise';
+        value: number | VoxelateExpertise;
+      } | null)
+    | ({
+        relationTo: 'voxelate-projects';
+        value: number | VoxelateProject;
+      } | null)
+    | ({
+        relationTo: 'voxelate-publications';
+        value: number | VoxelatePublication;
+      } | null)
+    | ({
+        relationTo: 'voxelate-photos';
+        value: number | VoxelatePhoto;
+      } | null)
+    | ({
+        relationTo: 'voxelate-videos';
+        value: number | VoxelateVideo;
+      } | null)
+    | ({
+        relationTo: 'voxelate-services';
+        value: number | VoxelateService;
+      } | null)
+    | ({
+        relationTo: 'voxelate-packages';
+        value: number | VoxelatePackage;
+      } | null)
+    | ({
+        relationTo: 'voxelate-reviews';
+        value: number | VoxelateReview;
+      } | null)
+    | ({
+        relationTo: 'voxelate-team';
+        value: number | VoxelateTeam;
+      } | null)
+    | ({
+        relationTo: 'voxelate-clients';
+        value: number | VoxelateClient;
       } | null)
     | ({
         relationTo: 'media';
@@ -1748,6 +2116,195 @@ export interface CreativesReviewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-experiences_select".
+ */
+export interface VoxelateExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-skill-categories_select".
+ */
+export interface VoxelateSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-expertise_select".
+ */
+export interface VoxelateExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-projects_select".
+ */
+export interface VoxelateProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  techStack?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  githubUrl?: T;
+  liveUrl?: T;
+  image?: T;
+  imageUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-publications_select".
+ */
+export interface VoxelatePublicationsSelect<T extends boolean = true> {
+  title?: T;
+  authors?: T;
+  date?: T;
+  publisher?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-photos_select".
+ */
+export interface VoxelatePhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-videos_select".
+ */
+export interface VoxelateVideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-services_select".
+ */
+export interface VoxelateServicesSelect<T extends boolean = true> {
+  title?: T;
+  icon?: T;
+  description?: T;
+  details?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-packages_select".
+ */
+export interface VoxelatePackagesSelect<T extends boolean = true> {
+  name?: T;
+  price?: T;
+  period?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  popular?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-reviews_select".
+ */
+export interface VoxelateReviewsSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  company?: T;
+  text?: T;
+  rating?: T;
+  avatarUrl?: T;
+  link?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-team_select".
+ */
+export interface VoxelateTeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  bio?: T;
+  photo?: T;
+  photoUrl?: T;
+  linkedin?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate-clients_select".
+ */
+export interface VoxelateClientsSelect<T extends boolean = true> {
+  name?: T;
+  website?: T;
+  logo?: T;
+  logoUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -2142,6 +2699,105 @@ export interface Creative {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate".
+ */
+export interface Voxelate {
+  id: number;
+  title: string;
+  tagline?: string | null;
+  name: string;
+  headline: string;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
+  };
+  /**
+   * About copy for this site. Rendered as HTML.
+   */
+  summary: string;
+  /**
+   * This site's full-screen hero.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * This site's own navigation; hrefs are section ids on its page.
+   */
+  nav?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | <title>".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.
+   */
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Shown in the footer.
+   */
+  company?: {
+    /**
+     * e.g. "Voxelate Pvt. Ltd."; defaults to the title.
+     */
+    legalName?: string | null;
+    /**
+     * Year, e.g. "2024".
+     */
+    founded?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tech_select".
  */
 export interface TechSelect<T extends boolean = true> {
@@ -2394,6 +3050,82 @@ export interface CreativesSelect<T extends boolean = true> {
         value?: T;
         label?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voxelate_select".
+ */
+export interface VoxelateSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  name?: T;
+  headline?: T;
+  image?: T;
+  imageUrl?: T;
+  mainSiteUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        location?: T;
+        whatsapp?: T;
+        linkedin?: T;
+        github?: T;
+        freelancer?: T;
+        googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
+      };
+  summary?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  company?:
+    | T
+    | {
+        legalName?: T;
+        founded?: T;
       };
   updatedAt?: T;
   createdAt?: T;

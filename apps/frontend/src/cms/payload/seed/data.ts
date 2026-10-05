@@ -1,4 +1,4 @@
-import type { ServiceIcon } from '@/types/creatives'
+import type { ServiceIcon } from '@/types/studio'
 
 // Seed content, one block per site. Every site owns its own tables, so the same
 // fact can appear on two sites as two rows — that is the trade-off of keeping
@@ -16,6 +16,15 @@ const CONTACT = {
 }
 
 const MAIN_SITE_URL = 'https://guptaamit.com.np'
+
+const STUDIO_NAV = [
+  { name: 'Home', href: '/#home' },
+  { name: 'Services', href: '/#services' },
+  { name: 'Packages', href: '/#packages' },
+  { name: 'Work', href: '/#work' },
+  { name: 'Reviews', href: '/#reviews' },
+  { name: 'Contact', href: '/#contact' },
+]
 const PORTRAIT = 'https://github.com/amitgupta1994.png'
 
 /** Values written into each site's global. Field defaults cover anything omitted. */
@@ -129,39 +138,68 @@ export const siteGlobals = {
   },
   creatives: {
     title: 'Creatives',
-    tagline: 'Digital marketing & branding studio',
+    tagline: 'Digital marketing & branding',
     name: 'Amit Gupta',
     headline: 'Digital Marketing & Branding',
     imageUrl: PORTRAIT,
     mainSiteUrl: MAIN_SITE_URL,
     contact: { email: CONTACT.email, phone: CONTACT.phone, whatsapp: CONTACT.whatsapp, location: CONTACT.location },
     summary:
-      'We build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing under one roof.',
+      'I help businesses build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing, done hands-on.',
     hero: {
       title: 'Ideas that move people',
       description: [
-        { text: 'Brand identity, ' },
+        { text: 'I craft ' },
+        { text: 'brand identities', highlight: true },
+        { text: ', ' },
         { text: 'social content', highlight: true },
         { text: ' and ' },
         { text: 'performance campaigns', highlight: true },
         { text: ' for businesses ready to grow.' },
       ],
-      cta: { label: 'Get started', href: '/#contact' },
+      cta: { label: 'Work with me', href: '/#contact' },
     },
-    nav: [
-      { name: 'Home', href: '/#home' },
-      { name: 'Services', href: '/#services' },
-      { name: 'Packages', href: '/#packages' },
-      { name: 'Work', href: '/#work' },
-      { name: 'Reviews', href: '/#reviews' },
-      { name: 'Contact', href: '/#contact' },
-    ],
+    nav: STUDIO_NAV,
     // Real figures only — add them in the admin; the row stays hidden while empty.
     stats: [],
     seo: {
-      title: 'Creatives | Digital Marketing & Branding',
+      title: 'Amit Gupta | Digital Marketing & Branding',
       description:
-        'Brand identity, social media content and performance marketing for businesses ready to grow.',
+        'Brand identity, social media content and performance marketing for businesses ready to grow — by Amit Gupta.',
+    },
+  },
+  voxelate: {
+    title: 'Voxelate',
+    tagline: 'Digital marketing & branding company',
+    name: 'Voxelate',
+    headline: 'Digital Marketing & Branding',
+    imageUrl: PORTRAIT,
+    // A company site doesn't link back to a personal portfolio.
+    mainSiteUrl: '',
+    // Placeholder: replace with the company's own inbox, number and socials in the admin.
+    contact: { email: CONTACT.email, phone: CONTACT.phone, whatsapp: CONTACT.whatsapp, location: CONTACT.location },
+    summary:
+      'Voxelate is a digital marketing and branding company. Our team of strategists, designers and creators builds brands people remember and campaigns that pay for themselves.',
+    hero: {
+      title: 'Brands built to be remembered',
+      description: [
+        { text: 'Our team delivers ' },
+        { text: 'brand strategy', highlight: true },
+        { text: ', ' },
+        { text: 'creative production', highlight: true },
+        { text: ' and ' },
+        { text: 'performance marketing', highlight: true },
+        { text: ' for growing businesses.' },
+      ],
+      cta: { label: 'Start a project', href: '/#contact' },
+    },
+    nav: [...STUDIO_NAV.slice(0, 4), { name: 'Team', href: '/#team' }, ...STUDIO_NAV.slice(4)],
+    stats: [],
+    // The registered name and founding year (company group) are filled in the admin.
+    seo: {
+      title: 'Voxelate | Digital Marketing & Branding Company',
+      description:
+        'Voxelate is a digital marketing and branding company: brand strategy, creative production and performance marketing for growing businesses.',
     },
   },
 }
@@ -524,7 +562,7 @@ const PACKAGES = [
     name: 'Brand Partner',
     price: 'On request',
     period: 'per month',
-    description: 'A full marketing team on retainer.',
+    description: 'Hands-on, ongoing marketing on retainer.',
     features: [
       'Full brand identity system',
       'All platforms, daily presence',
@@ -537,20 +575,69 @@ const PACKAGES = [
   },
 ]
 
+// The company's tiers: written for a team taking on the work, not one person.
+const COMPANY_PACKAGES = [
+  {
+    name: 'Launch',
+    price: 'On request',
+    period: '',
+    description: 'For new brands: identity, launch content and a channel set up properly.',
+    features: [
+      'Brand strategy workshop',
+      'Logo system & brand guidelines',
+      'Social profiles set up and designed',
+      'Launch campaign creative',
+      'Dedicated project manager',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Growth',
+    price: 'On request',
+    period: 'per month',
+    description: 'A full creative and media team running your marketing every month.',
+    features: [
+      'Content calendar across your platforms',
+      'Monthly shoot: reels & product photography',
+      'Meta & Google ads management',
+      'Community management',
+      'Monthly performance report & strategy call',
+      'Dedicated account manager',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: 'On request',
+    period: 'custom',
+    description: 'Multi-brand and multi-market programmes with a team built around you.',
+    features: [
+      'Integrated campaign planning',
+      'Brand system for multiple lines',
+      'Production at scale: video, photo, motion',
+      'Full-funnel paid media & conversion tracking',
+      'Websites, landing pages & SEO',
+      'Quarterly business reviews',
+    ],
+    popular: false,
+  },
+]
+
 const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
 /**
  * Per-site rows. Research repeats the research roles, skills and publications
  * that also belong on the tech portfolio — separate tables mean separate rows.
  * Trek starts empty: add real treks, photos and films in the admin.
- * Creatives gets its services and package outlines; reviews, stats, prices and
- * work videos are real-world facts, so they are added in the admin.
+ * Creatives (personal) and Voxelate (company) get services and package outlines;
+ * reviews, stats, prices, work videos, team and clients are real-world facts, so
+ * they are added in the admin.
  */
 export const siteContent = {
   tech: {
     treks: [] as typeof TREKS,
     services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES,
+    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
     experiences: ALL_EXPERIENCES,
     expertise: ALL_EXPERTISE,
     publications: ALL_PUBLICATIONS,
@@ -560,7 +647,7 @@ export const siteContent = {
   research: {
     treks: [] as typeof TREKS,
     services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES,
+    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
     experiences: pick(ALL_EXPERIENCES, (e) =>
       ['Research Exchange', 'Research Assistant'].includes(e.role)
     ),
@@ -574,7 +661,7 @@ export const siteContent = {
   trek: {
     treks: TREKS,
     services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES,
+    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
@@ -584,7 +671,17 @@ export const siteContent = {
   creatives: {
     treks: [] as typeof TREKS,
     services: SERVICES,
-    packages: PACKAGES,
+    packages: PACKAGES as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    experiences: [] as typeof ALL_EXPERIENCES,
+    expertise: [] as typeof ALL_EXPERTISE,
+    publications: [] as typeof ALL_PUBLICATIONS,
+    projects: [] as typeof ALL_PROJECTS,
+    skillCategories: [] as typeof ALL_SKILLS,
+  },
+  voxelate: {
+    treks: [] as typeof TREKS,
+    services: SERVICES,
+    packages: COMPANY_PACKAGES as typeof PACKAGES | typeof COMPANY_PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
