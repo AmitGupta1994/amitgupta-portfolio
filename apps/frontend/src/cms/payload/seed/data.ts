@@ -173,7 +173,7 @@ export const siteGlobals = {
     tagline: 'Digital marketing & branding company',
     name: 'Voxelate',
     headline: 'Digital Marketing & Branding',
-    imageUrl: PORTRAIT,
+    imageUrl: '/voxelate/logo-mark.jpg',
     // A company site doesn't link back to a personal portfolio.
     mainSiteUrl: '',
     // Placeholder: replace with the company's own inbox, number and socials in the admin.
