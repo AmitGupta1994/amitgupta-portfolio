@@ -1,3 +1,5 @@
+import type { ServiceIcon } from '@/types/creatives'
+
 // Seed content, one block per site. Every site owns its own tables, so the same
 // fact can appear on two sites as two rows — that is the trade-off of keeping
 // them separable.
@@ -123,6 +125,43 @@ export const siteGlobals = {
     seo: {
       title: 'Amit Gupta | Trek',
       description: 'Trekking routes in Nepal and beyond, with photographs and films.',
+    },
+  },
+  creatives: {
+    title: 'Creatives',
+    tagline: 'Digital marketing & branding studio',
+    name: 'Amit Gupta',
+    headline: 'Digital Marketing & Branding',
+    imageUrl: PORTRAIT,
+    mainSiteUrl: MAIN_SITE_URL,
+    contact: { email: CONTACT.email, phone: CONTACT.phone, whatsapp: CONTACT.whatsapp, location: CONTACT.location },
+    summary:
+      'We build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing under one roof.',
+    hero: {
+      title: 'Ideas that move people',
+      description: [
+        { text: 'Brand identity, ' },
+        { text: 'social content', highlight: true },
+        { text: ' and ' },
+        { text: 'performance campaigns', highlight: true },
+        { text: ' for businesses ready to grow.' },
+      ],
+      cta: { label: 'Get started', href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#home' },
+      { name: 'Services', href: '/#services' },
+      { name: 'Packages', href: '/#packages' },
+      { name: 'Work', href: '/#work' },
+      { name: 'Reviews', href: '/#reviews' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    // Real figures only — add them in the admin; the row stays hidden while empty.
+    stats: [],
+    seo: {
+      title: 'Creatives | Digital Marketing & Branding',
+      description:
+        'Brand identity, social media content and performance marketing for businesses ready to grow.',
     },
   },
 }
@@ -406,16 +445,112 @@ const TREKS = [
   },
 ]
 
+const SERVICES = [
+  {
+    title: 'Brand Identity',
+    icon: 'palette',
+    description: 'Logos, colour, type and voice that make a business recognisable at a glance.',
+    details:
+      'Brand strategy workshops, naming, logo systems, colour and typography, brand guidelines and the templates your team uses every day.',
+  },
+  {
+    title: 'Social Media Marketing',
+    icon: 'megaphone',
+    description: 'Content calendars, community management and campaigns that grow a following.',
+    details:
+      'Platform strategy for Instagram, Facebook, TikTok and LinkedIn, monthly content calendars, copywriting, scheduling, community replies and monthly reporting.',
+  },
+  {
+    title: 'Performance Ads',
+    icon: 'chart',
+    description: 'Paid campaigns on Meta and Google, measured against what they bring back.',
+    details:
+      'Audience research, creative testing, conversion tracking, budget pacing and a clear report on cost per lead and return on ad spend.',
+  },
+  {
+    title: 'Content & Video',
+    icon: 'video',
+    description: 'Reels, product shoots and short films made for the feed they live in.',
+    details:
+      'Scripting, shooting, editing, motion graphics, captions and sound — vertical and landscape cuts from one shoot.',
+  },
+  {
+    title: 'SEO & Web',
+    icon: 'search',
+    description: 'Fast websites and search visibility that keep working after the ads stop.',
+    details:
+      'Landing pages and business sites, technical SEO, local listings, on-page content and analytics set up so you can see what converts.',
+  },
+  {
+    title: 'Copy & Strategy',
+    icon: 'pen',
+    description: 'Positioning and words that explain why you, not the competitor.',
+    details:
+      'Market and competitor review, messaging framework, campaign concepts, ad and website copy, and launch plans.',
+  },
+] satisfies Array<{ icon: ServiceIcon } & Record<string, string>>
+
+// Prices are the studio's to set: "On request" until they are filled in the admin.
+const PACKAGES = [
+  {
+    name: 'Starter',
+    price: 'On request',
+    period: '',
+    description: 'For new businesses getting their brand and first channel right.',
+    features: [
+      'Logo refresh & mini brand guide',
+      'One social platform set up and managed',
+      '12 designed posts a month',
+      'Basic monthly report',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Growth',
+    price: 'On request',
+    period: 'per month',
+    description: 'For businesses ready to grow reach and leads every month.',
+    features: [
+      'Everything in Starter',
+      'Two platforms with content calendar',
+      '4 short-form reels a month',
+      'Meta ads management',
+      'Community management',
+      'Monthly strategy call',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Brand Partner',
+    price: 'On request',
+    period: 'per month',
+    description: 'A full marketing team on retainer.',
+    features: [
+      'Full brand identity system',
+      'All platforms, daily presence',
+      'Product & lifestyle shoots',
+      'Meta & Google ads with conversion tracking',
+      'Landing pages & SEO',
+      'Quarterly campaign planning',
+    ],
+    popular: false,
+  },
+]
+
 const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
 /**
  * Per-site rows. Research repeats the research roles, skills and publications
  * that also belong on the tech portfolio — separate tables mean separate rows.
  * Trek starts empty: add real treks, photos and films in the admin.
+ * Creatives gets its services and package outlines; reviews, stats, prices and
+ * work videos are real-world facts, so they are added in the admin.
  */
 export const siteContent = {
   tech: {
     treks: [] as typeof TREKS,
+    services: [] as typeof SERVICES,
+    packages: [] as typeof PACKAGES,
     experiences: ALL_EXPERIENCES,
     expertise: ALL_EXPERTISE,
     publications: ALL_PUBLICATIONS,
@@ -424,6 +559,8 @@ export const siteContent = {
   },
   research: {
     treks: [] as typeof TREKS,
+    services: [] as typeof SERVICES,
+    packages: [] as typeof PACKAGES,
     experiences: pick(ALL_EXPERIENCES, (e) =>
       ['Research Exchange', 'Research Assistant'].includes(e.role)
     ),
@@ -436,6 +573,18 @@ export const siteContent = {
   },
   trek: {
     treks: TREKS,
+    services: [] as typeof SERVICES,
+    packages: [] as typeof PACKAGES,
+    experiences: [] as typeof ALL_EXPERIENCES,
+    expertise: [] as typeof ALL_EXPERTISE,
+    publications: [] as typeof ALL_PUBLICATIONS,
+    projects: [] as typeof ALL_PROJECTS,
+    skillCategories: [] as typeof ALL_SKILLS,
+  },
+  creatives: {
+    treks: [] as typeof TREKS,
+    services: SERVICES,
+    packages: PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,

@@ -89,6 +89,16 @@ export interface Config {
     'trek-photos': TrekPhoto;
     'trek-videos': TrekVideo;
     'trek-treks': TrekTrek;
+    'creatives-experiences': CreativesExperience;
+    'creatives-skill-categories': CreativesSkillCategory;
+    'creatives-expertise': CreativesExpertise;
+    'creatives-projects': CreativesProject;
+    'creatives-publications': CreativesPublication;
+    'creatives-photos': CreativesPhoto;
+    'creatives-videos': CreativesVideo;
+    'creatives-services': CreativesService;
+    'creatives-packages': CreativesPackage;
+    'creatives-reviews': CreativesReview;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -120,6 +130,16 @@ export interface Config {
     'trek-photos': TrekPhotosSelect<false> | TrekPhotosSelect<true>;
     'trek-videos': TrekVideosSelect<false> | TrekVideosSelect<true>;
     'trek-treks': TrekTreksSelect<false> | TrekTreksSelect<true>;
+    'creatives-experiences': CreativesExperiencesSelect<false> | CreativesExperiencesSelect<true>;
+    'creatives-skill-categories': CreativesSkillCategoriesSelect<false> | CreativesSkillCategoriesSelect<true>;
+    'creatives-expertise': CreativesExpertiseSelect<false> | CreativesExpertiseSelect<true>;
+    'creatives-projects': CreativesProjectsSelect<false> | CreativesProjectsSelect<true>;
+    'creatives-publications': CreativesPublicationsSelect<false> | CreativesPublicationsSelect<true>;
+    'creatives-photos': CreativesPhotosSelect<false> | CreativesPhotosSelect<true>;
+    'creatives-videos': CreativesVideosSelect<false> | CreativesVideosSelect<true>;
+    'creatives-services': CreativesServicesSelect<false> | CreativesServicesSelect<true>;
+    'creatives-packages': CreativesPackagesSelect<false> | CreativesPackagesSelect<true>;
+    'creatives-reviews': CreativesReviewsSelect<false> | CreativesReviewsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -135,11 +155,13 @@ export interface Config {
     tech: Tech;
     research: Research;
     trek: Trek;
+    creatives: Creative;
   };
   globalsSelect: {
     tech: TechSelect<false> | TechSelect<true>;
     research: ResearchSelect<false> | ResearchSelect<true>;
     trek: TrekSelect<false> | TrekSelect<true>;
+    creatives: CreativesSelect<false> | CreativesSelect<true>;
   };
   locale: null;
   widgets: {
@@ -345,7 +367,7 @@ export interface TechVideo {
   url: string;
   description?: string | null;
   /**
-   * Optional grouping, e.g. a trek name.
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
    */
   album?: string | null;
   /**
@@ -512,7 +534,7 @@ export interface ResearchVideo {
   url: string;
   description?: string | null;
   /**
-   * Optional grouping, e.g. a trek name.
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
    */
   album?: string | null;
   /**
@@ -679,7 +701,7 @@ export interface TrekVideo {
   url: string;
   description?: string | null;
   /**
-   * Optional grouping, e.g. a trek name.
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
    */
   album?: string | null;
   /**
@@ -727,6 +749,252 @@ export interface TrekTrek {
    * Photos shown on this trek's page.
    */
   gallery?: (number | TrekPhoto)[] | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-experiences".
+ */
+export interface CreativesExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-skill-categories".
+ */
+export interface CreativesSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-expertise".
+ */
+export interface CreativesExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-projects".
+ */
+export interface CreativesProject {
+  id: number;
+  title: string;
+  description: string;
+  techStack?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-publications".
+ */
+export interface CreativesPublication {
+  id: number;
+  title: string;
+  authors: string;
+  /**
+   * e.g. "2024, September"
+   */
+  date: string;
+  publisher: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-photos".
+ */
+export interface CreativesPhoto {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-videos".
+ */
+export interface CreativesVideo {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
+   */
+  album?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-services".
+ */
+export interface CreativesService {
+  id: number;
+  title: string;
+  icon: 'megaphone' | 'palette' | 'chart' | 'camera' | 'video' | 'pen' | 'search' | 'globe';
+  /**
+   * One line, always shown.
+   */
+  description: string;
+  /**
+   * Revealed when the card is hovered or focused.
+   */
+  details?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-packages".
+ */
+export interface CreativesPackage {
+  id: number;
+  name: string;
+  /**
+   * Shown as written, e.g. "NPR 15,000".
+   */
+  price: string;
+  /**
+   * e.g. "per month", "one-off".
+   */
+  period?: string | null;
+  description: string;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Highlights this package.
+   */
+  popular?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-reviews".
+ */
+export interface CreativesReview {
+  id: number;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  text: string;
+  rating: number;
+  avatarUrl?: string | null;
+  /**
+   * Where the review was left, if public.
+   */
+  link?: string | null;
   /**
    * Lower numbers appear first.
    */
@@ -870,6 +1138,46 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trek-treks';
         value: number | TrekTrek;
+      } | null)
+    | ({
+        relationTo: 'creatives-experiences';
+        value: number | CreativesExperience;
+      } | null)
+    | ({
+        relationTo: 'creatives-skill-categories';
+        value: number | CreativesSkillCategory;
+      } | null)
+    | ({
+        relationTo: 'creatives-expertise';
+        value: number | CreativesExpertise;
+      } | null)
+    | ({
+        relationTo: 'creatives-projects';
+        value: number | CreativesProject;
+      } | null)
+    | ({
+        relationTo: 'creatives-publications';
+        value: number | CreativesPublication;
+      } | null)
+    | ({
+        relationTo: 'creatives-photos';
+        value: number | CreativesPhoto;
+      } | null)
+    | ({
+        relationTo: 'creatives-videos';
+        value: number | CreativesVideo;
+      } | null)
+    | ({
+        relationTo: 'creatives-services';
+        value: number | CreativesService;
+      } | null)
+    | ({
+        relationTo: 'creatives-packages';
+        value: number | CreativesPackage;
+      } | null)
+    | ({
+        relationTo: 'creatives-reviews';
+        value: number | CreativesReview;
       } | null)
     | ({
         relationTo: 'media';
@@ -1279,6 +1587,167 @@ export interface TrekTreksSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-experiences_select".
+ */
+export interface CreativesExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-skill-categories_select".
+ */
+export interface CreativesSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-expertise_select".
+ */
+export interface CreativesExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-projects_select".
+ */
+export interface CreativesProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  techStack?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  githubUrl?: T;
+  liveUrl?: T;
+  image?: T;
+  imageUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-publications_select".
+ */
+export interface CreativesPublicationsSelect<T extends boolean = true> {
+  title?: T;
+  authors?: T;
+  date?: T;
+  publisher?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-photos_select".
+ */
+export interface CreativesPhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-videos_select".
+ */
+export interface CreativesVideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-services_select".
+ */
+export interface CreativesServicesSelect<T extends boolean = true> {
+  title?: T;
+  icon?: T;
+  description?: T;
+  details?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-packages_select".
+ */
+export interface CreativesPackagesSelect<T extends boolean = true> {
+  name?: T;
+  price?: T;
+  period?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  popular?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives-reviews_select".
+ */
+export interface CreativesReviewsSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  company?: T;
+  text?: T;
+  rating?: T;
+  avatarUrl?: T;
+  link?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -1385,6 +1854,9 @@ export interface Tech {
     github?: string | null;
     freelancer?: string | null;
     googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
   };
   /**
    * About copy for this site. Rendered as HTML.
@@ -1458,6 +1930,9 @@ export interface Research {
     github?: string | null;
     freelancer?: string | null;
     googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
   };
   /**
    * About copy for this site. Rendered as HTML.
@@ -1531,6 +2006,9 @@ export interface Trek {
     github?: string | null;
     freelancer?: string | null;
     googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
   };
   /**
    * About copy for this site. Rendered as HTML.
@@ -1578,6 +2056,92 @@ export interface Trek {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives".
+ */
+export interface Creative {
+  id: number;
+  title: string;
+  tagline?: string | null;
+  name: string;
+  headline: string;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
+  };
+  /**
+   * About copy for this site. Rendered as HTML.
+   */
+  summary: string;
+  /**
+   * This site's full-screen hero.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * This site's own navigation; hrefs are section ids on its page.
+   */
+  nav?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | <title>".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.
+   */
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tech_select".
  */
 export interface TechSelect<T extends boolean = true> {
@@ -1599,6 +2163,9 @@ export interface TechSelect<T extends boolean = true> {
         github?: T;
         freelancer?: T;
         googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
       };
   summary?: T;
   hero?:
@@ -1659,6 +2226,9 @@ export interface ResearchSelect<T extends boolean = true> {
         github?: T;
         freelancer?: T;
         googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
       };
   summary?: T;
   hero?:
@@ -1719,6 +2289,9 @@ export interface TrekSelect<T extends boolean = true> {
         github?: T;
         freelancer?: T;
         googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
       };
   summary?: T;
   hero?:
@@ -1751,6 +2324,76 @@ export interface TrekSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "creatives_select".
+ */
+export interface CreativesSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  name?: T;
+  headline?: T;
+  image?: T;
+  imageUrl?: T;
+  mainSiteUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        location?: T;
+        whatsapp?: T;
+        linkedin?: T;
+        github?: T;
+        freelancer?: T;
+        googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
+      };
+  summary?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

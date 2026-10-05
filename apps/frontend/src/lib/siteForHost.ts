@@ -2,6 +2,7 @@
 export const SITE_BY_SUBDOMAIN: Record<string, string> = {
   research: "/research",
   trek: "/trek",
+  creatives: "/creatives",
 };
 
 /**

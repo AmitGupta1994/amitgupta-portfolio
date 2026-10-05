@@ -45,7 +45,13 @@ and syncs the schema directly, which marks the database as dev-pushed. The build
 resulting confirmation prompt automatically, but from then on every deploy runs migrations
 against a schema that was never migrated — which can fail. Keep production migration-only.
 
-This **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
+To seed only some sites and leave the others' admin edits alone, add `SEED_SITES` (comma-separated):
+
+```bash
+SEED_SITES=creatives NODE_ENV=production DATABASE_URL="…" npm run seed
+```
+
+Without it, this **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
 users and uploaded images alone. Run it once, then edit in the admin UI.
 
 ## Subdomains (research.…, trek.…)

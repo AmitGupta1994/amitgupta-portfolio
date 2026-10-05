@@ -187,7 +187,11 @@ export const createVideos = (site: SiteKey): CollectionConfig => ({
       admin: { description: 'Any YouTube link: watch?v=…, youtu.be/… or /shorts/….' },
     },
     { name: 'description', type: 'textarea' },
-    { name: 'album', type: 'text', admin: { description: 'Optional grouping, e.g. a trek name.' } },
+    {
+      name: 'album',
+      type: 'text',
+      admin: { description: 'Optional grouping, e.g. a trek name; the creatives site shows one card per album.' },
+    },
     orderField,
   ],
 })
@@ -244,6 +248,84 @@ export const createTreks = (site: SiteKey): CollectionConfig => ({
   ],
 })
 
+/** Icons a service card can show; the creatives site draws each one. */
+export const SERVICE_ICONS = ['megaphone', 'palette', 'chart', 'camera', 'video', 'pen', 'search', 'globe'] as const
+
+/** What the agency offers: a card with a short line and more detail on hover. */
+export const createServices = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'services', 'Service', 'Services'),
+  admin: { ...base(site, 'services', '', '').admin, useAsTitle: 'title', defaultColumns: ['title', 'icon', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        {
+          name: 'icon',
+          type: 'select',
+          required: true,
+          defaultValue: 'megaphone',
+          options: SERVICE_ICONS.map((value) => ({ label: value, value })),
+        },
+      ],
+    },
+    { name: 'description', type: 'textarea', required: true, admin: { description: 'One line, always shown.' } },
+    { name: 'details', type: 'textarea', admin: { description: 'Revealed when the card is hovered or focused.' } },
+    orderField,
+  ],
+})
+
+/** Priced packages; one may be flagged as the most popular. */
+export const createPackages = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'packages', 'Package', 'Packages'),
+  admin: { ...base(site, 'packages', '', '').admin, useAsTitle: 'name', defaultColumns: ['name', 'price', 'popular', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'price', type: 'text', required: true, admin: { description: 'Shown as written, e.g. "NPR 15,000".' } },
+        { name: 'period', type: 'text', admin: { description: 'e.g. "per month", "one-off".' } },
+      ],
+    },
+    { name: 'description', type: 'text', required: true },
+    {
+      name: 'features',
+      type: 'array',
+      labels: { singular: 'Feature', plural: 'Features' },
+      fields: [{ name: 'text', type: 'text', required: true }],
+    },
+    { name: 'popular', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar', description: 'Highlights this package.' } },
+    orderField,
+  ],
+})
+
+/** Client testimonials. Add only real ones, ideally with a link to the source. */
+export const createReviews = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'reviews', 'Review', 'Reviews'),
+  admin: { ...base(site, 'reviews', '', '').admin, useAsTitle: 'name', defaultColumns: ['name', 'company', 'rating', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'role', type: 'text' },
+        { name: 'company', type: 'text' },
+      ],
+    },
+    { name: 'text', type: 'textarea', required: true },
+    {
+      type: 'row',
+      fields: [
+        { name: 'rating', type: 'number', required: true, defaultValue: 5, min: 1, max: 5 },
+        { name: 'avatarUrl', type: 'text', label: 'Avatar URL' },
+        { name: 'link', type: 'text', label: 'Source URL', admin: { description: 'Where the review was left, if public.' } },
+      ],
+    },
+    orderField,
+  ],
+})
+
 /** Types every site gets, plus the ones only some sites need. */
 export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createExperiences(site),
@@ -254,4 +336,5 @@ export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   createPhotos(site),
   createVideos(site),
   ...(site === 'trek' ? [createTreks(site)] : []),
+  ...(site === 'creatives' ? [createServices(site), createPackages(site), createReviews(site)] : []),
 ]

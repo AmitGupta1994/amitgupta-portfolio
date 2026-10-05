@@ -1,3 +1,4 @@
+import type { Package, Review, Service } from "@/types/creatives";
 import type { Experience } from "@/types/experience";
 import type { Expertise } from "@/types/expertise";
 import type { Photo } from "@/types/photo";
@@ -27,6 +28,9 @@ export interface ContentSource {
   getVideos(site: SiteKey): Promise<Video[]>;
   getTreks(site: SiteKey): Promise<Trek[]>;
   getTrek(site: SiteKey, slug: string): Promise<Trek | null>;
+  getServices(site: SiteKey): Promise<Service[]>;
+  getPackages(site: SiteKey): Promise<Package[]>;
+  getReviews(site: SiteKey): Promise<Review[]>;
 }
 
 export type { SiteKey } from "@/types/sites";
