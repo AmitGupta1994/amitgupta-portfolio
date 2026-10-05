@@ -1,8 +1,9 @@
-// Replaces every site's content with src/cms/payload/seed/data.ts. Run with `npm run seed`.
+// Replaces site content with src/cms/payload/seed/data.ts. Run with `npm run seed`.
+// SEED_SITES=creatives (comma-separated) limits it to those sites and leaves the rest alone.
 // Users and uploaded media are left untouched.
 import { getPayload } from 'payload'
 
-import { SITES } from '@/types/sites'
+import { SITES, type SiteKey } from '@/types/sites'
 import config from '../payload.config'
 import { siteContent, siteGlobals } from './data'
 
@@ -10,9 +11,16 @@ import { siteContent, siteGlobals } from './data'
 const context = { disableRevalidate: true }
 const everything = { id: { exists: true } }
 
+const requested = process.env.SEED_SITES?.split(',').map((site) => site.trim()).filter(Boolean)
+const unknown = requested?.filter((site) => !SITES.includes(site as SiteKey)) ?? []
+if (unknown.length > 0) {
+  throw new Error(`Unknown site(s) in SEED_SITES: ${unknown.join(', ')}. Known: ${SITES.join(', ')}`)
+}
+const sites = requested?.length ? (requested as SiteKey[]) : SITES
+
 const payload = await getPayload({ config })
 
-for (const site of SITES) {
+for (const site of sites) {
   await payload.updateGlobal({ slug: site, data: siteGlobals[site], context })
 
   const content = siteContent[site]
@@ -46,6 +54,23 @@ for (const site of SITES) {
     for (const [order, trek] of content.treks.entries()) {
       await payload.create({ collection: 'trek-treks', data: { ...trek, order }, context })
     }
+  }
+
+  if (site === 'creatives' || site === 'voxelate') {
+    await payload.delete({ collection: `${site}-services`, where: everything, context })
+    for (const [order, service] of content.services.entries()) {
+      await payload.create({ collection: `${site}-services`, data: { ...service, order }, context })
+    }
+
+    await payload.delete({ collection: `${site}-packages`, where: everything, context })
+    for (const [order, pkg] of content.packages.entries()) {
+      await payload.create({
+        collection: `${site}-packages`,
+        data: { ...pkg, features: pkg.features.map((text) => ({ text })), order },
+        context,
+      })
+    }
+    // Reviews, team and clients are left alone: they are real facts added in the admin.
   }
 
   await payload.delete({ collection: `${site}-skill-categories`, where: everything, context })

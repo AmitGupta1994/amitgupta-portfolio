@@ -32,6 +32,7 @@ export function mapVideo(doc: CmsVideo): Video {
     title: doc.title,
     description: orUndefined(doc.description),
     url: doc.url,
+    album: orUndefined(doc.album),
     youtubeId,
     thumbnailUrl: youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : "",
   };

@@ -20,6 +20,9 @@ export interface Profile {
     linkedin?: string;
     github?: string;
     googleScholar?: string;
+    instagram?: string;
+    youtube?: string;
+    facebook?: string;
   };
   hero: HeroCopy;
   summary: string;

@@ -1,4 +1,4 @@
-import type { GlobalConfig } from 'payload'
+import type { Field, GlobalConfig } from 'payload'
 
 import type { SiteKey } from '@/types/sites'
 import { SITE_LABELS } from '@/types/sites'
@@ -19,6 +19,8 @@ export interface SiteDefaults {
   heroDescription: Array<{ text: string; highlight?: boolean }>
   ctaLabel: string
   nav: Array<{ name: string; href: string }>
+  /** Fields only this site's global carries, appended after the shared ones. */
+  extraFields?: Field[]
 }
 
 /**
@@ -89,6 +91,14 @@ export const createSiteGlobal = (defaults: SiteDefaults): GlobalConfig => ({
           fields: [
             { name: 'freelancer', type: 'text', label: 'Freelancer URL' },
             { name: 'googleScholar', type: 'text', label: 'Google Scholar URL' },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            { name: 'instagram', type: 'text', label: 'Instagram URL' },
+            { name: 'youtube', type: 'text', label: 'YouTube URL' },
+            { name: 'facebook', type: 'text', label: 'Facebook URL' },
           ],
         },
       ],
@@ -165,5 +175,6 @@ export const createSiteGlobal = (defaults: SiteDefaults): GlobalConfig => ({
         { name: 'description', type: 'textarea' },
       ],
     },
+    ...(defaults.extraFields ?? []),
   ],
 })

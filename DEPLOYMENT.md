@@ -45,7 +45,13 @@ and syncs the schema directly, which marks the database as dev-pushed. The build
 resulting confirmation prompt automatically, but from then on every deploy runs migrations
 against a schema that was never migrated — which can fail. Keep production migration-only.
 
-This **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
+To seed only some sites and leave the others' admin edits alone, add `SEED_SITES` (comma-separated):
+
+```bash
+SEED_SITES=creatives,voxelate NODE_ENV=production DATABASE_URL="…" npm run seed
+```
+
+Without it, this **replaces** all portfolio content with `apps/frontend/src/cms/payload/seed/data.ts`, leaving
 users and uploaded images alone. Run it once, then edit in the admin UI.
 
 ## Subdomains (research.…, trek.…)
@@ -61,8 +67,10 @@ The research and trek sites are the same deployment, served on their own hosts b
 3. Wait for the certificate to be issued, then open `https://research.yourdomain.com`.
 
 No extra project, build or environment variable is needed; `/research` and `/trek` keep
-working on the main domain too. Adding `creatives.` later is the same three steps plus a
-row in `SITE_BY_SUBDOMAIN`.
+working on the main domain too. `creatives.` and `voxelate.` are the same three steps (their
+rows are already in `SITE_BY_SUBDOMAIN`). Voxelate can also have its own domain: add
+`voxelate.com` (or any `voxelate.<tld>`) to the project the same way — its first label is
+`voxelate`, so it resolves to `/voxelate` with no code change.
 
 The trek site's photo gallery uploads through the admin, so it needs the Blob store from
 step 3; its films only store YouTube URLs and cost nothing. Sections with no content yet
