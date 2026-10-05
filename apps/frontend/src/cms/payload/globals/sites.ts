@@ -1,3 +1,5 @@
+import type { Field } from 'payload'
+
 import { createSiteGlobal } from './siteGlobal'
 
 const CONTACT_NOTE = 'Kathmandu (Nepal)'
@@ -93,45 +95,95 @@ export const TrekSite = createSiteGlobal({
   ],
 })
 
-/** The digital marketing & branding studio: services, packages, work and reviews. */
+/** Headline figures under a studio site's hero. */
+const statsField: Field = {
+  name: 'stats',
+  type: 'array',
+  labels: { singular: 'Stat', plural: 'Stats' },
+  admin: { description: 'Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.' },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'value', type: 'text', required: true },
+        { name: 'label', type: 'text', required: true },
+      ],
+    },
+  ],
+}
+
+const STUDIO_NAV = [
+  { name: 'Home', href: '/#home' },
+  { name: 'Services', href: '/#services' },
+  { name: 'Packages', href: '/#packages' },
+  { name: 'Work', href: '/#work' },
+  { name: 'Reviews', href: '/#reviews' },
+  { name: 'Contact', href: '/#contact' },
+]
+
+/** Amit's own digital marketing & branding practice — written in the first person. */
 export const CreativesSite = createSiteGlobal({
   site: 'creatives',
   title: 'Creatives',
-  tagline: 'Digital marketing & branding studio',
+  tagline: 'Digital marketing & branding',
   name: 'Amit Gupta',
   headline: 'Digital Marketing & Branding',
   imageUrl: 'https://github.com/amitgupta1994.png',
   summary:
-    'We build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing under one roof.',
+    'I help businesses build brands people remember and campaigns that pay for themselves — strategy, identity, content and performance marketing, done hands-on.',
   heroTitle: 'Ideas that move people',
   heroDescription: [
-    { text: 'Brand identity, ' },
+    { text: 'I craft ' },
+    { text: 'brand identities', highlight: true },
+    { text: ', ' },
     { text: 'social content', highlight: true },
     { text: ' and ' },
     { text: 'performance campaigns', highlight: true },
     { text: ' for businesses ready to grow.' },
   ],
-  ctaLabel: 'Get started',
+  ctaLabel: 'Work with me',
+  nav: STUDIO_NAV,
+  extraFields: [statsField],
+})
+
+/** Voxelate, the digital marketing & branding company — written as "we". */
+export const VoxelateSite = createSiteGlobal({
+  site: 'voxelate',
+  title: 'Voxelate',
+  tagline: 'Digital marketing & branding company',
+  name: 'Voxelate',
+  headline: 'Digital Marketing & Branding',
+  imageUrl: 'https://github.com/amitgupta1994.png',
+  summary:
+    'Voxelate is a digital marketing and branding company. Our team of strategists, designers and creators builds brands people remember and campaigns that pay for themselves.',
+  heroTitle: 'Brands built to be remembered',
+  heroDescription: [
+    { text: 'Our team delivers ' },
+    { text: 'brand strategy', highlight: true },
+    { text: ', ' },
+    { text: 'creative production', highlight: true },
+    { text: ' and ' },
+    { text: 'performance marketing', highlight: true },
+    { text: ' for growing businesses.' },
+  ],
+  ctaLabel: 'Start a project',
   nav: [
-    { name: 'Home', href: '/#home' },
-    { name: 'Services', href: '/#services' },
-    { name: 'Packages', href: '/#packages' },
-    { name: 'Work', href: '/#work' },
-    { name: 'Reviews', href: '/#reviews' },
-    { name: 'Contact', href: '/#contact' },
+    ...STUDIO_NAV.slice(0, 4),
+    { name: 'Team', href: '/#team' },
+    ...STUDIO_NAV.slice(4),
   ],
   extraFields: [
+    statsField,
     {
-      name: 'stats',
-      type: 'array',
-      labels: { singular: 'Stat', plural: 'Stats' },
-      admin: { description: 'Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.' },
+      name: 'company',
+      type: 'group',
+      admin: { description: 'Shown in the footer.' },
       fields: [
         {
           type: 'row',
           fields: [
-            { name: 'value', type: 'text', required: true },
-            { name: 'label', type: 'text', required: true },
+            { name: 'legalName', type: 'text', admin: { description: 'e.g. "Voxelate Pvt. Ltd."; defaults to the title.' } },
+            { name: 'founded', type: 'text', admin: { description: 'Year, e.g. "2024".' } },
           ],
         },
       ],

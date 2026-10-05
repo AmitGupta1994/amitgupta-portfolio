@@ -1,5 +1,5 @@
 /** Every site in this deployment. Each has its own tables and its own global. */
-export const SITES = ["tech", "research", "trek", "creatives"] as const;
+export const SITES = ["tech", "research", "trek", "creatives", "voxelate"] as const;
 
 export type SiteKey = (typeof SITES)[number];
 
@@ -8,4 +8,5 @@ export const SITE_LABELS: Record<SiteKey, string> = {
   research: "Research",
   trek: "Trek",
   creatives: "Creatives",
+  voxelate: "Voxelate",
 };

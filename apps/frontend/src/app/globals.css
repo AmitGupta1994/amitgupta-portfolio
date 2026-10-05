@@ -30,7 +30,7 @@
   --color-muted: var(--muted);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
-  /* Raised panels and hairlines; only the creatives site defines these. */
+  /* Raised panels and hairlines; only the studio sites define these. */
   --color-surface: var(--surface);
   --color-line: var(--line);
   --font-sans: var(--font-site-sans, var(--font-outfit)), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -64,9 +64,11 @@ body {
   background-size: 22px 22px;
 }
 
-/* The creatives (marketing & branding) site: dark only, near-black with a hot
-   orange accent and Montserrat. Scoped so the other sites are untouched. */
-[data-site="creatives"] {
+/* The studio sites — creatives (personal) and Voxelate (company) — share one
+   design: dark only, near-black with a hot orange accent and Montserrat. Scoped so
+   the other sites are untouched; split the selector to give one its own palette. */
+[data-site="creatives"],
+[data-site="voxelate"] {
   --background: #0d0d0d;
   --foreground: #fafafa;
   --muted: #a6a6a6;
@@ -80,18 +82,19 @@ body {
   color-scheme: dark;
 }
 
-/* This site has no Lenis, so native smooth scrolling is safe here (and only here). */
+/* The studio sites have no Lenis, so native smooth scrolling is safe here (and only here). */
 @media (prefers-reduced-motion: no-preference) {
-  html[data-site="creatives"] {
+  html[data-site="creatives"],
+  html[data-site="voxelate"] {
     scroll-behavior: smooth;
   }
 
-  [data-site="creatives"] .creatives-rise {
-    animation: creatives-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .studio-rise {
+    animation: studio-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
-@keyframes creatives-rise {
+@keyframes studio-rise {
   from {
     opacity: 0;
     transform: translateY(24px);

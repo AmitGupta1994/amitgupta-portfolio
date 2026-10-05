@@ -3,6 +3,8 @@ export const SITE_BY_SUBDOMAIN: Record<string, string> = {
   research: "/research",
   trek: "/trek",
   creatives: "/creatives",
+  // Also matches the company's own domain (voxelate.<tld>), whose first label is the name.
+  voxelate: "/voxelate",
 };
 
 /**

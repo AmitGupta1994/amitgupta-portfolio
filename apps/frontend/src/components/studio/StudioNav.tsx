@@ -8,15 +8,16 @@ import { sectionHref } from "./contactLinks";
 import GetStartedButton from "./GetStartedButton";
 import { Icon } from "./icons";
 
-interface CreativesNavProps {
+interface StudioNavProps {
   brand: string;
   links: NavLink[];
   contact: Profile["contact"];
   ctaLabel: string;
+  prompt: string;
 }
 
 /** Fixed bar: transparent over the hero, solid once scrolled; tracks the section in view. */
-export default function CreativesNav({ brand, links, contact, ctaLabel }: CreativesNavProps) {
+export default function StudioNav({ brand, links, contact, ctaLabel, prompt }: StudioNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
@@ -73,6 +74,7 @@ export default function CreativesNav({ brand, links, contact, ctaLabel }: Creati
           ))}
           <GetStartedButton
             contact={contact}
+            prompt={prompt}
             className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-deep"
           >
             {ctaLabel}
@@ -99,6 +101,7 @@ export default function CreativesNav({ brand, links, contact, ctaLabel }: Creati
           ))}
           <GetStartedButton
             contact={contact}
+            prompt={prompt}
             className="rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-deep"
           >
             {ctaLabel}

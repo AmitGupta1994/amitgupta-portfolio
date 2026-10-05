@@ -6,6 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import type { Video } from "@/types/video";
 import { Icon } from "./icons";
 import SectionHeading from "./SectionHeading";
+import type { VoiceCopy } from "./voice";
 
 const UNGROUPED = "Featured";
 
@@ -59,7 +60,7 @@ function VideoTile({ video }: { video: Video }) {
 }
 
 /** One card per album; opening one shows its videos full screen. */
-export default function WorkSection({ videos }: { videos: Video[] }) {
+export default function WorkSection({ videos, copy }: { videos: Video[]; copy: VoiceCopy }) {
   const albums = groupByAlbum(videos);
   const [openAlbum, setOpenAlbum] = useState<string | null>(null);
   const current = albums.find((group) => group.album === openAlbum);
@@ -81,7 +82,7 @@ export default function WorkSection({ videos }: { videos: Video[] }) {
   return (
     <section id="work" className="scroll-mt-20 bg-surface py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading lead="Our" accent="Work" description="Campaigns, reels and films — explore by category." />
+        <SectionHeading lead={copy.workLead} accent="Work" description={copy.workDescription} />
 
         <ScrollReveal stagger={0.1} className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {albums.map((group) => (

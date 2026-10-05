@@ -1,20 +1,22 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import type { Package } from "@/types/creatives";
+import type { Package } from "@/types/studio";
 import type { Profile } from "@/types/profile";
 import GetStartedButton from "./GetStartedButton";
 import { Icon } from "./icons";
 import SectionHeading from "./SectionHeading";
+import type { VoiceCopy } from "./voice";
 
 interface PackagesSectionProps {
   packages: Package[];
   contact: Profile["contact"];
+  copy: VoiceCopy;
 }
 
-export default function PackagesSection({ packages, contact }: PackagesSectionProps) {
+export default function PackagesSection({ packages, contact, copy }: PackagesSectionProps) {
   return (
     <section id="packages" className="scroll-mt-20 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading accent="Packages" description="Pick a starting point — every plan is tailored once we talk." />
+        <SectionHeading accent="Packages" description={copy.packagesDescription} />
 
         <ScrollReveal stagger={0.1} className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => (
@@ -51,6 +53,7 @@ export default function PackagesSection({ packages, contact }: PackagesSectionPr
               <GetStartedButton
                 contact={contact}
                 packageName={pkg.name}
+                prompt={copy.dialogPrompt}
                 className={`w-full rounded-xl px-6 py-3 font-semibold transition-colors ${
                   pkg.popular ? "bg-brand text-white hover:bg-brand-deep" : "bg-line text-foreground hover:bg-brand hover:text-white"
                 }`}

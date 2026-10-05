@@ -1,15 +1,16 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import type { Review } from "@/types/creatives";
+import type { Review } from "@/types/studio";
 import { Icon } from "./icons";
 import SectionHeading from "./SectionHeading";
+import type { VoiceCopy } from "./voice";
 
-export default function ReviewsSection({ reviews }: { reviews: Review[] }) {
+export default function ReviewsSection({ reviews, copy }: { reviews: Review[]; copy: VoiceCopy }) {
   const average = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
 
   return (
     <section id="reviews" className="scroll-mt-20 py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading lead="Client" accent="Reviews" description="Our results, in our clients' words." />
+        <SectionHeading lead="Client" accent="Reviews" description={copy.reviewsDescription} />
 
         <ScrollReveal stagger={0.08} className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {reviews.map((review) => {

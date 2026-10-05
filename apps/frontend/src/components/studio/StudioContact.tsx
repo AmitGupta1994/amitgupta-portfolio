@@ -6,6 +6,7 @@ import type { Profile } from "@/types/profile";
 import { mailtoHref } from "./contactLinks";
 import { Icon, type IconName } from "./icons";
 import SectionHeading from "./SectionHeading";
+import type { VoiceCopy } from "./voice";
 
 type Contact = Profile["contact"];
 
@@ -16,7 +17,7 @@ const field =
  * No mail backend: the form composes the enquiry and hands it to the visitor's
  * email app, so nothing is stored or sent from the server.
  */
-export default function CreativesContact({ contact }: { contact: Contact }) {
+export default function StudioContact({ contact, copy }: { contact: Contact; copy: VoiceCopy }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   const submit = (event: FormEvent) => {
@@ -43,7 +44,7 @@ export default function CreativesContact({ contact }: { contact: Contact }) {
         <SectionHeading
           lead="Let's"
           accent="Connect"
-          description="Ready to grow your brand? Tell us about your business and we'll get back to you."
+          description={`Ready to grow your brand? ${copy.contactDescription}`}
         />
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
@@ -79,11 +80,11 @@ export default function CreativesContact({ contact }: { contact: Contact }) {
           <div className="space-y-6">
             {contact.email && <ContactCard icon="mail" title="Email" href={`mailto:${contact.email}`} text={contact.email} />}
             {contact.phone && <ContactCard icon="phone" title="Phone" href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`} text={contact.phone} />}
-            {contact.location && <ContactCard icon="pin" title="Studio" text={contact.location} />}
+            {contact.location && <ContactCard icon="pin" title={copy.locationTitle} text={contact.location} />}
 
             {linked.length > 0 && (
               <div>
-                <h3 className="mb-4 text-xl font-bold">Follow us</h3>
+                <h3 className="mb-4 text-xl font-bold">{copy.followTitle}</h3>
                 <div className="flex gap-4">
                   {linked.map((social) => (
                     <a
@@ -103,7 +104,7 @@ export default function CreativesContact({ contact }: { contact: Contact }) {
 
             <div className="rounded-2xl border border-brand/30 bg-gradient-to-br from-brand/10 to-transparent p-6">
               <h3 className="mb-2 text-xl font-bold">Quick response</h3>
-              <p className="text-muted">We usually reply within 24 hours. For anything urgent, call or message us directly.</p>
+              <p className="text-muted">{copy.responseNote}</p>
             </div>
           </div>
         </div>

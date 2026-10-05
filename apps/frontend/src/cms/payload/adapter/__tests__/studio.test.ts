@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapPackage, mapReview, mapService } from '../creatives';
+import { mapClient, mapPackage, mapReview, mapService, mapTeamMember } from '../studio';
 
 describe('mapService', () => {
   it('maps nulls to undefined and defaults the icon', () => {
@@ -39,5 +39,27 @@ describe('mapReview', () => {
     expect(mapReview({ ...review, rating: 9 }).rating).toBe(5);
     expect(mapReview({ ...review, rating: 0 }).rating).toBe(1);
     expect(mapReview({ ...review, rating: null }).rating).toBe(5);
+  });
+});
+
+describe('mapTeamMember', () => {
+  it('prefers an uploaded photo over the external URL', () => {
+    const member = { id: 4, name: 'Sita Rai', role: 'Designer', photoUrl: 'https://example.com/a.jpg' };
+    expect(mapTeamMember({ ...member, photo: { id: 9, url: '/api/voxelate-photos/file/sita.jpg' } }).photoUrl).toBe(
+      '/api/voxelate-photos/file/sita.jpg'
+    );
+    expect(mapTeamMember({ ...member, photo: 9 }).photoUrl).toBe('https://example.com/a.jpg');
+    expect(mapTeamMember({ ...member, photoUrl: null }).photoUrl).toBeUndefined();
+  });
+});
+
+describe('mapClient', () => {
+  it('falls back to no logo, so the name is shown instead', () => {
+    expect(mapClient({ id: 5, name: 'Acme', logo: null, logoUrl: null, website: null })).toEqual({
+      id: '5',
+      name: 'Acme',
+      logoUrl: undefined,
+      website: undefined,
+    });
   });
 });
