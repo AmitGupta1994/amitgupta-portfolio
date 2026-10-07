@@ -3,6 +3,7 @@ import "../globals.css";
 
 import { getSite } from "@/content";
 import SiteShell from "@/components/SiteShell";
+import { loadTechCompany } from "./_content";
 
 // Same caching model as the other sites: prerendered, cleared on save, daily fallback.
 export const revalidate = 86400;
@@ -31,7 +32,10 @@ export default async function TechCompanyLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { profile, navLinks } = await getSite("techcompany");
+  const {
+    site: { profile },
+    navLinks,
+  } = await loadTechCompany();
 
   return (
     <SiteShell

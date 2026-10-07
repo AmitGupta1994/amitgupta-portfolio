@@ -12,39 +12,28 @@ import ReviewsSection from '@/components/company/ReviewsSection';
 import ServicesList from '@/components/company/ServicesList';
 import StatsBand from '@/components/company/StatsBand';
 
-import { getPackages, getProducts, getProjects, getReviews, getServices, getSite, getSkillCategories } from '@/content';
-
-const SITE = 'techcompany';
+import { loadTechCompany } from '../_content';
 
 // The software development company, in the tech portfolio's Digital Mantras design:
 // full-bleed hero, then services, engagement models, in-house products, client
 // work, process, stack and reviews. Sections with no rows don't render, and the
 // side nav drops their links.
 export default async function TechCompanyHome() {
-  const [site, services, models, products, projects, skills, reviews] = await Promise.all([
-    getSite(SITE),
-    getServices(SITE),
-    getPackages(SITE),
-    getProducts(SITE),
-    getProjects(SITE),
-    getSkillCategories(SITE),
-    getReviews(SITE),
-  ]);
+  const { site, services, models, products, projects, skills, reviews, visible, navLinks } = await loadTechCompany();
   const { profile } = site;
 
   const sections = [
-    { id: 'about', show: Boolean(profile.summary), node: <About summary={profile.summary} /> },
-    { id: 'stats', show: site.stats.length > 0, node: <StatsBand stats={site.stats} /> },
-    { id: 'services', show: services.length > 0, node: <ServicesList services={services} /> },
-    { id: 'engagement', show: models.length > 0, node: <EngagementModels models={models} /> },
-    { id: 'products', show: products.length > 0, node: <ProductsSection products={products} /> },
-    { id: 'projects', show: projects.length > 0, node: <HorizontalProjectsSection projects={projects} /> },
-    { id: 'process', show: site.process.length > 0, node: <ProcessSection steps={site.process} /> },
-    { id: 'skills', show: skills.some((category) => category.show), node: <SkillsSection skills={skills} /> },
-    { id: 'reviews', show: reviews.length > 0, node: <ReviewsSection reviews={reviews} /> },
+    { id: 'about', node: <About summary={profile.summary} /> },
+    { id: 'stats', node: <StatsBand stats={site.stats} /> },
+    { id: 'services', node: <ServicesList services={services} /> },
+    { id: 'engagement', node: <EngagementModels models={models} /> },
+    { id: 'products', node: <ProductsSection products={products} /> },
+    { id: 'projects', node: <HorizontalProjectsSection projects={projects} /> },
+    { id: 'process', node: <ProcessSection steps={site.process} /> },
+    { id: 'skills', node: <SkillsSection skills={skills} /> },
+    { id: 'reviews', node: <ReviewsSection reviews={reviews} /> },
     {
       id: 'contact',
-      show: true,
       node: (
         <CompanyContact
           contact={profile.contact}
@@ -53,13 +42,7 @@ export default async function TechCompanyHome() {
         />
       ),
     },
-  ].filter((section) => section.show);
-
-  const rendered = new Set(['hero', ...sections.map((section) => section.id)]);
-  const navLinks = site.navLinks.filter((link) => {
-    const id = link.href.split('#')[1];
-    return !id || rendered.has(id);
-  });
+  ].filter((section) => visible[section.id]);
 
   return (
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-brand/30 transition-colors duration-300">
