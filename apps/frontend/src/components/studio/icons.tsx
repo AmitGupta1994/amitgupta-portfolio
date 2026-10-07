@@ -2,7 +2,7 @@ import type { ServiceIcon } from "@/types/studio";
 
 type IconProps = { className?: string; size?: number };
 
-// Line icons on a 24px grid, stroked with currentColor so the parent sets the colour.
+// Line icons on a 24px grid (shared by the studio sites and the software company), stroked with currentColor so the parent sets the colour.
 const PATHS: Record<ServiceIcon | "star" | "quote" | "arrow" | "close" | "menu" | "mail" | "phone" | "whatsapp" | "pin" | "play" | "check" | "instagram" | "youtube" | "facebook" | "linkedin" | "send", string> = {
   megaphone: "M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Zm12-3a5 5 0 0 1 0 8m3-11a9 9 0 0 1 0 14",
   palette:
@@ -13,6 +13,12 @@ const PATHS: Record<ServiceIcon | "star" | "quote" | "arrow" | "close" | "menu" 
   pen: "M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z",
   search: "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm10 2-4.3-4.3",
   globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18",
+  code: "m8 6-6 6 6 6m8-12 6 6-6 6M14 4l-4 16",
+  mobile: "M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm4 16h2",
+  sparkles: "M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8ZM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8ZM5 2l.6 1.4L7 4l-1.4.6L5 6l-.6-1.4L3 4l1.4-.6Z",
+  cpu: "M7 7h10v10H7ZM10 10h4v4h-4ZM9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3",
+  layers: "m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5",
+  server: "M3 4h18v6H3Zm0 10h18v6H3Zm4-7h.01M7 17h.01",
   star: "m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z",
   quote: "M7 7H4v6h4v-1a5 5 0 0 1-3 4.6M17 7h-3v6h4v-1a5 5 0 0 1-3 4.6",
   arrow: "M5 12h14m-6-6 6 6-6 6",
