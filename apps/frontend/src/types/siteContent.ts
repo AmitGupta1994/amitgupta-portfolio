@@ -1,4 +1,5 @@
 import type { NavLink } from "./navigation";
+import type { ProcessStep } from "./company";
 import type { CompanyInfo } from "./studio";
 import type { Profile } from "./profile";
 import type { SiteKey } from "./sites";
@@ -15,5 +16,7 @@ export interface SiteContent {
   stats: Array<{ value: string; label: string }>;
   /** Set only for company sites. */
   company?: CompanyInfo;
+  /** How a project runs; only sites whose global has the field fill it. */
+  process: ProcessStep[];
   seo: { title?: string; description?: string };
 }

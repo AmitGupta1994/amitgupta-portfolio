@@ -23,5 +23,6 @@ export const getPackages = (site: SiteKey) => source.getPackages(site);
 export const getReviews = (site: SiteKey) => source.getReviews(site);
 export const getTeam = (site: SiteKey) => source.getTeam(site);
 export const getClients = (site: SiteKey) => source.getClients(site);
+export const getProducts = (site: SiteKey) => source.getProducts(site);
 
 export type { ContentSource, SiteKey } from "./ports";
