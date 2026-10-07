@@ -249,7 +249,11 @@ export const createTreks = (site: SiteKey): CollectionConfig => ({
 })
 
 /** Icons a service card can show; the creatives site draws each one. */
-export const SERVICE_ICONS = ['megaphone', 'palette', 'chart', 'camera', 'video', 'pen', 'search', 'globe'] as const
+export const SERVICE_ICONS = [
+  'megaphone', 'palette', 'chart', 'camera', 'video', 'pen', 'search', 'globe',
+  // Software services (techcompany).
+  'code', 'mobile', 'sparkles', 'cpu', 'layers', 'server',
+] as const
 
 /** What the agency offers: a card with a short line and more detail on hover. */
 export const createServices = (site: SiteKey): CollectionConfig => ({
@@ -369,6 +373,43 @@ export const createClients = (site: SiteKey): CollectionConfig => ({
   ],
 })
 
+/** A company's own products, built in house rather than for a client. */
+export const createProducts = (site: SiteKey): CollectionConfig => ({
+  ...base(site, 'products', 'Product', 'Products'),
+  admin: { ...base(site, 'products', '', '').admin, useAsTitle: 'name', defaultColumns: ['name', 'status', 'order'] },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        {
+          name: 'status',
+          type: 'select',
+          required: true,
+          defaultValue: 'building',
+          options: [
+            { label: 'Live', value: 'live' },
+            { label: 'Beta', value: 'beta' },
+            { label: 'In development', value: 'building' },
+          ],
+        },
+      ],
+    },
+    { name: 'tagline', type: 'text', required: true, admin: { description: 'One line, e.g. "Invoicing for freelancers".' } },
+    { name: 'description', type: 'textarea', required: true },
+    {
+      name: 'techStack',
+      type: 'array',
+      labels: { singular: 'Technology', plural: 'Tech stack' },
+      fields: [{ name: 'name', type: 'text', required: true }],
+    },
+    { name: 'url', type: 'text', label: 'Product URL' },
+    { name: 'image', type: 'upload', relationTo: `${site}-photos` as 'techcompany-photos' },
+    { name: 'imageUrl', type: 'text', label: 'External image URL', admin: { description: 'Used when no image is uploaded.' } },
+    orderField,
+  ],
+})
+
 /** The studio layout's tables: the personal site and the company site share these. */
 const STUDIO_SITES: SiteKey[] = ['creatives', 'voxelate']
 
@@ -384,4 +425,6 @@ export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   ...(site === 'trek' ? [createTreks(site)] : []),
   ...(STUDIO_SITES.includes(site) ? [createServices(site), createPackages(site), createReviews(site)] : []),
   ...(site === 'voxelate' ? [createTeam(site), createClients(site)] : []),
+  // The software company: services, engagement models (as packages), its own products and reviews.
+  ...(site === 'techcompany' ? [createServices(site), createPackages(site), createProducts(site), createReviews(site)] : []),
 ]

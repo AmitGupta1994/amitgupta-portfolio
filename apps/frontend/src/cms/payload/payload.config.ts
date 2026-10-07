@@ -9,7 +9,7 @@ import { SITES } from '@/types/sites'
 import { Media } from './collections/Media'
 import { collectionsForSite } from './collections/perSite'
 import { Users } from './collections/Users'
-import { CreativesSite, ResearchSite, TechSite, TrekSite, VoxelateSite } from './globals/sites'
+import { CreativesSite, ResearchSite, TechCompanySite, TechSite, TrekSite, VoxelateSite } from './globals/sites'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +31,7 @@ export default buildConfig({
     },
   },
   collections: [...SITES.flatMap(collectionsForSite), Media, Users],
-  globals: [TechSite, ResearchSite, TrekSite, CreativesSite, VoxelateSite],
+  globals: [TechSite, ResearchSite, TrekSite, CreativesSite, VoxelateSite, TechCompanySite],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
