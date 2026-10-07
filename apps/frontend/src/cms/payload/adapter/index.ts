@@ -3,6 +3,7 @@ import { getClients, getPackages, getReviews, getServices, getTeam } from "./stu
 import { getExperiences } from "./experience";
 import { getExpertise } from "./expertise";
 import { getPhotos } from "./photos";
+import { getProducts } from "./products";
 import { getProjects } from "./projects";
 import { getPublications } from "./publications";
 import { getSite } from "./sites";
@@ -27,4 +28,5 @@ export const payloadContentSource: ContentSource = {
   getReviews,
   getTeam,
   getClients,
+  getProducts,
 };
