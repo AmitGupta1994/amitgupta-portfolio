@@ -5,6 +5,7 @@ export const SITE_BY_SUBDOMAIN: Record<string, string> = {
   creatives: "/creatives",
   // Also matches the company's own domain (voxelate.<tld>), whose first label is the name.
   voxelate: "/voxelate",
+  techcompany: "/techcompany",
 };
 
 /**
