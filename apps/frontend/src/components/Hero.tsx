@@ -77,9 +77,13 @@ const pillClass =
 
 type HeroProps = Omit<Profile, 'summary' | 'imageUrl'> & {
   projects: Project[];
+  /** Replaces the CV's "Save as PDF" button, e.g. a company's "Our services". */
+  secondaryAction?: { label: string; href: string };
+  /** Shown as tiles in the reels while no project has an image yet. */
+  marqueeLabels?: string[];
 };
 
-export default function Hero({ name, headline, contact, hero, projects }: HeroProps) {
+export default function Hero({ name, headline, contact, hero, projects, secondaryAction, marqueeLabels }: HeroProps) {
   const containerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -256,13 +260,22 @@ export default function Hero({ name, headline, contact, hero, projects }: HeroPr
 
           <div data-hero-reveal className="hero-action-item flex">
             <MagneticButton strength={0.2}>
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className={`${pillClass} cursor-pointer px-6 py-3.5 text-sm font-bold uppercase tracking-wide print:hidden`}
-              >
-                Save as PDF
-              </button>
+              {secondaryAction ? (
+                <Link
+                  href={secondaryAction.href}
+                  className={`${pillClass} inline-block px-6 py-3.5 text-sm font-bold uppercase tracking-wide print:hidden`}
+                >
+                  {secondaryAction.label}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className={`${pillClass} cursor-pointer px-6 py-3.5 text-sm font-bold uppercase tracking-wide print:hidden`}
+                >
+                  Save as PDF
+                </button>
+              )}
             </MagneticButton>
           </div>
         </div>
@@ -331,7 +344,7 @@ export default function Hero({ name, headline, contact, hero, projects }: HeroPr
         </div>
       </div>
 
-      <HeroMarquee projects={projects} />
+      <HeroMarquee projects={projects} fallbackLabels={marqueeLabels} />
     </section>
   );
 }

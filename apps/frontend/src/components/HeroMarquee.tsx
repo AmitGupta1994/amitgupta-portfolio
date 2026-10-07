@@ -10,12 +10,15 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+/** A reel tile: a project image, or a labelled card while there are none. */
+type ReelItem = { imageUrl?: string; label?: string };
+
 function ReelColumn({
   items,
   columnRef,
   prefix,
 }: {
-  items: Project[];
+  items: ReelItem[];
   columnRef: React.RefObject<HTMLDivElement | null>;
   prefix: string;
 }) {
@@ -24,13 +27,23 @@ function ReelColumn({
       {/* Items use margin rather than flex gap so the doubled list is exactly twice
           one set, keeping the -50% loop seamless. */}
       <div ref={columnRef} className="flex flex-col will-change-transform">
-        {items.map((project, idx) => (
+        {items.map((item, idx) => (
           <div
             key={`${prefix}-${idx}`}
             className="relative mb-4 aspect-[3/4] w-full shrink-0 overflow-hidden rounded-2xl ring-1 ring-foreground/10"
           >
-            <Image src={project.imageUrl} alt="" fill sizes="16vw" className="object-cover" />
-            <div className="absolute inset-0 bg-background/20" />
+            {item.imageUrl ? (
+              <>
+                <Image src={item.imageUrl} alt="" fill sizes="16vw" className="object-cover" />
+                <div className="absolute inset-0 bg-background/20" />
+              </>
+            ) : (
+              <div className="flex h-full flex-col justify-end bg-gradient-to-br from-brand-deep/90 via-brand-deep/40 to-foreground/5 p-5">
+                <span className="text-2xl font-black uppercase leading-[0.95] tracking-tight text-foreground xl:text-3xl">
+                  {item.label}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -40,20 +53,23 @@ function ReelColumn({
 
 interface HeroMarqueeProps {
   projects: Project[];
+  /** Labels shown as tiles when no project has an image (e.g. a new company's services). */
+  fallbackLabels?: string[];
 }
 
-export default function HeroMarquee({ projects }: HeroMarqueeProps) {
+export default function HeroMarquee({ projects, fallbackLabels = [] }: HeroMarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const col1Ref = useRef<HTMLDivElement>(null);
   const col2Ref = useRef<HTMLDivElement>(null);
 
   // CMS projects may have no image; next/image can't render an empty src.
-  const withImages = projects.filter((project) => project.imageUrl);
+  const withImages: ReelItem[] = projects.filter((project) => project.imageUrl);
+  const reel: ReelItem[] = withImages.length > 0 ? withImages : fallbackLabels.map((label) => ({ label }));
 
   // Each column shows every project so one set is taller than the viewport; the list
   // is doubled so a -50% loop is seamless.
-  const column1Images = [...withImages, ...withImages];
-  const column2Images = [...[...withImages].reverse(), ...[...withImages].reverse()];
+  const column1Images = [...reel, ...reel];
+  const column2Images = [...[...reel].reverse(), ...[...reel].reverse()];
 
   useEffect(() => {
     const root = rootRef.current;
