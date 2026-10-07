@@ -23,7 +23,7 @@ export default function ServicesList({ services }: { services: Service[] }) {
             <span className="text-sm font-bold tabular-nums text-muted transition-colors group-hover:text-brand md:pt-2 md:text-base">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <span className="row-span-2 hidden h-12 w-12 place-items-center rounded-full border border-foreground/15 text-brand transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-white md:grid">
+            <span className="hidden h-12 w-12 place-items-center rounded-full border border-foreground/15 text-brand transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-white md:grid">
               <Icon name={service.icon} size={22} />
             </span>
             <div className="flex flex-col gap-2">
