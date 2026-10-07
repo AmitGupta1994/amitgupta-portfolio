@@ -1,4 +1,5 @@
 import type { Client, Package, Review, Service, TeamMember } from "@/types/studio";
+import type { Product } from "@/types/company";
 import type { Experience } from "@/types/experience";
 import type { Expertise } from "@/types/expertise";
 import type { Photo } from "@/types/photo";
@@ -33,6 +34,7 @@ export interface ContentSource {
   getReviews(site: SiteKey): Promise<Review[]>;
   getTeam(site: SiteKey): Promise<TeamMember[]>;
   getClients(site: SiteKey): Promise<Client[]>;
+  getProducts(site: SiteKey): Promise<Product[]>;
 }
 
 export type { SiteKey } from "@/types/sites";

@@ -1,6 +1,8 @@
 /** Content types for the studio sites: creatives (personal) and Voxelate (company). */
 
-export type ServiceIcon = "megaphone" | "palette" | "chart" | "camera" | "video" | "pen" | "search" | "globe";
+export type ServiceIcon =
+  | "megaphone" | "palette" | "chart" | "camera" | "video" | "pen" | "search" | "globe"
+  | "code" | "mobile" | "sparkles" | "cpu" | "layers" | "server";
 
 export interface Service {
   id: string;

@@ -23,6 +23,7 @@ export interface CmsSite {
   nav?: Array<{ name: string; href: string }> | null;
   stats?: Array<{ value: string; label: string }> | null;
   company?: { legalName?: string | null; founded?: string | null } | null;
+  process?: Array<{ title: string; description: string }> | null;
   seo?: { title?: string | null; description?: string | null } | null;
 }
 
@@ -37,6 +38,7 @@ export function mapSite(doc: CmsSite, site: SiteKey): SiteContent {
     tagline: orUndefined(doc.tagline),
     navLinks: (doc.nav ?? []).map(({ name, href }) => ({ name, href })),
     stats: (doc.stats ?? []).map(({ value, label }) => ({ value, label })),
+    process: (doc.process ?? []).map(({ title, description }) => ({ title, description })),
     company: doc.company
       ? { legalName: orUndefined(doc.company.legalName), founded: orUndefined(doc.company.founded) }
       : undefined,
