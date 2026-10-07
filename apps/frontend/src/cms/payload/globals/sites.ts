@@ -112,6 +112,22 @@ const statsField: Field = {
   ],
 }
 
+/** A company site's registered details, shown in the footer. */
+const companyField: Field = {
+  name: 'company',
+  type: 'group',
+  admin: { description: 'Shown in the footer.' },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        { name: 'legalName', type: 'text', admin: { description: 'Registered name, e.g. "Voxelate Pvt. Ltd."; defaults to the title.' } },
+        { name: 'founded', type: 'text', admin: { description: 'Year, e.g. "2024".' } },
+      ],
+    },
+  ],
+}
+
 const STUDIO_NAV = [
   { name: 'Home', href: '/#home' },
   { name: 'Services', href: '/#services' },
@@ -176,19 +192,58 @@ export const VoxelateSite = createSiteGlobal({
   ],
   extraFields: [
     statsField,
+    companyField,
+  ],
+})
+
+/**
+ * The software development company: same Digital Mantras design as the tech
+ * portfolio, written as "we". Placeholder name until the company is named.
+ */
+export const TechCompanySite = createSiteGlobal({
+  site: 'techcompany',
+  title: 'TechCompany',
+  tagline: 'Software development company',
+  name: 'TechCompany',
+  headline: 'Software Development Company',
+  imageUrl: '/techcompany/logo.png',
+  summary:
+    'We are a software development company that designs, builds and runs <strong>scalable web and mobile products</strong>, <strong>AI systems</strong> and the cloud infrastructure under them. Clients hire us as dedicated engineers at a fixed monthly rate, by the hour, or to deliver an outsourced project end to end — and we build and ship products of our own.',
+  heroTitle: 'Software built to scale',
+  heroDescription: [
+    { text: 'We design and build ' },
+    { text: 'web & mobile apps', highlight: true },
+    { text: ', ' },
+    { text: 'AI systems', highlight: true },
+    { text: ' and the ' },
+    { text: 'cloud infrastructure', highlight: true },
+    { text: ' they run on — as your team, by the hour, or end to end.' },
+  ],
+  ctaLabel: 'Start a project',
+  nav: [
+    { name: 'Home', href: '/#hero' },
+    { name: 'About', href: '/#about' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Engagement', href: '/#engagement' },
+    { name: 'Products', href: '/#products' },
+    { name: 'Work', href: '/#projects' },
+    { name: 'Process', href: '/#process' },
+    { name: 'Stack', href: '/#skills' },
+    { name: 'Reviews', href: '/#reviews' },
+    { name: 'Contact', href: '/#contact' },
+  ],
+  extraFields: [
+    statsField,
     {
-      name: 'company',
-      type: 'group',
-      admin: { description: 'Shown in the footer.' },
+      name: 'process',
+      type: 'array',
+      labels: { singular: 'Step', plural: 'Process' },
+      admin: { description: 'How a project runs, in order. Hidden when empty.' },
       fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'legalName', type: 'text', admin: { description: 'e.g. "Voxelate Pvt. Ltd."; defaults to the title.' } },
-            { name: 'founded', type: 'text', admin: { description: 'Year, e.g. "2024".' } },
-          ],
-        },
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea', required: true },
       ],
     },
+    companyField,
   ],
 })
