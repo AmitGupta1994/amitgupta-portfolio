@@ -56,7 +56,7 @@ for (const site of sites) {
     }
   }
 
-  if (site === 'creatives' || site === 'voxelate') {
+  if (site === 'creatives' || site === 'voxelate' || site === 'techcompany') {
     await payload.delete({ collection: `${site}-services`, where: everything, context })
     for (const [order, service] of content.services.entries()) {
       await payload.create({ collection: `${site}-services`, data: { ...service, order }, context })
@@ -70,7 +70,7 @@ for (const site of sites) {
         context,
       })
     }
-    // Reviews, team and clients are left alone: they are real facts added in the admin.
+    // Reviews, team, clients and products are left alone: they are real facts added in the admin.
   }
 
   await payload.delete({ collection: `${site}-skill-categories`, where: everything, context })

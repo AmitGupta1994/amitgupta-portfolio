@@ -202,6 +202,85 @@ export const siteGlobals = {
         'Voxelate is a digital marketing and branding company: brand strategy, creative production and performance marketing for growing businesses.',
     },
   },
+  techcompany: {
+    title: 'TechCompany',
+    tagline: 'Software development company',
+    name: 'TechCompany',
+    headline: 'Software Development Company',
+    imageUrl: '/techcompany/logo.png',
+    // A company site doesn't link back to a personal portfolio.
+    mainSiteUrl: '',
+    // Placeholder: replace with the company's own inbox, number and profiles in the admin.
+    contact: {
+      email: CONTACT.email,
+      phone: CONTACT.phone,
+      whatsapp: CONTACT.whatsapp,
+      location: CONTACT.location,
+      linkedin: CONTACT.linkedin,
+      github: CONTACT.github,
+    },
+    summary:
+      'We are a software development company that designs, builds and runs <strong>scalable web and mobile products</strong>, <strong>AI systems</strong> and the cloud infrastructure under them. Clients hire us as dedicated engineers at a fixed monthly rate, by the hour, or to deliver an outsourced project end to end — and we build and ship products of our own.',
+    hero: {
+      title: 'Software built to scale',
+      description: [
+        { text: 'We design and build ' },
+        { text: 'web & mobile apps', highlight: true },
+        { text: ', ' },
+        { text: 'AI systems', highlight: true },
+        { text: ' and the ' },
+        { text: 'cloud infrastructure', highlight: true },
+        { text: ' they run on — as your team, by the hour, or end to end.' },
+      ],
+      cta: { label: 'Start a project', href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#hero' },
+      { name: 'About', href: '/#about' },
+      { name: 'Services', href: '/#services' },
+      { name: 'Engagement', href: '/#engagement' },
+      { name: 'Products', href: '/#products' },
+      { name: 'Work', href: '/#projects' },
+      { name: 'Process', href: '/#process' },
+      { name: 'Stack', href: '/#skills' },
+      { name: 'Reviews', href: '/#reviews' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    // Real figures only — add them in the admin; the band stays hidden while empty.
+    stats: [],
+    process: [
+      {
+        title: 'Discover',
+        description:
+          'A short call and a written brief: the problem, the users, the constraints and what success looks like. You get a scope, an estimate and a recommended way to engage.',
+      },
+      {
+        title: 'Design the system',
+        description:
+          'Architecture before code — data model, services, integrations and infrastructure, sized for the load you expect next year, not just launch day.',
+      },
+      {
+        title: 'Build in sprints',
+        description:
+          'Two-week sprints with a working demo at the end of each, a shared board and direct access to the engineers doing the work.',
+      },
+      {
+        title: 'Ship & hand over',
+        description:
+          'Automated deployments, monitoring and documentation, so launch is a non-event and your team can own what we built.',
+      },
+      {
+        title: 'Run & scale',
+        description:
+          'Optional support after launch: on-call, performance work, cost tuning and new features as the product grows.',
+      },
+    ],
+    seo: {
+      title: 'TechCompany | Software Development Company',
+      description:
+        'Scalable web and mobile apps, AI integration and AI systems, system design and DevOps — dedicated engineers, hourly work or outsourced projects.',
+    },
+  },
 }
 
 const ALL_EXPERIENCES = [
@@ -483,7 +562,17 @@ const TREKS = [
   },
 ]
 
-const SERVICES = [
+type ServiceSeed = { title: string; icon: ServiceIcon; description: string; details: string }
+type PackageSeed = {
+  name: string
+  price: string
+  period: string
+  description: string
+  features: string[]
+  popular: boolean
+}
+
+const SERVICES: ServiceSeed[] = [
   {
     title: 'Brand Identity',
     icon: 'palette',
@@ -526,10 +615,10 @@ const SERVICES = [
     details:
       'Market and competitor review, messaging framework, campaign concepts, ad and website copy, and launch plans.',
   },
-] satisfies Array<{ icon: ServiceIcon } & Record<string, string>>
+]
 
 // Prices are the studio's to set: "On request" until they are filled in the admin.
-const PACKAGES = [
+const PACKAGES: PackageSeed[] = [
   {
     name: 'Starter',
     price: 'On request',
@@ -576,7 +665,7 @@ const PACKAGES = [
 ]
 
 // The company's tiers: written for a team taking on the work, not one person.
-const COMPANY_PACKAGES = [
+const COMPANY_PACKAGES: PackageSeed[] = [
   {
     name: 'Launch',
     price: 'On request',
@@ -623,6 +712,98 @@ const COMPANY_PACKAGES = [
   },
 ]
 
+// The software company's six services, in the order the page shows them.
+const TECH_SERVICES: ServiceSeed[] = [
+  {
+    title: 'Scalable Web App Development',
+    icon: 'code',
+    description: 'Web platforms and SaaS products built to handle growth from the first user to the millionth.',
+    details:
+      'React and Next.js frontends, Django, Node and Go backends, PostgreSQL and Redis, multi-tenant SaaS, real-time features, caching and horizontal scaling.',
+  },
+  {
+    title: 'Mobile App Development',
+    icon: 'mobile',
+    description: 'Native and cross-platform apps for Android and iOS that feel fast and stay reliable offline.',
+    details:
+      'Kotlin and Jetpack Compose, Kotlin Multiplatform, Flutter and React Native, offline-first sync, push notifications, payments and store releases.',
+  },
+  {
+    title: 'AI Integration',
+    icon: 'sparkles',
+    description: 'LLMs and machine learning added to the product you already have, where they earn their keep.',
+    details:
+      'Chat and copilots, retrieval over your own documents (RAG), document extraction, classification and recommendations, with evaluation and cost controls.',
+  },
+  {
+    title: 'AI System Development',
+    icon: 'cpu',
+    description: 'AI-native products and agents designed from the ground up, from data pipeline to production.',
+    details:
+      'Agentic workflows and tool use, model selection and fine-tuning, data pipelines, vector search, evaluation harnesses, guardrails and monitoring.',
+  },
+  {
+    title: 'System Design & Architecture',
+    icon: 'layers',
+    description: 'Architecture reviews and designs that keep systems simple today and scalable tomorrow.',
+    details:
+      'Domain modelling, monolith-to-services migrations, event-driven design, database sharding, performance audits and technical due diligence.',
+  },
+  {
+    title: 'DevOps & Infrastructure',
+    icon: 'server',
+    description: 'Cloud infrastructure, CI/CD and monitoring handled, so releases are routine and outages are rare.',
+    details:
+      'AWS, GCP and Azure, Docker and Kubernetes, Terraform, CI/CD pipelines, observability, backups, security hardening and cloud cost optimisation.',
+  },
+]
+
+// How clients engage the company. Rates are the company's to set: "On request" until filled in.
+const ENGAGEMENT_MODELS: PackageSeed[] = [
+  {
+    name: 'Fixed-Rate Engineers',
+    price: 'On request',
+    period: 'per engineer / month',
+    description: 'Dedicated engineers who join your team full time at a fixed monthly rate.',
+    features: [
+      'Full-time, dedicated to your product',
+      'Works in your tools, stand-ups and sprints',
+      'Fixed monthly cost — no surprises',
+      'Scale the team up or down monthly',
+      'Replacement guarantee',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Hourly Work',
+    price: 'On request',
+    period: 'per hour',
+    description: 'Flexible engineering time for features, fixes, audits and consulting.',
+    features: [
+      'Pay only for hours worked',
+      'Weekly timesheets and progress notes',
+      'Ideal for maintenance and short tasks',
+      'Architecture and code reviews',
+      'Start within days',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Outsourced Projects',
+    price: 'On request',
+    period: 'fixed scope',
+    description: 'Hand us the whole project — we deliver it end to end against an agreed scope.',
+    features: [
+      'Discovery, design and estimate up front',
+      'Milestone-based pricing',
+      'Dedicated project manager',
+      'QA, deployment and documentation included',
+      'Post-launch support available',
+    ],
+    popular: false,
+  },
+]
+
 const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
 /**
@@ -631,13 +812,14 @@ const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(p
  * Trek starts empty: add real treks, photos and films in the admin.
  * Creatives (personal) and Voxelate (company) get services and package outlines;
  * reviews, stats, prices, work videos, team and clients are real-world facts, so
- * they are added in the admin.
+ * they are added in the admin. TechCompany gets its services, engagement models,
+ * process and stack; case studies, products, reviews and stats come from the admin.
  */
 export const siteContent = {
   tech: {
     treks: [] as typeof TREKS,
-    services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    services: [] as ServiceSeed[],
+    packages: [] as PackageSeed[],
     experiences: ALL_EXPERIENCES,
     expertise: ALL_EXPERTISE,
     publications: ALL_PUBLICATIONS,
@@ -646,8 +828,8 @@ export const siteContent = {
   },
   research: {
     treks: [] as typeof TREKS,
-    services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    services: [] as ServiceSeed[],
+    packages: [] as PackageSeed[],
     experiences: pick(ALL_EXPERIENCES, (e) =>
       ['Research Exchange', 'Research Assistant'].includes(e.role)
     ),
@@ -660,8 +842,8 @@ export const siteContent = {
   },
   trek: {
     treks: TREKS,
-    services: [] as typeof SERVICES,
-    packages: [] as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    services: [] as ServiceSeed[],
+    packages: [] as PackageSeed[],
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
@@ -671,7 +853,7 @@ export const siteContent = {
   creatives: {
     treks: [] as typeof TREKS,
     services: SERVICES,
-    packages: PACKAGES as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    packages: PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
@@ -681,11 +863,23 @@ export const siteContent = {
   voxelate: {
     treks: [] as typeof TREKS,
     services: SERVICES,
-    packages: COMPANY_PACKAGES as typeof PACKAGES | typeof COMPANY_PACKAGES,
+    packages: COMPANY_PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
     expertise: [] as typeof ALL_EXPERTISE,
     publications: [] as typeof ALL_PUBLICATIONS,
     projects: [] as typeof ALL_PROJECTS,
     skillCategories: [] as typeof ALL_SKILLS,
+  },
+  techcompany: {
+    treks: [] as typeof TREKS,
+    services: TECH_SERVICES,
+    packages: ENGAGEMENT_MODELS,
+    experiences: [] as typeof ALL_EXPERIENCES,
+    expertise: [] as typeof ALL_EXPERTISE,
+    publications: [] as typeof ALL_PUBLICATIONS,
+    // Case studies are real client work, added in the admin.
+    projects: [] as typeof ALL_PROJECTS,
+    // The company's stack: the engineering categories of the tech portfolio.
+    skillCategories: pick(ALL_SKILLS, (s) => ['web', 'frontend', 'mobile', 'architecture', 'deployment'].includes(s.key)),
   },
 }

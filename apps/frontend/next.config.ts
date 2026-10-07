@@ -27,8 +27,8 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    // Media uploaded to the CMS is served from this same app.
-    localPatterns: [{ pathname: "/api/media/file/**" }],
+    // Media uploaded to the CMS, plus static brand assets in public/<site>.
+    localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/techcompany/**" }],
     remotePatterns: [
       {
         protocol: "https",
