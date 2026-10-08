@@ -281,6 +281,73 @@ export const siteGlobals = {
         'Scalable web and mobile apps, AI integration and AI systems, system design and DevOps — dedicated engineers, hourly work or outsourced projects.',
     },
   },
+  mokshyatrails: {
+    title: 'Mokshya Trails',
+    tagline: 'Trekking company in Nepal',
+    name: 'Mokshya Trails',
+    headline: 'Guided treks in the Himalaya',
+    imageUrl: '/mokshyatrails/logo.png',
+    mainSiteUrl: '',
+    // Placeholder: replace with the company's own inbox, number and profiles in the admin.
+    contact: { email: CONTACT.email, phone: CONTACT.phone, whatsapp: CONTACT.whatsapp, location: CONTACT.location },
+    summary:
+      "Mokshya Trails is a Nepal-based trekking company. Our licensed guides and porters lead small groups on the Himalaya's classic routes and quieter valleys — with permits, lodges and logistics handled, so you can <strong>just walk</strong>.",
+    hero: {
+      title: 'Walk the Himalaya with us',
+      description: [
+        { text: 'Guided treks to ' },
+        { text: 'Everest', highlight: true },
+        { text: ', ' },
+        { text: 'Annapurna', highlight: true },
+        { text: ' and ' },
+        { text: 'Langtang', highlight: true },
+        { text: ' — small groups, local guides, every detail handled.' },
+      ],
+      cta: { label: 'Plan your trek', href: '/#contact' },
+    },
+    nav: [
+      { name: 'Home', href: '/#hero' },
+      { name: 'About', href: '/#about' },
+      { name: 'Featured treks', href: '/#treks' },
+      { name: 'All treks', href: '/mokshyatrails/treks' },
+      { name: 'Reviews', href: '/#reviews' },
+      { name: 'Contact', href: '/#contact' },
+    ],
+    // Stock photos (Unsplash) until the company's own are uploaded.
+    slides: [
+      {
+        imageUrl: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2000',
+        eyebrow: 'Everest region',
+        title: 'Walk to the foot of Everest',
+        description: 'Thirteen days through Sherpa villages and monasteries to Base Camp and the dawn view from Kala Patthar.',
+        ctaLabel: 'Everest Base Camp trek',
+        ctaHref: '/mokshyatrails/treks/everest-base-camp',
+      },
+      {
+        imageUrl: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=2000',
+        eyebrow: 'Licensed local guides',
+        title: 'Small groups, big mountains',
+        description: 'Guides and porters from the regions we walk, permits and lodges arranged — you just bring your boots.',
+        ctaLabel: 'Browse all treks',
+        ctaHref: '/mokshyatrails/treks',
+      },
+      {
+        imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2000',
+        eyebrow: 'Fixed or private departures',
+        title: 'Your dates, your pace',
+        description: 'Join a scheduled group departure or tell us when you want to go, and we will build the trek around you.',
+        ctaLabel: 'Plan your trek',
+        ctaHref: '/#contact',
+      },
+    ],
+    // Real figures only — add them in the admin; the band stays hidden while empty.
+    stats: [],
+    seo: {
+      title: 'Mokshya Trails | Guided Treks in Nepal',
+      description:
+        'Guided treks to Everest Base Camp, Annapurna Base Camp and Langtang Valley with licensed local guides. Fixed departures and private treks.',
+    },
+  },
 }
 
 const ALL_EXPERIENCES = [
@@ -804,6 +871,117 @@ const ENGAGEMENT_MODELS: PackageSeed[] = [
   },
 ]
 
+// What a guided trek typically includes; adjust per trek in the admin.
+const STANDARD_INCLUDES = [
+  'Licensed English-speaking trekking guide',
+  'Porter (one per two trekkers)',
+  'National park and TIMS / conservation permits',
+  'Tea-house accommodation on the trail',
+  'Airport and hotel transfers in Kathmandu',
+  'First-aid kit and emergency evacuation arrangements',
+]
+const STANDARD_EXCLUDES = [
+  'International flights and Nepal visa',
+  'Meals in Kathmandu',
+  'Travel insurance with high-altitude evacuation cover',
+  'Tips for guides and porters',
+  'Personal gear, drinks and hot showers on the trail',
+]
+
+// Route facts are public knowledge; prices and departure dates are the company's
+// to set, so they start empty ("On request", request your own date).
+const TREK_PACKAGES = [
+  {
+    slug: 'everest-base-camp',
+    title: 'Everest Base Camp',
+    region: 'Khumbu, Nepal',
+    season: 'Mar–May, Sep–Nov',
+    days: 13,
+    maxAltitudeM: 5545,
+    distanceKm: 130,
+    difficulty: 'challenging' as const,
+    groupSize: '2–12',
+    featured: true,
+    heroImageUrl: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&q=80&w=2000',
+    summary:
+      'The classic Khumbu route: fly into Lukla, follow the Dudh Koshi through Namche and Tengboche, then up the glacial moraine to Base Camp at 5,364 m, with the dawn climb of Kala Patthar at 5,545 m.',
+    body: '',
+    itinerary: [
+      { day: '1', title: 'Fly Kathmandu → Lukla, trek to Phakding', description: 'A short mountain flight, then an easy first walk along the Dudh Koshi (2,610 m).' },
+      { day: '2', title: 'Phakding → Namche Bazaar', description: 'Suspension bridges and the first view of Everest on the climb to the Sherpa capital (3,440 m).' },
+      { day: '3', title: 'Acclimatisation in Namche', description: 'Hike to the Everest View Hotel and back down to sleep low.' },
+      { day: '4', title: 'Namche → Tengboche', description: 'Contouring trail with Ama Dablam ahead, ending at the monastery (3,860 m).' },
+      { day: '5', title: 'Tengboche → Dingboche', description: 'Into the Imja valley and its stone-walled fields (4,410 m).' },
+      { day: '6', title: 'Acclimatisation in Dingboche', description: 'Climb Nangkartshang for views of Makalu and Lhotse.' },
+      { day: '7', title: 'Dingboche → Lobuche', description: 'Past the climbers\' memorials at Thukla Pass (4,940 m).' },
+      { day: '8', title: 'Lobuche → Gorak Shep → Everest Base Camp', description: 'Along the Khumbu Glacier to Base Camp (5,364 m), back to Gorak Shep to sleep.' },
+      { day: '9', title: 'Kala Patthar at dawn, descend to Pheriche', description: 'Sunrise on Everest from 5,545 m, then a long descent.' },
+      { day: '10–11', title: 'Pheriche → Namche → Lukla', description: 'Two days retracing the valley down to Lukla.' },
+      { day: '12', title: 'Fly Lukla → Kathmandu', description: 'Morning flight back; a spare afternoon in the city.' },
+      { day: '13', title: 'Contingency day', description: 'Held in reserve for Lukla flight delays.' },
+    ],
+    includes: STANDARD_INCLUDES,
+    excludes: STANDARD_EXCLUDES,
+  },
+  {
+    slug: 'annapurna-base-camp',
+    title: 'Annapurna Base Camp',
+    region: 'Annapurna, Nepal',
+    season: 'Mar–May, Oct–Nov',
+    days: 9,
+    maxAltitudeM: 4130,
+    distanceKm: 110,
+    difficulty: 'moderate' as const,
+    groupSize: '2–12',
+    featured: true,
+    heroImageUrl: 'https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?auto=format&fit=crop&q=80&w=2000',
+    summary:
+      'Through terraced hills and rhododendron forest above Pokhara, up the Modi Khola gorge past Chhomrong and Machhapuchhre Base Camp into the Annapurna Sanctuary — a glacial amphitheatre ringed by peaks at 4,130 m.',
+    body: '',
+    itinerary: [
+      { day: '1', title: 'Pokhara → Nayapul, trek to Ghandruk', description: 'A short drive, then stone steps up to the Gurung village of Ghandruk (1,940 m).' },
+      { day: '2', title: 'Ghandruk → Chhomrong', description: 'Over the Kimrong Khola to Chhomrong, facing Annapurna South (2,170 m).' },
+      { day: '3', title: 'Chhomrong → Bamboo', description: 'Down and up into the forested Modi Khola gorge (2,310 m).' },
+      { day: '4', title: 'Bamboo → Deurali', description: 'Through bamboo and rhododendron as the valley narrows (3,230 m).' },
+      { day: '5', title: 'Deurali → Machhapuchhre Base Camp → Annapurna Base Camp', description: 'Into the Sanctuary, arriving at ABC (4,130 m) for sunset.' },
+      { day: '6', title: 'Sunrise at ABC, descend to Bamboo', description: 'First light on Annapurna I, then a long descent.' },
+      { day: '7', title: 'Bamboo → Jhinu Danda', description: 'Back through Chhomrong to the hot springs at Jhinu (1,780 m).' },
+      { day: '8', title: 'Jhinu → Nayapul, drive to Pokhara', description: 'Last morning on the trail, an afternoon by Phewa Lake.' },
+      { day: '9', title: 'Pokhara → Kathmandu', description: 'Drive or fly back to Kathmandu.' },
+    ],
+    includes: STANDARD_INCLUDES,
+    excludes: STANDARD_EXCLUDES,
+  },
+  {
+    slug: 'langtang-valley',
+    title: 'Langtang Valley',
+    region: 'Langtang, Nepal',
+    season: 'Mar–May, Sep–Nov',
+    days: 8,
+    maxAltitudeM: 4984,
+    distanceKm: 65,
+    difficulty: 'moderate' as const,
+    groupSize: '2–12',
+    featured: true,
+    heroImageUrl: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=2000',
+    summary:
+      'The closest high valley to Kathmandu: up the Langtang Khola through Tamang villages and yak pastures to Kyanjin Gompa, with an optional climb of Kyanjin Ri or Tserko Ri for a glacier-ringed panorama.',
+    body: '',
+    itinerary: [
+      { day: '1', title: 'Drive Kathmandu → Syabrubesi', description: 'A full day on mountain roads to the trailhead (1,460 m).' },
+      { day: '2', title: 'Syabrubesi → Lama Hotel', description: 'Along the river through forest home to red pandas (2,470 m).' },
+      { day: '3', title: 'Lama Hotel → Langtang village', description: 'The valley opens out to rebuilt Langtang village (3,430 m).' },
+      { day: '4', title: 'Langtang → Kyanjin Gompa', description: 'A short day past mani walls to the monastery and cheese factory (3,870 m).' },
+      { day: '5', title: 'Climb Tserko Ri, back to Kyanjin', description: 'Dawn ascent to 4,984 m for views of Langtang Lirung.' },
+      { day: '6', title: 'Kyanjin → Lama Hotel', description: 'A long descent down the valley.' },
+      { day: '7', title: 'Lama Hotel → Syabrubesi', description: 'Last day on the trail.' },
+      { day: '8', title: 'Drive Syabrubesi → Kathmandu', description: 'Back to the city.' },
+    ],
+    includes: STANDARD_INCLUDES,
+    excludes: STANDARD_EXCLUDES,
+  },
+]
+
 const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(predicate)
 
 /**
@@ -818,6 +996,7 @@ const pick = <T,>(items: T[], predicate: (item: T) => boolean) => items.filter(p
 export const siteContent = {
   tech: {
     treks: [] as typeof TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: [] as ServiceSeed[],
     packages: [] as PackageSeed[],
     experiences: ALL_EXPERIENCES,
@@ -828,6 +1007,7 @@ export const siteContent = {
   },
   research: {
     treks: [] as typeof TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: [] as ServiceSeed[],
     packages: [] as PackageSeed[],
     experiences: pick(ALL_EXPERIENCES, (e) =>
@@ -842,6 +1022,7 @@ export const siteContent = {
   },
   trek: {
     treks: TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: [] as ServiceSeed[],
     packages: [] as PackageSeed[],
     experiences: [] as typeof ALL_EXPERIENCES,
@@ -852,6 +1033,7 @@ export const siteContent = {
   },
   creatives: {
     treks: [] as typeof TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: SERVICES,
     packages: PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
@@ -862,6 +1044,7 @@ export const siteContent = {
   },
   voxelate: {
     treks: [] as typeof TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: SERVICES,
     packages: COMPANY_PACKAGES,
     experiences: [] as typeof ALL_EXPERIENCES,
@@ -872,6 +1055,7 @@ export const siteContent = {
   },
   techcompany: {
     treks: [] as typeof TREKS,
+    trekPackages: [] as typeof TREK_PACKAGES,
     services: TECH_SERVICES,
     packages: ENGAGEMENT_MODELS,
     experiences: [] as typeof ALL_EXPERIENCES,
@@ -881,5 +1065,16 @@ export const siteContent = {
     projects: [] as typeof ALL_PROJECTS,
     // The company's stack: the engineering categories of the tech portfolio.
     skillCategories: pick(ALL_SKILLS, (s) => ['web', 'frontend', 'mobile', 'architecture', 'deployment'].includes(s.key)),
+  },
+  mokshyatrails: {
+    treks: [] as typeof TREKS,
+    trekPackages: TREK_PACKAGES,
+    services: [] as ServiceSeed[],
+    packages: [] as PackageSeed[],
+    experiences: [] as typeof ALL_EXPERIENCES,
+    expertise: [] as typeof ALL_EXPERTISE,
+    publications: [] as typeof ALL_PUBLICATIONS,
+    projects: [] as typeof ALL_PROJECTS,
+    skillCategories: [] as typeof ALL_SKILLS,
   },
 }

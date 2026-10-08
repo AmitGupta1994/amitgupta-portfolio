@@ -122,6 +122,16 @@ export interface Config {
     'techcompany-packages': TechcompanyPackage;
     'techcompany-products': TechcompanyProduct;
     'techcompany-reviews': TechcompanyReview;
+    'mokshyatrails-experiences': MokshyatrailsExperience;
+    'mokshyatrails-skill-categories': MokshyatrailsSkillCategory;
+    'mokshyatrails-expertise': MokshyatrailsExpertise;
+    'mokshyatrails-projects': MokshyatrailsProject;
+    'mokshyatrails-publications': MokshyatrailsPublication;
+    'mokshyatrails-photos': MokshyatrailsPhoto;
+    'mokshyatrails-videos': MokshyatrailsVideo;
+    'mokshyatrails-treks': MokshyatrailsTrek;
+    'mokshyatrails-bookings': MokshyatrailsBooking;
+    'mokshyatrails-reviews': MokshyatrailsReview;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -186,6 +196,16 @@ export interface Config {
     'techcompany-packages': TechcompanyPackagesSelect<false> | TechcompanyPackagesSelect<true>;
     'techcompany-products': TechcompanyProductsSelect<false> | TechcompanyProductsSelect<true>;
     'techcompany-reviews': TechcompanyReviewsSelect<false> | TechcompanyReviewsSelect<true>;
+    'mokshyatrails-experiences': MokshyatrailsExperiencesSelect<false> | MokshyatrailsExperiencesSelect<true>;
+    'mokshyatrails-skill-categories': MokshyatrailsSkillCategoriesSelect<false> | MokshyatrailsSkillCategoriesSelect<true>;
+    'mokshyatrails-expertise': MokshyatrailsExpertiseSelect<false> | MokshyatrailsExpertiseSelect<true>;
+    'mokshyatrails-projects': MokshyatrailsProjectsSelect<false> | MokshyatrailsProjectsSelect<true>;
+    'mokshyatrails-publications': MokshyatrailsPublicationsSelect<false> | MokshyatrailsPublicationsSelect<true>;
+    'mokshyatrails-photos': MokshyatrailsPhotosSelect<false> | MokshyatrailsPhotosSelect<true>;
+    'mokshyatrails-videos': MokshyatrailsVideosSelect<false> | MokshyatrailsVideosSelect<true>;
+    'mokshyatrails-treks': MokshyatrailsTreksSelect<false> | MokshyatrailsTreksSelect<true>;
+    'mokshyatrails-bookings': MokshyatrailsBookingsSelect<false> | MokshyatrailsBookingsSelect<true>;
+    'mokshyatrails-reviews': MokshyatrailsReviewsSelect<false> | MokshyatrailsReviewsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -204,6 +224,7 @@ export interface Config {
     creatives: Creative;
     voxelate: Voxelate;
     techcompany: Techcompany;
+    mokshyatrails: Mokshyatrail;
   };
   globalsSelect: {
     tech: TechSelect<false> | TechSelect<true>;
@@ -212,6 +233,7 @@ export interface Config {
     creatives: CreativesSelect<false> | CreativesSelect<true>;
     voxelate: VoxelateSelect<false> | VoxelateSelect<true>;
     techcompany: TechcompanySelect<false> | TechcompanySelect<true>;
+    mokshyatrails: MokshyatrailsSelect<false> | MokshyatrailsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1668,6 +1690,321 @@ export interface TechcompanyReview {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-experiences".
+ */
+export interface MokshyatrailsExperience {
+  id: number;
+  role: string;
+  company: string;
+  /**
+   * Shown as written, e.g. "07/01/2024 - Current".
+   */
+  date: string;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-skill-categories".
+ */
+export interface MokshyatrailsSkillCategory {
+  id: number;
+  title: string;
+  /**
+   * Stable identifier, e.g. "web".
+   */
+  key: string;
+  items?:
+    | {
+        name: string;
+        rating: number;
+        id?: string | null;
+      }[]
+    | null;
+  show?: boolean | null;
+  /**
+   * 1 is highest priority.
+   */
+  priority: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-expertise".
+ */
+export interface MokshyatrailsExpertise {
+  id: number;
+  domain: string;
+  /**
+   * e.g. "4+ Years"
+   */
+  years?: string | null;
+  description: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-projects".
+ */
+export interface MokshyatrailsProject {
+  id: number;
+  title: string;
+  description: string;
+  techStack?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-publications".
+ */
+export interface MokshyatrailsPublication {
+  id: number;
+  title: string;
+  authors: string;
+  /**
+   * e.g. "2024, September"
+   */
+  date: string;
+  publisher: string;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-photos".
+ */
+export interface MokshyatrailsPhoto {
+  id: number;
+  /**
+   * Shown under the photo and used as its alt text.
+   */
+  caption?: string | null;
+  /**
+   * Groups photos, e.g. "Everest Base Camp 2024".
+   */
+  album?: string | null;
+  location?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-videos".
+ */
+export interface MokshyatrailsVideo {
+  id: number;
+  title: string;
+  /**
+   * Any YouTube link: watch?v=…, youtu.be/… or /shorts/….
+   */
+  url: string;
+  description?: string | null;
+  /**
+   * Optional grouping, e.g. a trek name; the creatives site shows one card per album.
+   */
+  album?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-treks".
+ */
+export interface MokshyatrailsTrek {
+  id: number;
+  title: string;
+  /**
+   * URL segment, e.g. "everest-base-camp" → /trek/everest-base-camp.
+   */
+  slug: string;
+  /**
+   * e.g. "Khumbu, Nepal"
+   */
+  region?: string | null;
+  /**
+   * e.g. "Mar–May, Sep–Nov"
+   */
+  season?: string | null;
+  /**
+   * Typical days on the trail.
+   */
+  days?: number | null;
+  maxAltitudeM?: number | null;
+  distanceKm?: number | null;
+  /**
+   * One or two lines, shown on the cards.
+   */
+  summary: string;
+  /**
+   * Your account of the trek. Rendered as HTML; leave empty to show only the summary.
+   */
+  body?: string | null;
+  heroImage?: (number | null) | MokshyatrailsPhoto;
+  /**
+   * Photos shown on this trek's page.
+   */
+  gallery?: (number | MokshyatrailsPhoto)[] | null;
+  /**
+   * Used when no hero image is uploaded.
+   */
+  heroImageUrl?: string | null;
+  difficulty?: ('easy' | 'moderate' | 'challenging' | 'strenuous') | null;
+  /**
+   * Shown as written, e.g. "USD 1,350". Empty shows "On request".
+   */
+  priceFrom?: string | null;
+  /**
+   * e.g. "2–12"
+   */
+  groupSize?: string | null;
+  /**
+   * Shown on the home page.
+   */
+  featured?: boolean | null;
+  itinerary?:
+    | {
+        /**
+         * e.g. "1" or "3–4"
+         */
+        day: string;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  includes?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  excludes?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Scheduled group dates. Clients can always request their own date too.
+   */
+  departures?:
+    | {
+        startDate: string;
+        endDate?: string | null;
+        /**
+         * Overrides "price from" for this date.
+         */
+        price?: string | null;
+        status: 'available' | 'limited' | 'full';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-bookings".
+ */
+export interface MokshyatrailsBooking {
+  id: number;
+  status: 'new' | 'contacted' | 'confirmed' | 'cancelled';
+  trek?: (number | null) | MokshyatrailsTrek;
+  /**
+   * As shown when the request was made.
+   */
+  trekTitle?: string | null;
+  /**
+   * A fixed departure or the client's preferred date.
+   */
+  departure: string;
+  travellers: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  country?: string | null;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-reviews".
+ */
+export interface MokshyatrailsReview {
+  id: number;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  text: string;
+  rating: number;
+  avatarUrl?: string | null;
+  /**
+   * Where the review was left, if public.
+   */
+  link?: string | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1934,6 +2271,46 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'techcompany-reviews';
         value: number | TechcompanyReview;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-experiences';
+        value: number | MokshyatrailsExperience;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-skill-categories';
+        value: number | MokshyatrailsSkillCategory;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-expertise';
+        value: number | MokshyatrailsExpertise;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-projects';
+        value: number | MokshyatrailsProject;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-publications';
+        value: number | MokshyatrailsPublication;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-photos';
+        value: number | MokshyatrailsPhoto;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-videos';
+        value: number | MokshyatrailsVideo;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-treks';
+        value: number | MokshyatrailsTrek;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-bookings';
+        value: number | MokshyatrailsBooking;
+      } | null)
+    | ({
+        relationTo: 'mokshyatrails-reviews';
+        value: number | MokshyatrailsReview;
       } | null)
     | ({
         relationTo: 'media';
@@ -2876,6 +3253,206 @@ export interface TechcompanyReviewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-experiences_select".
+ */
+export interface MokshyatrailsExperiencesSelect<T extends boolean = true> {
+  role?: T;
+  company?: T;
+  date?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-skill-categories_select".
+ */
+export interface MokshyatrailsSkillCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        rating?: T;
+        id?: T;
+      };
+  show?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-expertise_select".
+ */
+export interface MokshyatrailsExpertiseSelect<T extends boolean = true> {
+  domain?: T;
+  years?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-projects_select".
+ */
+export interface MokshyatrailsProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  techStack?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  githubUrl?: T;
+  liveUrl?: T;
+  image?: T;
+  imageUrl?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-publications_select".
+ */
+export interface MokshyatrailsPublicationsSelect<T extends boolean = true> {
+  title?: T;
+  authors?: T;
+  date?: T;
+  publisher?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-photos_select".
+ */
+export interface MokshyatrailsPhotosSelect<T extends boolean = true> {
+  caption?: T;
+  album?: T;
+  location?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-videos_select".
+ */
+export interface MokshyatrailsVideosSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  album?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-treks_select".
+ */
+export interface MokshyatrailsTreksSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  region?: T;
+  season?: T;
+  days?: T;
+  maxAltitudeM?: T;
+  distanceKm?: T;
+  summary?: T;
+  body?: T;
+  heroImage?: T;
+  gallery?: T;
+  heroImageUrl?: T;
+  difficulty?: T;
+  priceFrom?: T;
+  groupSize?: T;
+  featured?: T;
+  itinerary?:
+    | T
+    | {
+        day?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  includes?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  excludes?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  departures?:
+    | T
+    | {
+        startDate?: T;
+        endDate?: T;
+        price?: T;
+        status?: T;
+        id?: T;
+      };
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-bookings_select".
+ */
+export interface MokshyatrailsBookingsSelect<T extends boolean = true> {
+  status?: T;
+  trek?: T;
+  trekTitle?: T;
+  departure?: T;
+  travellers?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  country?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails-reviews_select".
+ */
+export interface MokshyatrailsReviewsSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  company?: T;
+  text?: T;
+  rating?: T;
+  avatarUrl?: T;
+  link?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -3478,6 +4055,129 @@ export interface Techcompany {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails".
+ */
+export interface Mokshyatrail {
+  id: number;
+  title: string;
+  tagline?: string | null;
+  name: string;
+  headline: string;
+  image?: (number | null) | Media;
+  /**
+   * Used when no image is uploaded.
+   */
+  imageUrl?: string | null;
+  /**
+   * Absolute URL of the main portfolio, e.g. https://guptaamit.com.np — other sites link back to it. A relative "/" would loop on a subdomain.
+   */
+  mainSiteUrl?: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    location?: string | null;
+    whatsapp?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    freelancer?: string | null;
+    googleScholar?: string | null;
+    instagram?: string | null;
+    youtube?: string | null;
+    facebook?: string | null;
+  };
+  /**
+   * About copy for this site. Rendered as HTML.
+   */
+  summary: string;
+  /**
+   * This site's full-screen hero.
+   */
+  hero: {
+    title: string;
+    /**
+     * Joined in order into one paragraph (include spaces at the edges). Tick "highlight" to colour a segment.
+     */
+    description?:
+      | {
+          text: string;
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * This site's own navigation; hrefs are section ids on its page.
+   */
+  nav?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Defaults to "<name> | <title>".
+     */
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * The home page slider, in order. Three works best.
+   */
+  slides?:
+    | {
+        image?: (number | null) | MokshyatrailsPhoto;
+        /**
+         * Used when no image is uploaded.
+         */
+        imageUrl?: string | null;
+        /**
+         * Small line above the title.
+         */
+        eyebrow?: string | null;
+        title: string;
+        description?: string | null;
+        ctaLabel?: string | null;
+        /**
+         * e.g. /mokshyatrails/treks/everest-base-camp
+         */
+        ctaHref?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Figures under the hero, e.g. "120+" / "Campaigns launched". Hidden when empty.
+   */
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Shown in the footer.
+   */
+  company?: {
+    /**
+     * Registered name, e.g. "Voxelate Pvt. Ltd."; defaults to the title.
+     */
+    legalName?: string | null;
+    /**
+     * Year, e.g. "2024".
+     */
+    founded?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tech_select".
  */
 export interface TechSelect<T extends boolean = true> {
@@ -3882,6 +4582,94 @@ export interface TechcompanySelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        id?: T;
+      };
+  company?:
+    | T
+    | {
+        legalName?: T;
+        founded?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mokshyatrails_select".
+ */
+export interface MokshyatrailsSelect<T extends boolean = true> {
+  title?: T;
+  tagline?: T;
+  name?: T;
+  headline?: T;
+  image?: T;
+  imageUrl?: T;
+  mainSiteUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        location?: T;
+        whatsapp?: T;
+        linkedin?: T;
+        github?: T;
+        freelancer?: T;
+        googleScholar?: T;
+        instagram?: T;
+        youtube?: T;
+        facebook?: T;
+      };
+  summary?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  nav?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  slides?:
+    | T
+    | {
+        image?: T;
+        imageUrl?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+        id?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
         id?: T;
       };
   company?:

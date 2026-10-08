@@ -3,6 +3,7 @@ import * as migration_20261002_164849_trek_routes from './20261002_164849_trek_r
 import * as migration_20261005_092125_creatives_site from './20261005_092125_creatives_site';
 import * as migration_20261005_100857_voxelate_site from './20261005_100857_voxelate_site';
 import * as migration_20261007_100656_techcompany_site from './20261007_100656_techcompany_site';
+import * as migration_20261007_164338_mokshyatrails_site from './20261007_164338_mokshyatrails_site';
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20261007_100656_techcompany_site.up,
     down: migration_20261007_100656_techcompany_site.down,
     name: '20261007_100656_techcompany_site',
+  },
+  {
+    up: migration_20261007_164338_mokshyatrails_site.up,
+    down: migration_20261007_164338_mokshyatrails_site.down,
+    name: '20261007_164338_mokshyatrails_site',
   },
 ];

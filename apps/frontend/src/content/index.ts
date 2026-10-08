@@ -1,4 +1,5 @@
 import { payloadContentSource } from "@/cms/payload/adapter";
+import type { BookingRequest } from "@/types/trekCompany";
 import type { ContentSource, SiteKey } from "./ports";
 
 /**
@@ -24,5 +25,8 @@ export const getReviews = (site: SiteKey) => source.getReviews(site);
 export const getTeam = (site: SiteKey) => source.getTeam(site);
 export const getClients = (site: SiteKey) => source.getClients(site);
 export const getProducts = (site: SiteKey) => source.getProducts(site);
+export const getTrekPackages = (site: SiteKey) => source.getTrekPackages(site);
+export const getTrekPackage = (site: SiteKey, slug: string) => source.getTrekPackage(site, slug);
+export const requestBooking = (site: SiteKey, request: BookingRequest) => source.requestBooking(site, request);
 
 export type { ContentSource, SiteKey } from "./ports";

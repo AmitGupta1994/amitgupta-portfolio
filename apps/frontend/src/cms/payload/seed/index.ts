@@ -56,6 +56,23 @@ for (const site of sites) {
     }
   }
 
+  if (site === 'mokshyatrails') {
+    await payload.delete({ collection: 'mokshyatrails-treks', where: everything, context })
+    for (const [order, trek] of content.trekPackages.entries()) {
+      await payload.create({
+        collection: 'mokshyatrails-treks',
+        data: {
+          ...trek,
+          includes: trek.includes.map((text) => ({ text })),
+          excludes: trek.excludes.map((text) => ({ text })),
+          order,
+        },
+        context,
+      })
+    }
+    // Booking requests and reviews are real records: never touched by the seed.
+  }
+
   if (site === 'creatives' || site === 'voxelate' || site === 'techcompany') {
     await payload.delete({ collection: `${site}-services`, where: everything, context })
     for (const [order, service] of content.services.entries()) {

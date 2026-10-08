@@ -24,6 +24,15 @@ export interface CmsSite {
   stats?: Array<{ value: string; label: string }> | null;
   company?: { legalName?: string | null; founded?: string | null } | null;
   process?: Array<{ title: string; description: string }> | null;
+  slides?: Array<{
+    image?: CmsMedia;
+    imageUrl?: string | null;
+    eyebrow?: string | null;
+    title: string;
+    description?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+  }> | null;
   seo?: { title?: string | null; description?: string | null } | null;
 }
 
@@ -39,6 +48,16 @@ export function mapSite(doc: CmsSite, site: SiteKey): SiteContent {
     navLinks: (doc.nav ?? []).map(({ name, href }) => ({ name, href })),
     stats: (doc.stats ?? []).map(({ value, label }) => ({ value, label })),
     process: (doc.process ?? []).map(({ title, description }) => ({ title, description })),
+    slides: (doc.slides ?? [])
+      .map((slide) => ({
+        imageUrl: resolveImageUrl(slide.image, slide.imageUrl),
+        eyebrow: orUndefined(slide.eyebrow) || undefined,
+        title: slide.title,
+        description: orUndefined(slide.description) || undefined,
+        cta: slide.ctaLabel && slide.ctaHref ? { label: slide.ctaLabel, href: slide.ctaHref } : undefined,
+      }))
+      // A slide without a picture can't be shown.
+      .filter((slide) => slide.imageUrl),
     company: doc.company
       ? { legalName: orUndefined(doc.company.legalName), founded: orUndefined(doc.company.founded) }
       : undefined,
