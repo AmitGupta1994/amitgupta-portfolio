@@ -9,6 +9,7 @@ import { getPublications } from "./publications";
 import { getSite } from "./sites";
 import { getSkillCategories } from "./skills";
 import { getTrek, getTreks } from "./treks";
+import { getTrekPackage, getTrekPackages, requestBooking } from "./trekPackages";
 import { getVideos } from "./videos";
 
 /** Payload implementation of the sites' content port. */
@@ -29,4 +30,7 @@ export const payloadContentSource: ContentSource = {
   getTeam,
   getClients,
   getProducts,
+  getTrekPackages,
+  getTrekPackage,
+  requestBooking,
 };

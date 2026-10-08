@@ -1,6 +1,7 @@
 import type { NavLink } from "./navigation";
 import type { ProcessStep } from "./company";
 import type { CompanyInfo } from "./studio";
+import type { HeroSlide } from "./trekCompany";
 import type { Profile } from "./profile";
 import type { SiteKey } from "./sites";
 
@@ -18,5 +19,7 @@ export interface SiteContent {
   company?: CompanyInfo;
   /** How a project runs; only sites whose global has the field fill it. */
   process: ProcessStep[];
+  /** Home page slider; only sites whose global has the field fill it. */
+  slides: HeroSlide[];
   seo: { title?: string; description?: string };
 }
