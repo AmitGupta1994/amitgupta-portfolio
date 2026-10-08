@@ -94,6 +94,16 @@ body {
   }
 }
 
+/* The hero slider's progress indicator (trekCompany/HeroSlider.tsx). */
+@keyframes slider-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 @keyframes studio-rise {
   from {
     opacity: 0;

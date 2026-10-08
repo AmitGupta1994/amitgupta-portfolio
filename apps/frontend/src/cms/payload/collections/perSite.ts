@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import type { SiteKey } from '@/types/sites'
 import { SITE_LABELS } from '@/types/sites'
+import { authenticated } from '../access/authenticated'
 import { publicRead } from '../access/publicRead'
 import { orderField } from '../fields/order'
 import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateSite'
@@ -410,6 +411,162 @@ export const createProducts = (site: SiteKey): CollectionConfig => ({
   ],
 })
 
+/**
+ * A trekking company's trek: everything a personal trek has, plus what a client
+ * needs to book it — price, difficulty, itinerary, inclusions and departures.
+ */
+export const createTrekPackages = (site: SiteKey): CollectionConfig => {
+  // The personal trek's fields (its hero and gallery already point at this site's photos).
+  const trek = createTreks(site)
+  return {
+    ...trek,
+    admin: { ...trek.admin, defaultColumns: ['title', 'region', 'days', 'priceFrom', 'featured', 'order'] },
+    fields: [
+      // The personal trek's fields, minus its trailing order field (re-added last).
+      ...trek.fields.filter((field) => !('name' in field && field.name === 'order')),
+      {
+        name: 'heroImageUrl',
+        type: 'text',
+        label: 'External hero image URL',
+        admin: { description: 'Used when no hero image is uploaded.' },
+      },
+      {
+        type: 'row',
+        fields: [
+          {
+            name: 'difficulty',
+            type: 'select',
+            defaultValue: 'moderate',
+            options: [
+              { label: 'Easy', value: 'easy' },
+              { label: 'Moderate', value: 'moderate' },
+              { label: 'Challenging', value: 'challenging' },
+              { label: 'Strenuous', value: 'strenuous' },
+            ],
+          },
+          { name: 'priceFrom', type: 'text', label: 'Price from', admin: { description: 'Shown as written, e.g. "USD 1,350". Empty shows "On request".' } },
+          { name: 'groupSize', type: 'text', admin: { description: 'e.g. "2–12"' } },
+        ],
+      },
+      { name: 'featured', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar', description: 'Shown on the home page.' } },
+      {
+        name: 'itinerary',
+        type: 'array',
+        labels: { singular: 'Day', plural: 'Itinerary' },
+        fields: [
+          {
+            type: 'row',
+            fields: [
+              { name: 'day', type: 'text', required: true, admin: { description: 'e.g. "1" or "3–4"' } },
+              { name: 'title', type: 'text', required: true },
+            ],
+          },
+          { name: 'description', type: 'textarea' },
+        ],
+      },
+      {
+        type: 'row',
+        fields: [
+          {
+            name: 'includes',
+            type: 'array',
+            labels: { singular: 'Item', plural: 'Included' },
+            fields: [{ name: 'text', type: 'text', required: true }],
+          },
+          {
+            name: 'excludes',
+            type: 'array',
+            labels: { singular: 'Item', plural: 'Not included' },
+            fields: [{ name: 'text', type: 'text', required: true }],
+          },
+        ],
+      },
+      {
+        name: 'departures',
+        type: 'array',
+        labels: { singular: 'Departure', plural: 'Fixed departures' },
+        admin: { description: 'Scheduled group dates. Clients can always request their own date too.' },
+        fields: [
+          {
+            type: 'row',
+            fields: [
+              { name: 'startDate', type: 'date', required: true, admin: { date: { pickerAppearance: 'dayOnly' } } },
+              { name: 'endDate', type: 'date', admin: { date: { pickerAppearance: 'dayOnly' } } },
+              { name: 'price', type: 'text', admin: { description: 'Overrides "price from" for this date.' } },
+              {
+                name: 'status',
+                type: 'select',
+                required: true,
+                defaultValue: 'available',
+                options: [
+                  { label: 'Available', value: 'available' },
+                  { label: 'Few seats left', value: 'limited' },
+                  { label: 'Full', value: 'full' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      orderField,
+    ],
+  }
+}
+
+/**
+ * Booking requests from the trek pages. Private: only logged-in admins can read
+ * or change them; the site creates them through the local API.
+ */
+export const createBookings = (site: SiteKey): CollectionConfig => ({
+  slug: `${site}-bookings`,
+  labels: { singular: 'Booking request', plural: 'Booking requests' },
+  admin: {
+    group: SITE_LABELS[site],
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'trekTitle', 'departure', 'travellers', 'status', 'createdAt'],
+  },
+  defaultSort: '-createdAt',
+  access: { read: authenticated, create: authenticated, update: authenticated, delete: authenticated },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'status',
+          type: 'select',
+          required: true,
+          defaultValue: 'new',
+          options: [
+            { label: 'New', value: 'new' },
+            { label: 'Contacted', value: 'contacted' },
+            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'Cancelled', value: 'cancelled' },
+          ],
+        },
+        { name: 'trek', type: 'relationship', relationTo: `${site}-treks` as 'mokshyatrails-treks' },
+        { name: 'trekTitle', type: 'text', admin: { description: 'As shown when the request was made.' } },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'departure', type: 'text', required: true, admin: { description: 'A fixed departure or the client\'s preferred date.' } },
+        { name: 'travellers', type: 'number', required: true, min: 1, max: 50 },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'email', type: 'email', required: true },
+        { name: 'phone', type: 'text' },
+        { name: 'country', type: 'text' },
+      ],
+    },
+    { name: 'message', type: 'textarea' },
+  ],
+})
+
 /** The studio layout's tables: the personal site and the company site share these. */
 const STUDIO_SITES: SiteKey[] = ['creatives', 'voxelate']
 
@@ -427,4 +584,6 @@ export const collectionsForSite = (site: SiteKey): CollectionConfig[] => [
   ...(site === 'voxelate' ? [createTeam(site), createClients(site)] : []),
   // The software company: services, engagement models (as packages), its own products and reviews.
   ...(site === 'techcompany' ? [createServices(site), createPackages(site), createProducts(site), createReviews(site)] : []),
+  // The trekking company: bookable treks, booking requests and reviews.
+  ...(site === 'mokshyatrails' ? [createTrekPackages(site), createBookings(site), createReviews(site)] : []),
 ]

@@ -9,6 +9,7 @@ import type { SiteContent } from "@/types/siteContent";
 import type { SiteKey } from "@/types/sites";
 import type { SkillCategoryData } from "@/types/skill";
 import type { Trek } from "@/types/trek";
+import type { BookingRequest, TrekPackage } from "@/types/trekCompany";
 import type { Video } from "@/types/video";
 
 /**
@@ -35,6 +36,10 @@ export interface ContentSource {
   getTeam(site: SiteKey): Promise<TeamMember[]>;
   getClients(site: SiteKey): Promise<Client[]>;
   getProducts(site: SiteKey): Promise<Product[]>;
+  getTrekPackages(site: SiteKey): Promise<TrekPackage[]>;
+  getTrekPackage(site: SiteKey, slug: string): Promise<TrekPackage | null>;
+  /** The one write: a client's booking request, saved for the admins. */
+  requestBooking(site: SiteKey, request: BookingRequest): Promise<{ trekTitle: string }>;
 }
 
 export type { SiteKey } from "@/types/sites";

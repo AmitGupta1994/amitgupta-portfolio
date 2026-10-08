@@ -247,3 +247,67 @@ export const TechCompanySite = createSiteGlobal({
     companyField,
   ],
 })
+
+/** Mokshya Trails, the trekking company: same design as the trek site, written as "we". */
+export const MokshyaTrailsSite = createSiteGlobal({
+  site: 'mokshyatrails',
+  title: 'Mokshya Trails',
+  tagline: 'Trekking company in Nepal',
+  name: 'Mokshya Trails',
+  headline: 'Guided treks in the Himalaya',
+  imageUrl: '/mokshyatrails/logo.png',
+  summary:
+    'Mokshya Trails is a Nepal-based trekking company. Our licensed guides and porters lead small groups on the Himalaya\'s classic routes and quieter valleys — with permits, lodges and logistics handled, so you can <strong>just walk</strong>.',
+  heroTitle: 'Walk the Himalaya with us',
+  heroDescription: [
+    { text: 'Guided treks to ' },
+    { text: 'Everest', highlight: true },
+    { text: ', ' },
+    { text: 'Annapurna', highlight: true },
+    { text: ' and ' },
+    { text: 'Langtang', highlight: true },
+    { text: ' — small groups, local guides, every detail handled.' },
+  ],
+  ctaLabel: 'Plan your trek',
+  // Sections use "/#…" like the other sites (served at the subdomain root); pages use
+  // the /mokshyatrails/… form so they work on the subdomain and the main domain.
+  nav: [
+    { name: 'Home', href: '/#hero' },
+    { name: 'About', href: '/#about' },
+    { name: 'Featured treks', href: '/#treks' },
+    { name: 'All treks', href: '/mokshyatrails/treks' },
+    { name: 'Reviews', href: '/#reviews' },
+    { name: 'Contact', href: '/#contact' },
+  ],
+  extraFields: [
+    {
+      name: 'slides',
+      type: 'array',
+      labels: { singular: 'Slide', plural: 'Hero slides' },
+      minRows: 1,
+      maxRows: 5,
+      admin: { description: 'The home page slider, in order. Three works best.' },
+      fields: [
+        { name: 'image', type: 'upload', relationTo: 'mokshyatrails-photos' },
+        { name: 'imageUrl', type: 'text', label: 'External image URL', admin: { description: 'Used when no image is uploaded.' } },
+        {
+          type: 'row',
+          fields: [
+            { name: 'eyebrow', type: 'text', admin: { description: 'Small line above the title.' } },
+            { name: 'title', type: 'text', required: true },
+          ],
+        },
+        { name: 'description', type: 'textarea' },
+        {
+          type: 'row',
+          fields: [
+            { name: 'ctaLabel', type: 'text', label: 'Button label' },
+            { name: 'ctaHref', type: 'text', label: 'Button link', admin: { description: 'e.g. /mokshyatrails/treks/everest-base-camp' } },
+          ],
+        },
+      ],
+    },
+    statsField,
+    companyField,
+  ],
+})

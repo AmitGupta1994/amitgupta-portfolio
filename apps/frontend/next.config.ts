@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     // Media uploaded to the CMS, plus static brand assets in public/<site>.
-    localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/techcompany/**" }],
+    localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/techcompany/**" }, { pathname: "/mokshyatrails/**" }],
     remotePatterns: [
       {
         protocol: "https",

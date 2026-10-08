@@ -67,8 +67,8 @@ The research and trek sites are the same deployment, served on their own hosts b
 3. Wait for the certificate to be issued, then open `https://research.yourdomain.com`.
 
 No extra project, build or environment variable is needed; `/research` and `/trek` keep
-working on the main domain too. `creatives.`, `voxelate.` and `techcompany.` are the same three
-steps (their rows are already in `SITE_BY_SUBDOMAIN`). Voxelate can also have its own domain: add
+working on the main domain too. `creatives.`, `voxelate.`, `techcompany.` and `mokshyatrails.` are
+the same three steps (their rows are already in `SITE_BY_SUBDOMAIN`). Voxelate can also have its own domain: add
 `voxelate.com` (or any `voxelate.<tld>`) to the project the same way — its first label is
 `voxelate`, so it resolves to `/voxelate` with no code change.
 
