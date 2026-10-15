@@ -4,3 +4,4 @@ SEED_SITES=mokshyatrails NODE_ENV=production DATABASE_URL="" npm run seed
 SEED_SITES=techcompany NODE_ENV=production DATABASE_URL="" npm run seed
 SEED_SITES=tech NODE_ENV=production DATABASE_URL="" npm run seed
 SEED_SITES=voxelate NODE_ENV=production DATABASE_URL="" npm run seed
+SEED_SITES=trek NODE_ENV=production DATABASE_URL="" npm run seed
