@@ -31,26 +31,26 @@ const PORTRAIT = 'https://github.com/amitgupta1994.png'
 export const siteGlobals = {
   tech: {
     title: 'Portfolio',
-    tagline: 'Backend-focused full stack engineering',
+    tagline: 'Senior Full Stack Lead Engineer (Backend Focused)',
     name: 'Amit Gupta',
-    headline: 'Lead Engineer | Full Stack Engineer (Backend-Focused)',
+    headline: 'Senior Full Stack Lead Engineer (Backend Focused)',
     imageUrl: PORTRAIT,
     mainSiteUrl: MAIN_SITE_URL,
     contact: CONTACT,
     summary:
-      'As a Tech Lead and Full Stack Engineer (Backend-Focused) with <strong>7+ years</strong>  of experience architecting scalable systems, I drive the complete lifecycle from requirement gathering and MVP development to cloud deployment and monitoring. Communicating directly with clients, I build complex software solutions and AI-based systems. Backed by AI/ML research, I integrate AI capabilities, build AI-native products, and leverage AI-assisted coding. I am skilled in leading teams, mentoring, and applying deep expertise across Backend, Native Android, and DevOps to drive business growth. \n \n I am a pragmatic builder and debugger who approaches software development from a strict systems engineering perspective. By combining strong coding fundamentals with a highly iterative mindset, I build quickly, diagnose issues efficiently, and continuously refine architectures to scale seamlessly from initial single region deployments to high concurrency, multi sharded environments.',
+      'As a <strong>Senior Full Stack Lead Engineer (Backend Focused)</strong> with <strong>7+ years</strong> of experience building scalable systems in autonomous, remote environments, I architect and deliver end-to-end solutions across backend, cloud, web, and AI-driven products. With <strong>4+ years of dedicated backend expertise</strong>, I specialize in engineering robust APIs and data architectures using Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB. \n \n Because I understand both the intricacies of server-side systems and how APIs are consumed by frontend and mobile clients, I lead technical execution and bridge cross-stack boundaries seamlessly. My background in containerized cloud environments (AWS, Docker, CI/CD pipelines, Nginx) ensures features are delivered reliably with high availability, strong observability, and minimal downtime. Backed by 2 years of university AI/ML research, I integrate intelligent models and generative AI into production to build performant, resilient software that scales.',
     hero: {
       title: 'Engineering systems that scale',
       description: [
-        { text: 'Lead engineer building ' },
+        { text: 'Senior Full Stack Lead Engineer specializing in ' },
         { text: 'resilient backends', highlight: true },
         { text: ', ' },
+        { text: 'scalable cloud infrastructure', highlight: true },
+        { text: ' and ' },
         { text: 'AI-native products', highlight: true },
-        { text: ' and cloud platforms that grow from first MVP to ' },
-        { text: 'high-concurrency scale', highlight: true },
-        { text: '.' },
+        { text: ' engineered from MVP to high-concurrency scale.' },
       ],
-      cta: { label: "Let's build together", href: '/#contact' },
+      cta: { label: "Let's connect", href: '/#contact' },
     },
     nav: [
       { name: 'Home', href: '/#hero' },
@@ -64,8 +64,9 @@ export const siteGlobals = {
       { name: 'Contact', href: '/#contact' },
     ],
     seo: {
-      title: 'Amit Gupta | Portfolio',
-      description: 'Lead engineer building resilient backends, AI-native products and cloud platforms.',
+      title: 'Amit Gupta | Senior Full Stack Lead Engineer (Backend Focused)',
+      description:
+        'Senior Full Stack Lead Engineer (Backend Focused) with 7+ years of experience building resilient backends, cloud platforms, and AI-native systems.',
     },
   },
   research: {
