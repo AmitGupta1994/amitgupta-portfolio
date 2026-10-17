@@ -357,43 +357,78 @@ const ALL_EXPERIENCES = [
     company: 'TheGemsTech',
     date: '07/01/2024 - Current',
     description:
-      'Architected and led scalable backend and application systems across fintech, ride-sharing, travel, and AI platforms, supporting multi-product architecture with CI/CD pipelines and cloud-ready deployments.',
+      'Architected and led scalable backend and multi-product systems across fintech, ride-sharing, travel, and AI platforms (Restro Cash, Vite, Karmic Astrology). Established CI/CD pipelines and cloud-ready AWS deployments; mentored engineering teams to standardize engineering practices and eliminate delivery bottlenecks.',
   },
   {
-    role: 'Professional Freelancer (Senior Software Engineer)',
+    role: 'Professional Freelancer (Senior Software Engineer and Researcher)',
     company: 'Freelancer.com',
     date: '17/05/2021 - Current',
     description:
-      'Developed AI/ML systems including recommendation engines and generative AI applications, improving personalization quality and response relevance through NLP and machine learning pipelines.',
+      'Delivered end-to-end scalable full-stack solutions and AI/ML architectures for international clients. Built recommendation engines, generative AI applications (Cocktail & Recipe generator), and digital consultation platforms with optimized backend APIs and low-latency database queries.',
   },
   {
     role: 'Research Exchange',
     company: 'Department of Biomedical Engineering, IIT Hyderabad',
     date: '08/08/2023 - 08/12/2024',
     description:
-      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems.',
+      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems. Contributed to biomedical gait analysis and sensor calibration workflows.',
   },
   {
     role: 'Research Assistant',
     company: 'Kathmandu University',
     date: '02/01/2022 - 02/01/2024',
     description:
-      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance.',
+      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance. Developed ML pipelines for human motion analysis for biomedical AI applications.',
+  },
+  {
+    role: 'Senior Software Engineer and Team Lead',
+    company: 'Energy Bank Systems',
+    date: '01/10/2020 - 01/11/2021',
+    description:
+      'Led the architecture of Android TV and STB-based digital signage systems deployed in enterprise environments, improving system stability and reducing playback failures. Managed sprint delivery cycles, code quality, release predictability, and embedded system performance.',
+  },
+  {
+    role: 'Senior Engineer and Researcher: AOSP',
+    company: 'New IT Venture',
+    date: '20/11/2019 - 07/08/2020',
+    description:
+      'Customized AOSP and developed firmware for Amlogic-based STB devices in collaboration with cross-border hardware teams in China. Developed NetTV streaming platform with system-level integration, improving media delivery reliability and eliminating streaming interruptions.',
+  },
+  {
+    role: 'Software Engineer',
+    company: 'Insight Workshop',
+    date: '06/07/2018 - 19/11/2019',
+    description:
+      'Developed native mobile applications using Kotlin/Java with MVVM architecture, improving app performance, maintainability, and backend API response handling efficiency. Participated in Agile delivery with automated CI/CD workflows.',
+  },
+  {
+    role: 'Software Developer',
+    company: 'New IT Venture',
+    date: '01/12/2016 - 04/07/2018',
+    description:
+      'Developed and maintained Android-based OTT/IPTV/STB streaming applications (NetTV), implementing media server communication, token authentication, and secure video encryption/decryption using ExoPlayer.',
+  },
+  {
+    role: 'Software Engineer Intern',
+    company: 'Leapfrog Technology',
+    date: '05/06/2016 - 05/09/2016',
+    description:
+      'Developed "Awaz," an Android application using Java and digital signal processing (DSP) techniques for real-time sound frequency detection and musical note matching, implementing audio processing algorithms and UI components.',
   },
 ]
 
 const ALL_EXPERTISE = [
   {
+    domain: 'Backend & Databases',
+    years: '4+ Years',
+    description:
+      'Building scalable, high-throughput APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, Redis, and MongoDB.',
+  },
+  {
     domain: 'Total Software Development',
     years: '7+ Years',
     description:
       'Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring.',
-  },
-  {
-    domain: 'Backend & Databases',
-    years: '4+ Years',
-    description:
-      'Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB.',
   },
   {
     domain: 'DevOps & Cloud',
@@ -411,12 +446,13 @@ const ALL_EXPERTISE = [
     domain: 'Frontend',
     years: '1+ Years',
     description:
-      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, React, and Next.js.',
+      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, TypeScript, React, and Next.js.',
   },
   {
     domain: 'Native Android',
     years: '4+ Years',
-    description: 'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP.',
+    description:
+      'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP with clean architecture.',
   },
   {
     domain: 'Professional Research',
@@ -451,101 +487,161 @@ const ALL_PUBLICATIONS = [
 
 const ALL_PROJECTS = [
   {
-    title: 'Monorepo Portfolio',
+    title: 'Restro Cash',
     description:
-      'A production-grade portfolio built with Next.js, Tailwind CSS, and structured for a future Django backend integration.',
-    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/yourusername/amitgupta-portfolio',
+      'Multi-tenant restaurant fintech and order management platform built with Django and PostgreSQL, supporting high-concurrency order workflows, digital wallet settlements, and containerized AWS deployments.',
+    techStack: ['Python', 'Django', 'PostgreSQL', 'Docker', 'AWS'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800',
   },
   {
-    title: 'Task Management API',
+    title: 'Vite (Ride-Sharing Platform)',
     description:
-      'A robust backend service featuring JWT authentication, role-based access control, and comprehensive test coverage.',
-    techStack: ['Django', 'Python', 'PostgreSQL', 'Docker'],
-    githubUrl: 'https://github.com/yourusername/task-api',
+      'High-throughput ride-sharing platform backend featuring real-time driver matching, geospatial query routing, dynamic fare calculation algorithms, and WebSockets for live location synchronization.',
+    techStack: ['FastAPI', 'Python', 'PostgreSQL', 'Redis', 'Docker'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800',
   },
   {
-    title: 'E-Commerce Platform',
+    title: 'Trekking & Travel Platform',
     description:
-      'A full-featured e-commerce solution with Stripe payment integration, real-time inventory tracking, and an admin dashboard.',
-    techStack: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    githubUrl: 'https://github.com/yourusername/ecommerce-app',
+      'Scalable booking platform and itinerary management system with dynamic route planning, automated permit tracking, group departure scheduling, and secure payment processing.',
+    techStack: ['Next.js', 'React', 'FastAPI', 'PostgreSQL', 'Tailwind CSS'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
   },
   {
-    title: 'Real-time Chat App',
+    title: 'Gen AI Recipe Generation System',
     description:
-      'A scalable chat application featuring WebSocket connections, online status indicators, and message history.',
-    techStack: ['React', 'Express', 'Socket.io', 'Redis'],
-    githubUrl: 'https://github.com/yourusername/chat-app',
+      'Generative AI application leveraging LLM pipelines, LangChain orchestration, and vector embeddings to deliver personalized cocktail and culinary recommendations with structured output formatting.',
+    techStack: ['Python', 'LangChain', 'OpenAI API', 'Vector DB', 'FastAPI'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
   },
   {
-    title: 'AI Image Generator',
+    title: 'NetTV Streaming Platform',
     description:
-      "A creative tool allowing users to generate artwork from text prompts using OpenAI's DALL-E 3 API.",
-    techStack: ['Next.js', 'Tailwind', 'OpenAI API', 'Vercel'],
-    githubUrl: 'https://github.com/yourusername/ai-generator',
+      'Large-scale OTT media streaming platform with secure DRM video encryption/decryption, ExoPlayer pipeline optimizations, adaptive bitrate streaming, and system-level Android TV/STB integrations.',
+    techStack: ['Kotlin', 'Java', 'ExoPlayer', 'AOSP', 'RESTful APIs'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&q=80&w=800',
   },
   {
-    title: 'SaaS Analytics Dashboard',
-    description: 'A comprehensive dashboard for SaaS companies to track user engagement, MRR, and churn rates.',
-    techStack: ['Vue.js', 'Nuxt', 'Chart.js', 'Supabase'],
-    githubUrl: 'https://github.com/yourusername/saas-dashboard',
+    title: 'Biomedical Gait Analysis & Smart Insole',
+    description:
+      'Biomedical AI sensing platform combining BLE-enabled FSR smart insoles with MediaPipe computer vision pose estimation for real-time human gait classification and clinical motion diagnostics.',
+    techStack: ['Python', 'MediaPipe', 'PyTorch', 'BLE', 'Data Pipelines'],
+    githubUrl: 'https://github.com/amitgupta1994',
     liveUrl: '#',
-    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    title: 'ML Movie Recommendation System',
+    description:
+      'Scalable machine learning recommendation engine combining collaborative filtering with content-based NLP feature extraction, served through containerized high-speed prediction APIs.',
+    techStack: ['Python', 'Scikit-Learn', 'FastAPI', 'Pandas', 'Docker'],
+    githubUrl: 'https://github.com/amitgupta1994',
+    liveUrl: '#',
+    imageUrl: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    title: 'Online Digital Consultation Platform',
+    description:
+      'Full-stack telehealth and digital consultation application featuring secure real-time communication channels, practitioner scheduling, and encrypted patient data records.',
+    techStack: ['React', 'Next.js', 'Django', 'PostgreSQL', 'Docker'],
+    githubUrl: 'https://github.com/amitgupta1994',
+    liveUrl: '#',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
   },
 ]
 
 const ALL_SKILLS = [
   {
-    key: 'architecture',
-    title: 'System Design & Architecture',
+    key: 'web',
+    title: 'Web & Backend Architecture',
     show: true,
     priority: 1,
     items: [
-      { name: 'System Design', rating: 8 },
-      { name: 'Clean Architecture', rating: 9 },
-      { name: 'SOLID Principles', rating: 9 },
-      { name: 'MVVM', rating: 9 },
+      { name: 'Python', rating: 9 },
+      { name: 'Django & DRF', rating: 9 },
+      { name: 'FastAPI', rating: 9 },
+      { name: 'PostgreSQL', rating: 9 },
+      { name: 'MySQL & MongoDB', rating: 8 },
+      { name: 'Redis & Caching', rating: 8 },
+      { name: 'RESTful APIs', rating: 9 },
     ],
   },
   {
-    key: 'web',
-    title: 'Web & Backend',
+    key: 'architecture',
+    title: 'System Design & Architecture',
     show: true,
     priority: 2,
     items: [
-      { name: 'Python', rating: 9 },
-      { name: 'Django', rating: 8 },
-      { name: 'PostgreSQL', rating: 8 },
-      { name: 'AI/ML', rating: 8 },
+      { name: 'System Design', rating: 9 },
+      { name: 'Microservices Architecture', rating: 8 },
+      { name: 'Clean Architecture', rating: 9 },
+      { name: 'SOLID Principles', rating: 9 },
+      { name: 'Distributed Systems & Sharding', rating: 8 },
+      { name: 'MVVM & Design Patterns', rating: 9 },
+    ],
+  },
+  {
+    key: 'deployment',
+    title: 'DevOps & Cloud Infrastructure',
+    show: true,
+    priority: 3,
+    items: [
+      { name: 'AWS (EC2, S3, Lambda, ALB)', rating: 8 },
+      { name: 'Docker & Containerization', rating: 9 },
+      { name: 'CI/CD & GitHub Actions', rating: 8 },
+      { name: 'Nginx & Reverse Proxies', rating: 8 },
+      { name: 'Monitoring & Observability', rating: 8 },
+      { name: 'Terraform', rating: 7 },
+    ],
+  },
+  {
+    key: 'frontend',
+    title: 'Frontend Engineering',
+    show: true,
+    priority: 4,
+    items: [
+      { name: 'React', rating: 8 },
+      { name: 'Next.js', rating: 8 },
+      { name: 'TypeScript & JavaScript', rating: 8 },
+      { name: 'Tailwind CSS', rating: 9 },
+      { name: 'State Management & UI/UX', rating: 8 },
+    ],
+  },
+  {
+    key: 'research',
+    title: 'AI, Machine Learning & Research',
+    show: true,
+    priority: 5,
+    items: [
+      { name: 'LLMs & Generative AI', rating: 8 },
+      { name: 'LangChain & RAG', rating: 8 },
+      { name: 'Vector Databases & Embeddings', rating: 7 },
+      { name: 'PyTorch & TensorFlow', rating: 7 },
+      { name: 'Computer Vision (MediaPipe)', rating: 8 },
+      { name: 'Sensor Fusion & Biomechanics', rating: 8 },
     ],
   },
   {
     key: 'mobile',
-    title: 'Mobile',
+    title: 'Mobile App Development',
     show: true,
-    priority: 3,
-    items: [{ name: 'Android (Kotlin, KMP)', rating: 9 }],
-  },
-  {
-    key: 'deployment',
-    title: 'Deployment',
-    show: true,
-    priority: 4,
+    priority: 6,
     items: [
-      { name: 'AWS', rating: 8 },
-      { name: 'Docker', rating: 8 },
-      { name: 'CI/CD', rating: 8 },
+      { name: 'Native Android (Kotlin & Java)', rating: 9 },
+      { name: 'Jetpack Compose', rating: 8 },
+      { name: 'Compose Multiplatform (KMP/KMM)', rating: 8 },
+      { name: 'ExoPlayer & Media Streaming', rating: 9 },
+      { name: 'JUnit 5 & Mobile Architecture', rating: 8 },
     ],
   },
   {
@@ -554,46 +650,21 @@ const ALL_SKILLS = [
     show: true,
     priority: 7,
     items: [
-      { name: 'Android TV / STB', rating: 9 },
-      { name: 'AOSP Firmware', rating: 8 },
-      { name: 'BLE & Sensors', rating: 7 },
+      { name: 'Android TV & STB', rating: 9 },
+      { name: 'AOSP & Firmware Customization', rating: 8 },
+      { name: 'BLE & Smart Sensors', rating: 8 },
       { name: 'Digital Signage Systems', rating: 8 },
     ],
   },
   {
-    key: 'research',
-    title: 'Research & Academic (2+ Years)',
-    show: true,
-    priority: 6,
-    items: [
-      { name: 'Data Acquisition & Analysis', rating: 8 },
-      { name: 'Computer Vision (MediaPipe)', rating: 8 },
-      { name: 'Sensor Fusion', rating: 7 },
-      { name: 'Academic Writing', rating: 8 },
-    ],
-  },
-  {
-    key: 'frontend',
-    title: 'Frontend',
-    show: true,
-    priority: 5,
-    items: [
-      { name: 'React', rating: 7 },
-      { name: 'Next.js', rating: 7 },
-      { name: 'Tailwind CSS', rating: 8 },
-      { name: 'GSAP', rating: 6 },
-    ],
-  },
-  {
     key: 'learning',
-    title: 'Currently Learning',
+    title: 'Emerging Tech & Exploration',
     show: true,
     priority: 8,
     items: [
-      { name: 'RAG', rating: 5 },
-      { name: 'LangChain', rating: 5 },
-      { name: 'Terraform', rating: 4 },
-      { name: 'Agentic AI', rating: 4 },
+      { name: 'Agentic AI & Multi-Agent Systems', rating: 7 },
+      { name: 'AI-Assisted Workflow Automation', rating: 8 },
+      { name: 'High-Throughput Event Streaming', rating: 7 },
     ],
   },
 ]
