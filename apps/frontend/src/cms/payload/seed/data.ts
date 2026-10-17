@@ -357,28 +357,63 @@ const ALL_EXPERIENCES = [
     company: 'TheGemsTech',
     date: '07/01/2024 - Current',
     description:
-      'Architected and led scalable backend and application systems across fintech, ride-sharing, travel, and AI platforms, supporting multi-product architecture with CI/CD pipelines and cloud-ready deployments.',
+      'Architected and led scalable backend and multi-product systems across fintech, ride-sharing, travel, and AI platforms (Restro Cash, Vite, Karmic Astrology). Established CI/CD pipelines and cloud-ready AWS deployments; mentored engineering teams to standardize engineering practices and eliminate delivery bottlenecks.',
   },
   {
-    role: 'Professional Freelancer (Senior Software Engineer)',
+    role: 'Professional Freelancer (Senior Software Engineer and Researcher)',
     company: 'Freelancer.com',
     date: '17/05/2021 - Current',
     description:
-      'Developed AI/ML systems including recommendation engines and generative AI applications, improving personalization quality and response relevance through NLP and machine learning pipelines.',
+      'Delivered end-to-end scalable full-stack solutions and AI/ML architectures for international clients. Built recommendation engines, generative AI applications (Cocktail & Recipe generator), and digital consultation platforms with optimized backend APIs and low-latency database queries.',
   },
   {
     role: 'Research Exchange',
     company: 'Department of Biomedical Engineering, IIT Hyderabad',
     date: '08/08/2023 - 08/12/2024',
     description:
-      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems.',
+      'Designed and validated BLE-enabled FSR smart insoles achieving real-time gait data acquisition with improved signal reliability and experimental accuracy for clinical research systems. Contributed to biomedical gait analysis and sensor calibration workflows.',
   },
   {
     role: 'Research Assistant',
     company: 'Kathmandu University',
     date: '02/01/2022 - 02/01/2024',
     description:
-      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance.',
+      'Built computer vision gait analysis system using MediaPipe pose estimation and sensor fusion, improving movement classification robustness and real-time inference performance. Developed ML pipelines for human motion analysis for biomedical AI applications.',
+  },
+  {
+    role: 'Senior Software Engineer and Team Lead',
+    company: 'Energy Bank Systems',
+    date: '01/10/2020 - 01/11/2021',
+    description:
+      'Led the architecture of Android TV and STB-based digital signage systems deployed in enterprise environments, improving system stability and reducing playback failures. Managed sprint delivery cycles, code quality, release predictability, and embedded system performance.',
+  },
+  {
+    role: 'Senior Engineer and Researcher: AOSP',
+    company: 'New IT Venture',
+    date: '20/11/2019 - 07/08/2020',
+    description:
+      'Customized AOSP and developed firmware for Amlogic-based STB devices in collaboration with cross-border hardware teams in China. Developed NetTV streaming platform with system-level integration, improving media delivery reliability and eliminating streaming interruptions.',
+  },
+  {
+    role: 'Software Engineer',
+    company: 'Insight Workshop',
+    date: '06/07/2018 - 19/11/2019',
+    description:
+      'Developed native mobile applications using Kotlin/Java with MVVM architecture, improving app performance, maintainability, and backend API response handling efficiency. Participated in Agile delivery with automated CI/CD workflows.',
+  },
+  {
+    role: 'Software Developer',
+    company: 'New IT Venture',
+    date: '01/12/2016 - 04/07/2018',
+    description:
+      'Developed and maintained Android-based OTT/IPTV/STB streaming applications (NetTV), implementing media server communication, token authentication, and secure video encryption/decryption using ExoPlayer.',
+  },
+  {
+    role: 'Software Engineer Intern',
+    company: 'Leapfrog Technology',
+    date: '05/06/2016 - 05/09/2016',
+    description:
+      'Developed "Awaz," an Android application using Java and digital signal processing (DSP) techniques for real-time sound frequency detection and musical note matching, implementing audio processing algorithms and UI components.',
   },
 ]
 
