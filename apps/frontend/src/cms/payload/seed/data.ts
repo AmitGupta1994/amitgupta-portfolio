@@ -384,16 +384,16 @@ const ALL_EXPERIENCES = [
 
 const ALL_EXPERTISE = [
   {
+    domain: 'Backend & Databases',
+    years: '4+ Years',
+    description:
+      'Building scalable, high-throughput APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, Redis, and MongoDB.',
+  },
+  {
     domain: 'Total Software Development',
     years: '7+ Years',
     description:
       'Architecting, designing, and delivering end-to-end scalable solutions across web, mobile, and cloud environments while managing the full product lifecycle from initial requirements to system monitoring.',
-  },
-  {
-    domain: 'Backend & Databases',
-    years: '4+ Years',
-    description:
-      'Building scalable APIs and managing complex data architectures with Python, Django, FastAPI, PostgreSQL, MySQL, and MongoDB.',
   },
   {
     domain: 'DevOps & Cloud',
@@ -411,12 +411,13 @@ const ALL_EXPERTISE = [
     domain: 'Frontend',
     years: '1+ Years',
     description:
-      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, React, and Next.js.',
+      'Crafting dynamic, responsive, and user-centric interfaces utilizing HTML, CSS, JavaScript, TypeScript, React, and Next.js.',
   },
   {
     domain: 'Native Android',
     years: '4+ Years',
-    description: 'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP.',
+    description:
+      'Developing high-performance, robust mobile applications using Java, Kotlin, Jetpack Compose, KMM, and KMP with clean architecture.',
   },
   {
     domain: 'Professional Research',
@@ -507,45 +508,86 @@ const ALL_PROJECTS = [
 
 const ALL_SKILLS = [
   {
-    key: 'architecture',
-    title: 'System Design & Architecture',
+    key: 'web',
+    title: 'Web & Backend Architecture',
     show: true,
     priority: 1,
     items: [
-      { name: 'System Design', rating: 8 },
-      { name: 'Clean Architecture', rating: 9 },
-      { name: 'SOLID Principles', rating: 9 },
-      { name: 'MVVM', rating: 9 },
+      { name: 'Python', rating: 9 },
+      { name: 'Django & DRF', rating: 9 },
+      { name: 'FastAPI', rating: 9 },
+      { name: 'PostgreSQL', rating: 9 },
+      { name: 'MySQL & MongoDB', rating: 8 },
+      { name: 'Redis & Caching', rating: 8 },
+      { name: 'RESTful APIs', rating: 9 },
     ],
   },
   {
-    key: 'web',
-    title: 'Web & Backend',
+    key: 'architecture',
+    title: 'System Design & Architecture',
     show: true,
     priority: 2,
     items: [
-      { name: 'Python', rating: 9 },
-      { name: 'Django', rating: 8 },
-      { name: 'PostgreSQL', rating: 8 },
-      { name: 'AI/ML', rating: 8 },
+      { name: 'System Design', rating: 9 },
+      { name: 'Microservices Architecture', rating: 8 },
+      { name: 'Clean Architecture', rating: 9 },
+      { name: 'SOLID Principles', rating: 9 },
+      { name: 'Distributed Systems & Sharding', rating: 8 },
+      { name: 'MVVM & Design Patterns', rating: 9 },
+    ],
+  },
+  {
+    key: 'deployment',
+    title: 'DevOps & Cloud Infrastructure',
+    show: true,
+    priority: 3,
+    items: [
+      { name: 'AWS (EC2, S3, Lambda, ALB)', rating: 8 },
+      { name: 'Docker & Containerization', rating: 9 },
+      { name: 'CI/CD & GitHub Actions', rating: 8 },
+      { name: 'Nginx & Reverse Proxies', rating: 8 },
+      { name: 'Monitoring & Observability', rating: 8 },
+      { name: 'Terraform', rating: 7 },
+    ],
+  },
+  {
+    key: 'frontend',
+    title: 'Frontend Engineering',
+    show: true,
+    priority: 4,
+    items: [
+      { name: 'React', rating: 8 },
+      { name: 'Next.js', rating: 8 },
+      { name: 'TypeScript & JavaScript', rating: 8 },
+      { name: 'Tailwind CSS', rating: 9 },
+      { name: 'State Management & UI/UX', rating: 8 },
+    ],
+  },
+  {
+    key: 'research',
+    title: 'AI, Machine Learning & Research',
+    show: true,
+    priority: 5,
+    items: [
+      { name: 'LLMs & Generative AI', rating: 8 },
+      { name: 'LangChain & RAG', rating: 8 },
+      { name: 'Vector Databases & Embeddings', rating: 7 },
+      { name: 'PyTorch & TensorFlow', rating: 7 },
+      { name: 'Computer Vision (MediaPipe)', rating: 8 },
+      { name: 'Sensor Fusion & Biomechanics', rating: 8 },
     ],
   },
   {
     key: 'mobile',
-    title: 'Mobile',
+    title: 'Mobile App Development',
     show: true,
-    priority: 3,
-    items: [{ name: 'Android (Kotlin, KMP)', rating: 9 }],
-  },
-  {
-    key: 'deployment',
-    title: 'Deployment',
-    show: true,
-    priority: 4,
+    priority: 6,
     items: [
-      { name: 'AWS', rating: 8 },
-      { name: 'Docker', rating: 8 },
-      { name: 'CI/CD', rating: 8 },
+      { name: 'Native Android (Kotlin & Java)', rating: 9 },
+      { name: 'Jetpack Compose', rating: 8 },
+      { name: 'Compose Multiplatform (KMP/KMM)', rating: 8 },
+      { name: 'ExoPlayer & Media Streaming', rating: 9 },
+      { name: 'JUnit 5 & Mobile Architecture', rating: 8 },
     ],
   },
   {
@@ -554,46 +596,21 @@ const ALL_SKILLS = [
     show: true,
     priority: 7,
     items: [
-      { name: 'Android TV / STB', rating: 9 },
-      { name: 'AOSP Firmware', rating: 8 },
-      { name: 'BLE & Sensors', rating: 7 },
+      { name: 'Android TV & STB', rating: 9 },
+      { name: 'AOSP & Firmware Customization', rating: 8 },
+      { name: 'BLE & Smart Sensors', rating: 8 },
       { name: 'Digital Signage Systems', rating: 8 },
     ],
   },
   {
-    key: 'research',
-    title: 'Research & Academic (2+ Years)',
-    show: true,
-    priority: 6,
-    items: [
-      { name: 'Data Acquisition & Analysis', rating: 8 },
-      { name: 'Computer Vision (MediaPipe)', rating: 8 },
-      { name: 'Sensor Fusion', rating: 7 },
-      { name: 'Academic Writing', rating: 8 },
-    ],
-  },
-  {
-    key: 'frontend',
-    title: 'Frontend',
-    show: true,
-    priority: 5,
-    items: [
-      { name: 'React', rating: 7 },
-      { name: 'Next.js', rating: 7 },
-      { name: 'Tailwind CSS', rating: 8 },
-      { name: 'GSAP', rating: 6 },
-    ],
-  },
-  {
     key: 'learning',
-    title: 'Currently Learning',
+    title: 'Emerging Tech & Exploration',
     show: true,
     priority: 8,
     items: [
-      { name: 'RAG', rating: 5 },
-      { name: 'LangChain', rating: 5 },
-      { name: 'Terraform', rating: 4 },
-      { name: 'Agentic AI', rating: 4 },
+      { name: 'Agentic AI & Multi-Agent Systems', rating: 7 },
+      { name: 'AI-Assisted Workflow Automation', rating: 8 },
+      { name: 'High-Throughput Event Streaming', rating: 7 },
     ],
   },
 ]
